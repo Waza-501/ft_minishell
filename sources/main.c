@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/08/25 12:51:50 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/25 17:35:01 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,43 @@ int	mini_loop(t_data *data)
 		}
 		free(data->input);
 	}
+	cdll_del_list(data->envp_copy);
 	return (0);
 }
 
-void print_envp(char **envp)
+void	print_envp(char **envp, t_cdllist *list)
 {
-    int i = 0;
-    while (envp[i])
-    {
-        printf("%s", envp[i]);
-        i++;
-    }
+	int	i;
+
+	i = 0;
+	(void)envp;
+	//while (envp[i])
+	//{
+	//	printf("%s\n", envp[i]);
+	//	i++;
+	//}
+	//i = 0;
+	while (i < list->size)
+	{
+		printf("%s\n", list->current->var_1);
+		list->current = list->current->next;
+		i++;
+	}
+	list->current = list->head;
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	
+
 	(void)argv;
 	ft_memset(&data, 0, sizeof(data));
 	if (init_data(&data) == false)
 		exit(1);
-	print_envp(envp);
+	data.envp_copy = copy_envp(envp);
+	if (!data.envp_copy)
+		exit(1);
+	print_envp(envp, data.envp_copy);
 	//copy_env_data(&data, envp);
 	if (argc > 1)
 	{

@@ -1,6 +1,6 @@
 NAME		:=	minishell
 CC			:=	cc
-FLAGS		:=	-Wall -Wextra -g -fsanitize=address -lreadline
+FLAGS		:=	-Wall -Werror -Wextra -g -fsanitize=address
 
 LIBRARIES		:=	./libraries/libft/libft.a ./libraries/cd_ll/cd_ll.a\
 
@@ -9,7 +9,8 @@ LIBFT			:= ./libraries/libft
 CDLL			:= ./libraries/cd_ll
 
 SOURCES_DIR	:=	sources/
-SOURCES		:=	lexer_list.c\
+SOURCES		:=	copy_env.c\
+				lexer_list.c\
 				lexer.c\
 				main.c\
 				parsing.c\
@@ -25,15 +26,15 @@ HEADERS		:=	-I $(HEADER_DIR)
 all:		libraries $(NAME)
 
 $(NAME):	$(OBJECTS)
-				$(CC) $(FLAGS) -o $@ $^ $(HEADERS) $(LIBRARIES)
+				$(CC) $(FLAGS) -o $@ $^ -lreadline $(HEADERS) $(LIBRARIES)
 
 $(OBJECTS_DIR)%.o:	$(SOURCES_DIR)%.c
 					@mkdir -p $(dir $@)
 					$(CC) $(FLAGS) $(HEADERS) -c -o $@ $<
 
 libraries:	
-			$(MAKE) -C $(LIBFT)
-			$(MAKE) -C $(CDLL)
+			@$(MAKE) -C $(LIBFT)
+			@$(MAKE) -C $(CDLL)
 
 clean:
 			@rm -rf $(OBJECTS)

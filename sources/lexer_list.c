@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/31 09:49:10 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/05 10:42:50 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/25 15:06:11 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	clear_lexer(t_data *data)
 	}
 }
 
-t_token		*new_lex_node(char *str)
+t_token	*new_lex_node(char *str)
 {
 	t_token		*new;
 
@@ -67,14 +67,13 @@ void	lex_add_back(t_token **list, t_token *new)
 	new->id = end->id + 1;
 }
 
-int		add_lex_node(char *str, t_token **lexer)
+int	add_lex_node(char *str, t_token **lexer)
 {
 	int	dup_len;
 	int	idx;
 
 	dup_len = 0;
 	idx = 0;
-	//printf("The current string is %s\n", str);
 	if (str[idx] == S_Q)
 	{
 		lex_add_back(lexer, new_lex_node(strcpy_delim(str, S_Q)));

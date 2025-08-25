@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/15 09:06:15 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/15 09:12:57 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/25 17:23:14 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ void	cdll_add_back(t_cdllist *list, t_cd_ll_node *node)
 		list->head->prev->next = node;
 		list->head->prev = node;
 	}
+	list->size++;
 }

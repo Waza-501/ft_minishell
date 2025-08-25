@@ -6,15 +6,15 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/15 01:30:48 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/15 09:08:49 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/25 15:05:54 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cd_ll.h"
 #include <stdlib.h>
 
-/*cdl_new_node allocates a new t_cd_ll_node and sets its fields to the given values.
-It returns the new node, or NULL if allocation fails.*/
+/*cdl_new_node allocates a new t_cd_ll_node and sets its fields to the given
+values. It returns the new node, or NULL if allocation fails.*/
 t_cd_ll_node	*cdll_new_node(char *str1, char *str2, int id)
 {
 	t_cd_ll_node	*new;

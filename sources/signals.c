@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:45 by owen          #+#    #+#                 */
-/*   Updated: 2025/07/28 14:55:38 by owen          ########   odam.nl         */
+/*   Updated: 2025/08/25 15:09:00 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void	trap_sigquit()
+void	trap_sigquit(void)
 {
 	struct sigaction	ms;
 

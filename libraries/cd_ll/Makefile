@@ -1,6 +1,6 @@
 NAME		:=	cd_ll.a
 CC			:=	cc
-FLAGS		:=	-Wall -Wextra -g -fsanitize=address
+FLAGS		:=	-Wall -Werror -Wextra
 
 SOURCES_DIR	:=	sources/
 SOURCES		:=	cd_ll_addback.c\

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/01 11:48:40 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/05 15:04:58 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/25 16:25:22 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	identify_type(t_token *list)
 		if (list->string[1] && list->string[1] == '<')
 			list->type = HEREDOC;
 		else if (list->string[1])
-			return(printf("unexpected eof\n"), 1);
+			return (printf("unexpected eof\n"), 1);
 		else
 			list->type = INPUT;
 	}
 	else if (list->string[0] == '>')
 	{
-		if (list->string[1] && list->string[1] == '<')
+		if (list->string[1] && list->string[1] == '>')
 			list->type = APPEND;
 		else if (list->string[1])
 			return (printf("unexpected eof\n"), 1);

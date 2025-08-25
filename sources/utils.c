@@ -6,13 +6,13 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/29 14:10:30 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/07/30 20:20:20 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/25 15:54:32 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		find_other_half(char *str, char delim, bool *delim_toggle)
+int	find_other_half(char *str, char delim, bool *delim_toggle)
 {
 	int	idx;
 
@@ -48,9 +48,9 @@ bool	find_matching_quotes(char *str, bool s_q, bool d_q)
 		}
 		idx++;
 	}
-	if ((s_q == true))
+	if (s_q == true)
 		return (ft_putstr_fd(EOF_SQ, STDERR_FILENO), false);
-	else if ((d_q == true))
+	else if (d_q == true)
 		return (ft_putstr_fd(EOF_DQ, STDERR_FILENO), false);
 	return (true);
 }

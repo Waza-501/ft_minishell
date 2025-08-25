@@ -6,13 +6,13 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 20:28:55 by owen          #+#    #+#                 */
-/*   Updated: 2025/08/05 14:59:19 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/25 15:09:47 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t		ft_strlen_delim(char *str, char delim)
+size_t	ft_strlen_delim(char *str, char delim)
 {
 	size_t	size;
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
+/*   Updated: 2025/08/25 17:17:26 by owhearn       ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -31,7 +43,6 @@ typedef enum e_token_type
 	APPEND,
 }	t_token_type;
 
-
 typedef struct s_token
 {
 	int				id;
@@ -56,7 +67,7 @@ typedef struct s_commands
 typedef struct s_data
 {
 	char			*input;
-	char			**envp_copy;
+	t_cdllist		*envp_copy;
 	int				exit_code;
 	bool			debug;
 	bool			error;
@@ -66,32 +77,32 @@ typedef struct s_data
 }			t_data;
 
 /*copy_env*/
-
+t_cdllist	*copy_envp(char **envp);
 
 /*lexer_list.c*/
-void	clear_lexer(t_data *data);
-t_token	*new_lex_node(char *str);
-t_token	*lex_last(t_token *list);
-void	lex_add_back(t_token **list, t_token *new);
-int		add_lex_node(char *str, t_token **lexer);
+void		clear_lexer(t_data *data);
+t_token		*new_lex_node(char *str);
+t_token		*lex_last(t_token *list);
+void		lex_add_back(t_token **list, t_token *new);
+int			add_lex_node(char *str, t_token **lexer);
 
 /*lexer.c*/
 size_t		ft_strlen_delim(char *str, char delim);
-char	*strcpy_delim(char *str, char delim);
-bool	setup_lexer(t_data *data);
+char		*strcpy_delim(char *str, char delim);
+bool		setup_lexer(t_data *data);
 
 /*parsing.c*/
-int		is_whitespace(char c);
-bool	parse_input(t_data *data, char *str);
+int			is_whitespace(char c);
+bool		parse_input(t_data *data, char *str);
 
 /*signals.c*/
-void	set_signals_interactive(void);
-void	set_signals_noninteractive(void);
-
+void		set_signals_interactive(void);
+void		set_signals_noninteractive(void);
 
 /*tokeniser.c*/
-bool	assign_type(t_data *data);
-/*utils.c*/
-bool	find_matching_quotes(char *str, bool s_q, bool d_q);
+bool		assign_type(t_data *data);
 
-# endif
+/*utils.c*/
+bool		find_matching_quotes(char *str, bool s_q, bool d_q);
+
+#endif

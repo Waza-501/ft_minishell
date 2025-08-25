@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   cd_ll.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/08/25 15:01:38 by owhearn       #+#    #+#                 */
+/*   Updated: 2025/08/25 17:22:18 by owhearn       ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CD_LL_H
 # define CD_LL_H
 
@@ -12,11 +24,11 @@ typedef struct s_cd_node
 	struct s_cd_node	*prev;
 }						t_cd_ll_node;
 
-typedef	struct s_cdllist
+typedef struct s_cdllist
 {
 	t_cd_ll_node	*head;
 	t_cd_ll_node	*current;
-	size_t			size;
+	int				size;
 }					t_cdllist;
 
 /*cd_ll_addback.c*/
@@ -31,7 +43,7 @@ void			cdll_del_list(t_cdllist *list);
 void			cdll_del_node(t_cdllist *list, int num, char *name);
 
 /*cd_ll_get_node.c*/
-t_cd_ll_node	*cdll_get_node(t_cdllist *list, int	n, char *name);
+t_cd_ll_node	*cdll_get_node(t_cdllist *list, int n, char *name);
 
 /*cd_ll_init.c*/
 t_cdllist		*cdll_init_list(void);

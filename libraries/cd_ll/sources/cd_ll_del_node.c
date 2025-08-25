@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/18 22:08:37 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/22 11:53:44 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/25 15:05:35 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,14 @@ void	cdll_del_node(t_cdllist *list, int num, char *name)
 	copy = cdll_get_node(list, num, name);
 	if (!copy)
 		return ;
-	//configure_links(list, copy);
-		copy->prev->next = copy->next;
+	copy->prev->next = copy->next;
 	copy->next->prev = copy->prev;
 	if (copy == list->head)
 	{
 		if (copy == copy->next)
 			list->head = NULL;
 		else
-			list->head = copy->next;		
+			list->head = copy->next;
 	}
 	free(copy->var_1);
 	free(copy->var_2);

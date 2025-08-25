@@ -1,0 +1,1 @@
+add paths to main struct (string array that stores all paths in PATH=)?

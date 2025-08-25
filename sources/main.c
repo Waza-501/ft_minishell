@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/08/22 13:53:06 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/25 12:51:50 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	mini_loop(t_data *data)
 		set_signals_interactive();
 		data->input = readline("minishell$ ");
 		set_signals_noninteractive();
-		if (ft_strncmp(data->input, "exit", ft_strlen(data->input)) == 0)
+		if (ft_strlen(data->input) >= 4 && (ft_strncmp(data->input, "exit", 4) == 0))
 			break ;
 		// if (data->input[0] == 'f')
 		// 	rl_clear_history();

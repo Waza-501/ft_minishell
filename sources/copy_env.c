@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/15 01:01:54 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/26 08:51:28 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/26 08:53:53 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	free_mem(char **data)
 
 char	**ft_split_env(char const *s, char c)
 {
-	int		count;
 	char	*copy;
 	char	**ret;
 	int			i;
@@ -35,11 +34,10 @@ char	**ft_split_env(char const *s, char c)
 	i = 0;
 	if (!s)
 		return (NULL);
-	count = 2;
-	ret = (char **)malloc(sizeof(char *) * (count + 1));
+	ret = (char **)malloc(sizeof(char *) * (3));
 	if (!ret)
 		return (NULL);
-	ret[count] = NULL;
+	ret[2] = NULL;
 	copy = ft_strdup(s);
 	while (*copy && c == *copy)
 		copy++;

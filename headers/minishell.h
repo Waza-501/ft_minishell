@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/25 17:17:26 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/26 09:06:17 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ typedef struct s_data
 	struct s_data	*next;
 	struct s_data	*prev;
 }			t_data;
+
+/*TEMPORARY*/
+void		print_tokenlist(t_token *list);
 
 /*copy_env*/
 t_cdllist	*copy_envp(char **envp);

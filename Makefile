@@ -10,6 +10,7 @@ CDLL			:= ./libraries/cd_ll
 
 SOURCES_DIR	:=	sources/
 SOURCES		:=	copy_env.c\
+				expand_args.c\
 				lexer_list.c\
 				lexer.c\
 				main.c\

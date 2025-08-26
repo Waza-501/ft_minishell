@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/08/26 08:34:15 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/26 09:05:24 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		printf("This is not a thing anymore\n");
 		exit(1);
-		parse_input(&data, argv[1]);
+		//parse_input(&data, argv[1]);
 	}
 	else if (argc == 1)
 		mini_loop(&data);

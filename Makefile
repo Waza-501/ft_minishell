@@ -12,9 +12,10 @@ SOURCES_DIR	:=	sources/
 SOURCES		:=	copy_env.c\
 				lexer/lexer_list.c\
 				lexer/lexer.c\
-				expand_args.c\
+				parser/expand_args.c\
+				parser/expand_utils.c\
 				main.c\
-				parsing.c\
+				parser/parsing.c\
 				signals.c\
 				lexer/tokeniser.c\
 				utils.c\

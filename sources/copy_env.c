@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/15 01:01:54 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/26 08:53:53 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/27 18:11:31 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**ft_split_env(char const *s, char c)
 {
 	char	*copy;
 	char	**ret;
-	int			i;
+	int		i;
 
 	i = 0;
 	if (!s)

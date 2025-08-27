@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/08/26 09:05:24 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/27 18:11:38 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char **argv, char **envp)
 	data.envp_copy = copy_envp(envp);
 	if (!data.envp_copy)
 		exit(1);
-	print_envp(envp, data.envp_copy);
+	//print_envp(envp, data.envp_copy);
 	if (argc > 1)
 	{
 		printf("This is not a thing anymore\n");

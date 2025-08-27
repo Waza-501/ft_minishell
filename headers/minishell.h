@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/27 14:09:39 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/27 17:59:16 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,11 @@ void		print_tokenlist(t_token *list);
 /*copy_env*/
 t_cdllist	*copy_envp(char **envp);
 
-/*expand_args.c*/
+/*expand_args.c/expand_utils.c*/
 bool		expand_args(t_data *data);
+bool		check_env_char(char c);
+int			find_dollar_sign(char *str);
+int			find_var_name(char *str);
 
 /*lexer_list.c*/
 void		clear_lexer(t_data *data);

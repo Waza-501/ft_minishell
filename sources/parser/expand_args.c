@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/27 14:40:07 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/27 15:49:20 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ size_t	find_var_name(char *str)
 	}
 	return (size);
 	
+}
+
+bool	rebuild_string(char *str, char *var, t_cd_ll_node *node)
+{
+	size_t	new;
+
+	new = (ft_strlen(str) - (ft_strlen(var) + 1) + ft_strlen(node->var_2));
+	printf("old size was %zu, new size is %zu\n", ft_strlen(str), new);
+	return (true);
 }
 
 int	replace_var(t_cdllist *list, char *str)

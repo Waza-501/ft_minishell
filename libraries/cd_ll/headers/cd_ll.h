@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/25 17:22:18 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/27 14:56:43 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CD_LL_H
 
 # include <stddef.h>
+# include <stdbool.h>
 
 typedef struct s_cd_node
 {
@@ -40,10 +41,10 @@ void			cdll_add_front(t_cdllist *list, t_cd_ll_node *node);
 /*cd_ll_del_list.c*/
 void			cdll_del_list(t_cdllist *list);
 /*cd_ll_del_node.c*/
-void			cdll_del_node(t_cdllist *list, int num, char *name);
+void			cdll_del_node(t_cdllist *list, bool clear, char *name);
 
 /*cd_ll_get_node.c*/
-t_cd_ll_node	*cdll_get_node(t_cdllist *list, int n, char *name);
+t_cd_ll_node	*cdll_get_node(t_cdllist *list, bool clear, char *name);
 
 /*cd_ll_init.c*/
 t_cdllist		*cdll_init_list(void);

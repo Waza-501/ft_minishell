@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/26 09:06:17 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/27 14:09:39 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_commands
 	char				**args;
 	int					infile;
 	int					outfile;
-	int					type;
 	struct s_commands	*next;
 	struct s_commands	*prev;
 }			t_commands;
@@ -81,6 +80,9 @@ void		print_tokenlist(t_token *list);
 
 /*copy_env*/
 t_cdllist	*copy_envp(char **envp);
+
+/*expand_args.c*/
+bool		expand_args(t_data *data);
 
 /*lexer_list.c*/
 void		clear_lexer(t_data *data);

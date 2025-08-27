@@ -10,13 +10,13 @@ CDLL			:= ./libraries/cd_ll
 
 SOURCES_DIR	:=	sources/
 SOURCES		:=	copy_env.c\
+				lexer/lexer_list.c\
+				lexer/lexer.c\
 				expand_args.c\
-				lexer_list.c\
-				lexer.c\
 				main.c\
 				parsing.c\
 				signals.c\
-				tokeniser.c\
+				lexer/tokeniser.c\
 				utils.c\
 
 OBJECTS_DIR	:=	objects/

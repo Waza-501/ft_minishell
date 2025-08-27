@@ -6,32 +6,33 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/18 22:11:26 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/25 15:10:59 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/27 14:57:30 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cd_ll.h"
 
 /*Moves through the list until a specific node is found, then returns the node*/
-t_cd_ll_node	*cdll_get_node(t_cdllist *list, int num, char *name)
+t_cd_ll_node	*cdll_get_node(t_cdllist *list, bool clear, char *name)
 {
 	t_cd_ll_node	*copy;
+	int				i;
 
 	if (!list || !list->head)
 		return (NULL);
+	i = 0;
 	copy = list->head;
-	if (!name)
-	{
-		while (num != 0)
-		{
-			copy = copy->next;
-			num--;
-		}
-	}
+	if (clear == true)
+		return (copy);
 	else
 	{
-		while (copy && !cdll_strncmp(copy->var_1, name, cdll_strlen(name)))
+		while (list->size >= i && cdll_strncmp(copy->var_1, name, cdll_strlen(name)))
+		{
 			copy = copy->next;
+			i++;
+		}
 	}
+	if (i > list->size)
+		return (NULL);
 	return (copy);
 }

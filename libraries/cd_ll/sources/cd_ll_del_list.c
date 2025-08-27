@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/19 11:05:18 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/22 11:53:16 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/27 14:56:12 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	cdll_del_list(t_cdllist *list)
 	if (!list)
 		return ;
 	while (list->head != NULL)
-		cdll_del_node(list, 0, NULL);
+		cdll_del_node(list, true, NULL);
 	free(list);
 	list = NULL;
 }

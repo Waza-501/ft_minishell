@@ -18,6 +18,12 @@ SOURCES		:=	copy_env.c\
 				signals.c\
 				lexer/tokeniser.c\
 				utils.c\
+# 				builtins/ft_cd.c\
+# 				builtins/ft_echo.c\
+# 				builtins/ft_pwd.c\
+# 				executor/executor.c\
+# 				executor/execute_ultil1.c\
+# 				execute/execute_ultil2.c\
 
 OBJECTS_DIR	:=	objects/
 OBJECTS		:=	$(addprefix $(OBJECTS_DIR), $(SOURCES:.c=.o))

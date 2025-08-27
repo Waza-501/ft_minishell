@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/27 18:22:34 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/27 18:53:37 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,43 +22,44 @@ bool	check_valid_var(char *str)
 int	find_var_in_string(char *str, char *var)
 {
 	int	idx;
-	int	i;
 
 	idx = 0;
 	while (str[idx])
 	{
-		i = 0;
 		while (str[idx] != '$')
 			idx++;
 		if (str[idx] == '$')
+		{
 			if (!ft_strncmp(&str[idx + 1], var, ft_strlen(var)))
 				return (idx);
+			idx++;
+		}
 	}
 	return (idx);
 }
 
-bool	rebuild_string(char *str, char *var, t_cd_ll_node *node)
+bool	rebuild_string(t_token *node, char *var, t_cd_ll_node *env_node)
 {
 	int		idx;
 	char	*start;
 	char	*temp;
 	char	*end;
 
-	printf("string is %s\n", str);
-	idx = find_var_in_string(str, var);
-	start = ft_substr(str, 0, idx);
-	end = ft_substr(str, (idx + ft_strlen(var) + 1), ft_strlen(&str[(idx + ft_strlen(var) + 1)]));
-	printf("start has %s - var is %s - end has %s\n", start, var, end);
-	free(str);
-	temp = ft_strjoin(start, node->var_2);
+	//printf("string is %s\n", node->string);
+	idx = find_var_in_string(node->string, var);
+	start = ft_substr(node->string, 0, idx);
+	end = ft_substr(node->string, (idx + ft_strlen(var) + 1), ft_strlen(&node->string[(idx + ft_strlen(var) + 1)]));
+	//printf("start has %s - var is %s - end has %s\n", start, var, end);
+	free(node->string);
+	temp = ft_strjoin(start, env_node->var_2);
 	free(start);
-	str = ft_strjoin(temp, end);
+	node->string = ft_strjoin(temp, end);
 	free(temp);
 	free(end);
 	return (true);
 }
 
-int	replace_var(t_cdllist *list, char *str, int idx)
+int	replace_var(t_cdllist *list, t_token *node, int idx)
 {
 	int				size;
 	t_cd_ll_node	*var;
@@ -67,13 +68,13 @@ int	replace_var(t_cdllist *list, char *str, int idx)
 
 	// if (str[0] != '$')
 	// 	return (0);
-	size = (find_var_name(&str[idx + 1]) + 1);
+	size = (find_var_name(&node->string[idx + 1]) + 1);
 	var_copy = (char *)malloc(sizeof(char) * (size + 1));
 	if (!var_copy)
 		/*implement malloc protection at a later date*/
 		return (1);
-	ft_strlcpy(var_copy, &str[idx + 1], size);
-	printf("%s\n", var_copy);
+	ft_strlcpy(var_copy, &node->string[idx + 1], size);
+	//printf("%s\n", var_copy);
 	var = cdll_get_node(list, 0, var_copy);
 	if (!var)
 		/*implement replace var_copy in original string with ' '*/
@@ -81,7 +82,7 @@ int	replace_var(t_cdllist *list, char *str, int idx)
 		exit(1);
 	else
 		//printf("%s = %s\n", var->var_1, var->var_2);
-		rebuild_string(str, var_copy, var);
+		rebuild_string(node, var_copy, var);
 	free(var_copy);
 	return (size);
 }
@@ -97,7 +98,7 @@ void	scan_expand(t_data *data, t_token *node)
 		idx += find_dollar_sign(&node->string[idx]);
 		if (idx == ft_strlen(node->string))
 			return ;
-		replace_var(data->envp_copy, node->string, idx);
+		replace_var(data->envp_copy, node, idx);
 		idx++;
 	}
 	return ;

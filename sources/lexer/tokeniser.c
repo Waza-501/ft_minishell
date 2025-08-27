@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/01 11:48:40 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/25 16:25:22 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/27 18:56:02 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	identify_type(t_token *list)
 
 void	print_tokenlist(t_token *list)
 {
+	printf("-------------------------\n");
 	while (list)
 	{
 		printf("Type: ");
@@ -64,6 +65,7 @@ void	print_tokenlist(t_token *list)
 			printf("[APPEND]-String [%s]\n", list->string);
 		list = list->next;
 	}
+	printf("-------------------------\n");
 }
 
 bool	assign_type(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/08/27 13:31:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/27 18:55:35 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ bool	is_space(const char *str)
 
 bool	parse_input(t_data *data, char *str)
 {
+	t_token		*copy;
+
 	if (is_space(str))
 		return (false);
 	add_history(data->input);
@@ -48,7 +50,9 @@ bool	parse_input(t_data *data, char *str)
 		exit(1);
 	if (expand_args(data) == false)
 		/*implement error handling function*/
-		exit(1);	
+		exit(1);
+	copy = data->lexer;
+	print_tokenlist(copy);
 	clear_lexer(data);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 16:59:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/27 18:25:47 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/29 09:21:52 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	find_dollar_sign(char *str)
 	return (idx);
 }
 
-int	find_var_name(char *str)
+int	find_var_size(char *str)
 {
 	int	idx;
 

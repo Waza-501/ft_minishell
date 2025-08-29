@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/27 17:59:16 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/08/29 09:22:02 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_cdllist	*copy_envp(char **envp);
 bool		expand_args(t_data *data);
 bool		check_env_char(char c);
 int			find_dollar_sign(char *str);
-int			find_var_name(char *str);
+int			find_var_size(char *str);
 
 /*lexer_list.c*/
 void		clear_lexer(t_data *data);

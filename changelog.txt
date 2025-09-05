@@ -1,0 +1,5 @@
+#05/09/2025
+## MAX
+- BULETINS: Add ft_unset, ft_export, ft_env, ft_exit
+- TESTING: cd, pwd, echo, export command
+- LIBFT: add ft_arrdup; ft_free_arr; ft_malloc; ft_strjoin_free.c

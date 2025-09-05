@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/08 17:18:26 by owen          #+#    #+#                 */
-/*   Updated: 2024/10/16 14:02:32 by owen          ########   odam.nl         */
+/*   Updated: 2025/09/05 10:33:00 by haianhle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	count = count_words(s, c);
-	ret = (char **)malloc(sizeof(char *) * (count + 1));
+	ret = (char **)ft_malloc(sizeof(char *) * (count + 1));
 	if (!ret)
 		return (NULL);
 	ret[count] = NULL;

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/07 11:00:05 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/09/05 10:23:17 by haianhle      ########   odam.nl         */
+/*   Updated: 2025/09/05 10:36:22 by haianhle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ char	*get_next_line(int fd);
 void	*ft_malloc(size_t size);
 char	**ft_arrdup(char **arr);
 void	ft_free_arr(char **arr);
+char	*ft_strjoin_free(char *s1, char *s2);
 
 #endif

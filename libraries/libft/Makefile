@@ -44,7 +44,8 @@ SRCS	=		ft_atoi.c\
 				ft_lstmap.c\
 				get_next_line_utils.c\
 				get_next_line.c\
-				
+				ft_malloc.c ft_arrdup.c ft_free_arr.c ft_strjoin_free.c\
+
 
 NAME	=	libft.a
 CC		=	cc

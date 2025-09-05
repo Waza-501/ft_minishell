@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/07 11:00:05 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/03/12 16:40:41 by owen          ########   odam.nl         */
+/*   Updated: 2025/09/05 10:23:17 by haianhle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,10 @@ size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
 int		nl_checker(const char *s);
 char	*get_next_line(int fd);
+
+//Custom Functions - Max
+void	*ft_malloc(size_t size);
+char	**ft_arrdup(char **arr);
+void	ft_free_arr(char **arr);
 
 #endif

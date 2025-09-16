@@ -6,11 +6,11 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:18 by haile         #+#    #+#                 */
-/*   Updated: 2025/08/27 12:49:14 by haile         ########   odam.nl         */
+/*   Updated: 2025/09/16 12:40:58 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+// #include "minishell.h"
 #include "libft.h"
 
 int add_path(t_shell *shell, char *new_path)

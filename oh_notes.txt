@@ -1,4 +1,0 @@
-add paths to main struct (string array that stores all paths in PATH=)?
-
-test string:
-testing "$USER basic test $PATH" node $PATH

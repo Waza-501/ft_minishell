@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/08/27 18:11:38 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/09/10 15:39:04 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	mini_loop(t_data *data)
 			if (data->error == true)
 				exit (1);
 		}
+		/*execution would go here*/
 		free(data->input);
 	}
 	free(data->input);

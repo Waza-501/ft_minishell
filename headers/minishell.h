@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/29 09:22:02 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/09/29 20:01:19 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,22 @@ void		print_tokenlist(t_token *list);
 /*copy_env*/
 t_cdllist	*copy_envp(char **envp);
 
+/*concatonate_strings*/
+bool		is_quotes(char c);
+bool		concatonate_redirect(t_data *data);
+
 /*expand_args.c/expand_utils.c*/
 bool		expand_args(t_data *data);
 bool		check_env_char(char c);
 int			find_dollar_sign(char *str);
 int			find_var_size(char *str);
 
-/*lexer_list.c*/
+/*lexer_list_clear.c*/
+void		lex_del_node(t_token *node);
+void		lex_del_first(t_data *data);
 void		clear_lexer(t_data *data);
+
+/*lexer_list.c*/
 t_token		*new_lex_node(char *str);
 t_token		*lex_last(t_token *list);
 void		lex_add_back(t_token **list, t_token *new);
@@ -96,7 +104,7 @@ int			add_lex_node(char *str, t_token **lexer);
 
 /*lexer.c*/
 size_t		ft_strlen_delim(char *str, char delim);
-char		*strcpy_delim(char *str, char delim);
+char		*strcpy_delim(char *str, char delim1, char delim2, char delim3);
 bool		setup_lexer(t_data *data);
 
 /*parsing.c*/

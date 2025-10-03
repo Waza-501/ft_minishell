@@ -10,4 +10,5 @@ void	*ft_malloc(size_t size)
 		ft_putstr_fd("A malloc error occured, existing the program \n", 2);
 		exit(EXIT_FAILURE);
 	}
+	return (ret);
 }

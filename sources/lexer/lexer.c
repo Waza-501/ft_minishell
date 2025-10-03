@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 20:28:55 by owen          #+#    #+#                 */
-/*   Updated: 2025/08/25 15:09:47 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/09/29 20:38:27 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,22 @@ size_t	ft_strlen_delim(char *str, char delim)
 		size++;
 	if (delim == SPACE)
 		return (size);
-	//printf("size until delim:-%zu\n", size);
 	return (size + 1);
 }
 
-char	*strcpy_delim(char *str, char delim)
+char	*strcpy_delim(char *str, char delim1, char delim2, char delim3)
 {
 	size_t	idx;
 	size_t	size;
 	char	*new;
 
 	idx = 0;
-	size = ft_strlen_delim(str, delim);
+	size = 0;
+	if (is_quotes(delim1) == true)
+		size = ft_strlen_delim(str, delim1);
+	else
+		while (str[size] && str[size] != delim1 && str[size] != delim2 && str[size] != delim3)
+			size++;
 	new = (char *)malloc(sizeof(char) * (size + 1));
 	if (!new)
 		return (NULL);
@@ -61,19 +65,19 @@ bool	id_token(char *str)
 	return (false);
 }
 
-/*temp function*/
-void	print_lex(t_data *data)
-{
-	t_token		*start;
+// /*temp function*/
+// void	print_lex(t_data *data)
+// {
+// 	t_token		*start;
 
-	start = data->lexer;
-	while (start->next)
-	{
-		printf("%s\n", start->string);
-		start = start->next;
-	}
-	printf("%s\n", start->string);
-}
+// 	start = data->lexer;
+// 	while (start->next)
+// 	{
+// 		printf("%s\n", start->string);
+// 		start = start->next;
+// 	}
+// 	printf("%s\n", start->string);
+// }
 
 bool	setup_lexer(t_data *data)
 {
@@ -90,20 +94,7 @@ bool	setup_lexer(t_data *data)
 			idx++;
 		if (copy[idx])
 			idx += add_lex_node(&copy[idx], &(data->lexer));
-		/*if (id_token(&copy[idx]) == true)
-		{
-			printf("it's a token, %c\n", copy[idx]);
-			idx += add_lex_node(&copy[idx], );
-		}
-			do thing where you save the token character in a node
-		else if (id_word(&copy[idx]) == true)
-		{
-			printf(" it's a word\n");
-			idx += add_lex_node(%copy[idx], )
-			do thing where you save the word in a node
-		}*/
 	}
-	//print_lex(data);
 	free (copy);
 	return (true);
 }

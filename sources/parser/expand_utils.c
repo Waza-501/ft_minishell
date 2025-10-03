@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 16:59:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/29 09:21:52 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/09/08 11:43:29 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ bool	check_env_char(char c)
 	else if (c == '_')
 		return (true);
 	else if (c == '$')
+		return (true);
+	else if (c == '?')
 		return (true);
 	return (false);
 }

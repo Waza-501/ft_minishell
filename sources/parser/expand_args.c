@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/29 16:36:58 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/03 16:00:20 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,17 @@ bool	reform_string(t_token *node, char *start, char *end, char *middle)
 	return (true);
 }
 
+/**
+ * @brief Replaces a variable in a token's string with its value from the environment.
+ *
+ * Finds the specified variable in the token's string, extracts the parts before and after the variable,
+ * and reconstructs the string with the variable's value from the environment list.
+ *
+ * @param list Pointer to the environment variable list.
+ * @param node Pointer to the t_token node whose string will be modified.
+ * @param arg_var The variable name to replace.
+ * @return int Returns 0 on success, 1 on memory allocation failure or error.
+ */
 int	replace_var(t_cdllist *list, t_token *node, char *arg_var)
 {
 	t_cd_ll_node	*var;
@@ -81,32 +92,67 @@ int	replace_var(t_cdllist *list, t_token *node, char *arg_var)
 	return (0);
 }
 
+int	empty_space_dollar(char *start, int idx, int size, t_token *node)
+{
+	char	*end;
+
+	end = ft_substr(node->string, (idx + size), ft_strlen(&node->string[(idx + size)]));
+	if (!end)
+		return (1);
+	if (reform_string(node, start, end, "") == false)
+		return (free(end), 1);
+	free(end);
+	return (0);
+}
+
+/**
+ * @brief Determines the type of variable replacement needed in a token string.
+ *
+ * Searches for the variable in the node's string and decides how to handle its replacement,
+ * including special cases like "$?" or numeric variables. May update the node if needed.
+ *
+ * @param node Pointer to the t_token node containing the string.
+ * @param arg_var The variable name to search for and process.
+ * @return int Returns 0 on success, 1 on memory allocation failure or error.
+ */
 int	find_replace_type(t_token *node, char *arg_var)
 {
 	int				idx;
 	int				size;
 	char			*start;
-	char			*end;
 
 	idx = find_var_in_string(node->string, arg_var);
 	start = ft_substr(node->string, 0, idx);
+	if (!start)
+		return (1);
 	size = ft_strlen(arg_var);
 	if (size == 1)
 		return (0);
 	if (!ft_strncmp(&node->string[idx], "$?", 2))
 		return (0);
-	if (ft_isdigit(node->string[idx + 1]))
+	if (ft_isdigit(node->string[idx + 1]) || node->string[idx + 1] == '$')
 	{
-		handle_dollar_digit(start,)
-		// size = 2;
-		// end = ft_substr(node->string, (idx + size), ft_strlen(&node->string[(idx + size)]));
-		// reform_string(node, start, end, "");
+		if (empty_space_dollar(start, idx, 2, node))
+			return (free(start), 1);
 	}
+	else
+		if (empty_space_dollar(start, idx, ft_strlen(arg_var) + 1, node))
+			return (free(start), 1);
 	free(start);
-	free(end);
 	return (0);
 }
 
+/**
+ * @brief Expands environment variables in a token's string.
+ *
+ * Iterates through the string of the given token node, finds variables to expand,
+ * and replaces them with their values from the environment. Handles special cases
+ * and returns false on error.
+ *
+ * @param data Pointer to the t_data structure containing environment variables.
+ * @param node Pointer to the t_token node whose string will be expanded.
+ * @return bool Returns true on success, false on failure.
+ */
 bool	scan_expand(t_data *data, t_token *node)
 {
 	size_t	idx;
@@ -123,8 +169,10 @@ bool	scan_expand(t_data *data, t_token *node)
 		if (!arg_var)
 			return (false);
 		if (!cdll_get_node(data->envp_copy, false, arg_var))
+		{
 			if (find_replace_type(node, arg_var) == 1)
 				return (free(arg_var), false);
+		}
 		else
 			if (replace_var(data->envp_copy, node, arg_var) == 1)
 				return (free(arg_var), false);

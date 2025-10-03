@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/09/29 20:01:19 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/03 17:16:52 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct s_token
 
 typedef struct s_commands
 {
-	char				*command;
 	char				**args;
 	int					infile;
 	int					outfile;
@@ -81,9 +80,15 @@ void		print_tokenlist(t_token *list);
 /*copy_env*/
 t_cdllist	*copy_envp(char **envp);
 
+/*command_list.c*/
+int			build_command_list(t_data *data);
+
 /*concatonate_strings*/
 bool		is_quotes(char c);
-bool		concatonate_redirect(t_data *data);
+char		*identify_quotes(char c);
+int			trim_quotes(t_token *node);
+bool		is_quotes(char c);
+bool		concatonate_strings(t_token *list);
 
 /*expand_args.c/expand_utils.c*/
 bool		expand_args(t_data *data);
@@ -107,9 +112,24 @@ size_t		ft_strlen_delim(char *str, char delim);
 char		*strcpy_delim(char *str, char delim1, char delim2, char delim3);
 bool		setup_lexer(t_data *data);
 
+/*handle_append.c*/
+bool		handle_append(t_token *lexer, t_data *data);
+
+/*handle_heredoc.c*/
+bool		handle_heredoc(t_token *lexer, t_data *data);
+
+/*handle_input.c*/
+bool		handle_input(t_token *lexer, t_data *data);
+
+/*handle_output.c*/
+bool		handle_output(t_token *lexer, t_data *data);
+
 /*parsing.c*/
 int			is_whitespace(char c);
 bool		parse_input(t_data *data, char *str);
+
+/*set_redirect*/
+bool		set_redirect(t_token *lexer, t_data *data);
 
 /*signals.c*/
 void		set_signals_interactive(void);

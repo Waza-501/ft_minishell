@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/03 16:00:53 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/03 17:31:48 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,47 @@ bool	is_space(const char *str)
 	return (true);
 }
 
+bool	set_redirect(t_token *lexer, t_data *data)
+{
+	if (lexer->type == INPUT)
+	{
+		if (handle_input(lexer, data) == false)
+			return (false);
+	}
+	else if (lexer->type == OUTPUT)
+	{
+		if (handle_output(lexer, data) == false)
+			return (false);
+	}
+	else if (lexer->type == APPEND)
+	{
+		if (handle_output(lexer, data) == false)
+			return (false);
+	}
+	else if (lexer->type == HEREDOC)
+	{
+		if (handle_output(lexer, data) == false)
+			return (false);
+	}
+	return (true);
+}
+
+// bool	concatonate_redirect(t_data *data)
+// {
+// 	t_token		*copy;
+
+// 	copy = data->lexer;
+// 	if (concatonate_strings(copy))
+// 		return (false);
+// 	while (copy->next)
+// 	{
+// 		if (copy->type > 3)
+// 			set_redirect(copy);
+// 		copy = copy->next;
+// 	}
+// 	return (true);
+// }
+
 bool	parse_input(t_data *data, char *str)
 {
 	t_token		*copy;
@@ -49,18 +90,16 @@ bool	parse_input(t_data *data, char *str)
 		/*implement error handling function*/
 		exit(1);
 	copy = data->lexer;
-	//print_tokenlist(copy);
 	if (expand_args(data) == false)
 		/*implement error handling function*/
 		exit(1);
 	copy = data->lexer;
-	print_tokenlist(copy);
-	if (concatonate_redirect(data) == false)
+	if (concatonate_strings(data->lexer) == false)
 		/*implement error handling function*/
 		exit(1);
 	copy = data->lexer;
 	print_tokenlist(copy);
-	//build_command_list(data);
+	build_command_list(data);
 	clear_lexer(data);
 	return (true);
 }

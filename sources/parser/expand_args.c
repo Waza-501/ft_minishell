@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/03 16:00:20 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/03 17:30:17 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,13 @@ bool	reform_string(t_token *node, char *start, char *end, char *middle)
 }
 
 /**
- * @brief Replaces a variable in a token's string with its value from the environment.
+ * @brief Replaces a variable in a token's string with its 
+ * value from the environment.
  *
- * Finds the specified variable in the token's string, extracts the parts before and after the variable,
- * and reconstructs the string with the variable's value from the environment list.
+ * Finds the specified variable in the token's string, 
+ * extracts the parts before and after the variable,
+ * and reconstructs the string with the variable's value
+ * from the environment list.
  *
  * @param list Pointer to the environment variable list.
  * @param node Pointer to the t_token node whose string will be modified.
@@ -96,7 +99,8 @@ int	empty_space_dollar(char *start, int idx, int size, t_token *node)
 {
 	char	*end;
 
-	end = ft_substr(node->string, (idx + size), ft_strlen(&node->string[(idx + size)]));
+	end = ft_substr(node->string, (idx + size),
+			ft_strlen(&node->string[(idx + size)]));
 	if (!end)
 		return (1);
 	if (reform_string(node, start, end, "") == false)
@@ -108,8 +112,9 @@ int	empty_space_dollar(char *start, int idx, int size, t_token *node)
 /**
  * @brief Determines the type of variable replacement needed in a token string.
  *
- * Searches for the variable in the node's string and decides how to handle its replacement,
- * including special cases like "$?" or numeric variables. May update the node if needed.
+ * Searches for the variable in the node's string and decides how to
+ * handle its replacement, including special cases like "$?" or numeric
+ * variables. May update the node if needed.
  *
  * @param node Pointer to the t_token node containing the string.
  * @param arg_var The variable name to search for and process.

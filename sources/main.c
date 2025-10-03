@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/09/10 15:39:04 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/03 17:27:16 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,20 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-bool	init_data(t_data *data)
+t_data	*init_data(void)
 {
-	data->input = NULL;
-	data->envp_copy = NULL;
-	data->exit_code = 0;
-	data->debug = true;
-	data->error = false;
-	data->lexer = NULL;
-	return (true);
+	t_data	*new;
+
+	new = (t_data *)malloc(sizeof(t_data));
+	if (!new)
+		return (NULL);
+	new->input = NULL;
+	new->envp_copy = NULL;
+	new->exit_code = 0;
+	new->debug = true;
+	new->error = false;
+	new->lexer = NULL;
+	return (new);
 }
 
 int	mini_loop(t_data *data)
@@ -35,7 +40,12 @@ int	mini_loop(t_data *data)
 		set_signals_interactive();
 		data->input = readline("minishell$ ");
 		set_signals_noninteractive();
-		if (ft_strlen(data->input) >= 4 && (ft_strncmp(data->input, "exit", 4) == 0))
+		if (!data->input)
+		{
+			exit(1);
+		}
+		if (ft_strlen(data->input) >= 4 &&
+			(ft_strncmp(data->input, "exit", 4) == 0))
 			break ;
 		// if (data->input[0] == 'f')
 		// 	rl_clear_history();
@@ -52,46 +62,44 @@ int	mini_loop(t_data *data)
 	return (0);
 }
 
-void	print_envp(char **envp, t_cdllist *list)
-{
-	int	i;
+// void	print_envp(char **envp, t_cdllist *list)
+// {
+// 	int	i;
 
-	i = 0;
-	while (envp[i])
-	{
-		printf("%s\n", envp[i]);
-		i++;
-	}
-	i = 0;
-	while (i < list->size)
-	{
-		printf("%s\n", list->current->var_1);
-		list->current = list->current->next;
-		i++;
-	}
-	list->current = list->head;
-}
+// 	i = 0;
+// 	while (envp[i])
+// 	{
+// 		printf("%s\n", envp[i]);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < list->size)
+// 	{
+// 		printf("%s\n", list->current->var_1);
+// 		list->current = list->current->next;
+// 		i++;
+// 	}
+// 	list->current = list->head;
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	data;
+	t_data	*data;
 
 	(void)argv;
-	ft_memset(&data, 0, sizeof(data));
-	if (init_data(&data) == false)
+	data = init_data();
+	if (!data)
 		exit(1);
-	data.envp_copy = copy_envp(envp);
-	if (!data.envp_copy)
+	data->envp_copy = copy_envp(envp);
+	if (!data->envp_copy)
 		exit(1);
-	//print_envp(envp, data.envp_copy);
 	if (argc > 1)
 	{
 		printf("This is not a thing anymore\n");
 		exit(1);
-		//parse_input(&data, argv[1]);
 	}
 	else if (argc == 1)
-		mini_loop(&data);
-	//free(&data);
-	exit (0);
+		mini_loop(data);
+	free(data);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 20:28:55 by owen          #+#    #+#                 */
-/*   Updated: 2025/09/29 20:38:27 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/03 16:10:16 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char	*strcpy_delim(char *str, char delim1, char delim2, char delim3)
 	if (is_quotes(delim1) == true)
 		size = ft_strlen_delim(str, delim1);
 	else
-		while (str[size] && str[size] != delim1 && str[size] != delim2 && str[size] != delim3)
+		while (str[size] && str[size] != delim1 && str[size] != delim2
+			&& str[size] != delim3)
 			size++;
 	new = (char *)malloc(sizeof(char) * (size + 1));
 	if (!new)
@@ -64,20 +65,6 @@ bool	id_token(char *str)
 		return (true);
 	return (false);
 }
-
-// /*temp function*/
-// void	print_lex(t_data *data)
-// {
-// 	t_token		*start;
-
-// 	start = data->lexer;
-// 	while (start->next)
-// 	{
-// 		printf("%s\n", start->string);
-// 		start = start->next;
-// 	}
-// 	printf("%s\n", start->string);
-// }
 
 bool	setup_lexer(t_data *data)
 {

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/03 15:56:43 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/03 17:19:03 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	trim_quotes(t_token *node)
 	node->string = new;
 	return (0);
 }
+
 /**
  * @brief Merges the string of the given token node with its next node.
  *
@@ -55,7 +56,8 @@ int	trim_quotes(t_token *node)
  * the next node before merging.
  *
  * @param node Pointer to the current t_token node. Must have a valid next node.
- * @return int Returns 0 on success, 1 on failure (e.g., memory allocation error).
+ * @return int Returns 0 on success, 
+ * 1 on failure (e.g., memory allocation error).
  */
 int	merge_nodes(t_token *node)
 {
@@ -81,9 +83,10 @@ int	merge_nodes(t_token *node)
  * for concatenation. Updates the concat flag and removes merged nodes.
  *
  * @param list Pointer to the head of the t_token linked list.
- * @return int Returns 0 on success, 1 on failure (e.g., memory allocation error).
+ * @return int Returns 0 on success, 
+ * 1 on failure (e.g., memory allocation error).
  */
-int	concatonate_strings(t_token	*list)
+bool	concatonate_strings(t_token	*list)
 {
 	t_token	*copy;
 
@@ -92,31 +95,15 @@ int	concatonate_strings(t_token	*list)
 	{
 		if (copy && is_quotes(copy->string[0]) == true)
 		{
-			if (trim_quotes(copy))
-				return (1);
 			while (copy->concat == true)
 			{
+				if (trim_quotes(copy))
+					return (false);
 				copy->concat = false;
 				if (merge_nodes(copy))
-					return (1);
+					return (false);
 			}
 		}
-		copy = copy->next;
-	}
-	return (0);
-}
-
-bool	concatonate_redirect(t_data *data)
-{
-	t_token		*copy;
-
-	copy = data->lexer;
-	if (concatonate_strings(copy))
-		return (false);
-	while (copy->next)
-	{
-		if (copy->type > 3)
-			set_redirect(copy);
 		copy = copy->next;
 	}
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/01 11:48:40 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/09/29 23:16:30 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/03 17:31:32 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,5 @@ bool	assign_type(t_data *data)
 		copy = copy->next;
 	}
 	copy = data->lexer;
-	print_tokenlist(copy);
 	return (true);
 }

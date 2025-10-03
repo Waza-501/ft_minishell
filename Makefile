@@ -13,11 +13,16 @@ SOURCES		:=	copy_env.c\
 				lexer/lexer_list_clear.c\
 				lexer/lexer_list.c\
 				lexer/lexer.c\
+				parser/command_list.c\
 				parser/concatonate_strings.c\
 				parser/expand_args.c\
 				parser/expand_utils.c\
-				main.c\
+				parser/handle_append.c\
+				parser/handle_heredoc.c\
+				parser/handle_input.c\
+				parser/handle_output.c\
 				parser/parsing.c\
+				main.c\
 				signals.c\
 				lexer/tokeniser.c\
 				utils.c\

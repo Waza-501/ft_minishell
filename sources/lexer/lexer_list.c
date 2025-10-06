@@ -6,17 +6,17 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/31 09:49:10 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/09/29 23:26:45 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/06 13:15:48 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*new_lex_node(char *str)
+t_lexer	*new_lex_node(char *str)
 {
-	t_token		*new;
+	t_lexer		*new;
 
-	new = (t_token *)malloc(sizeof(t_token));
+	new = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new)
 		return (NULL);
 	new->id = 0;
@@ -28,9 +28,9 @@ t_token	*new_lex_node(char *str)
 	return (new);
 }
 
-t_token	*lex_last(t_token *list)
+t_lexer	*lex_last(t_lexer *list)
 {
-	t_token		*copy;
+	t_lexer		*copy;
 
 	copy = list;
 	while (copy->next)
@@ -38,9 +38,9 @@ t_token	*lex_last(t_token *list)
 	return (copy);
 }
 
-void	lex_add_back(t_token **list, t_token *new)
+void	lex_add_back(t_lexer **list, t_lexer *new)
 {
-	t_token	*end;
+	t_lexer	*end;
 
 	if (!*list)
 	{
@@ -53,10 +53,9 @@ void	lex_add_back(t_token **list, t_token *new)
 	new->id = end->id + 1;
 }
 
-int	add_lex_node(char *str, t_token **lexer)
+int	add_lex_node(char *str, t_lexer **lexer)
 {
 	int		dup_len;
-	//t_token	*last;
 
 	dup_len = 0;
 	if (str[0] == S_Q)
@@ -84,7 +83,6 @@ int	add_lex_node(char *str, t_token **lexer)
 		// printf("dup len is %i\n", dup_len);
 	}
 	dup_len = ft_strlen(lex_last(*lexer)->string);
-	//printf("dup len is %i\n", dup_len);
 	if (str[dup_len])
 		if (str[dup_len] != ' ')
 			lex_last(*lexer)->concat = true;

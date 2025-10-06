@@ -6,13 +6,13 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/12 10:45:22 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/09/19 12:11:55 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/06 13:16:16 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lex_del_node(t_token *node)
+void	lex_del_node(t_lexer *node)
 {
 	if (node->next != NULL)
 		node->next->prev = node->prev;
@@ -25,8 +25,8 @@ void	lex_del_node(t_token *node)
 
 void	lex_del_first(t_data *data)
 {
-	t_token	*new_head;
-	t_token	*old_head;
+	t_lexer	*new_head;
+	t_lexer	*old_head;
 
 	new_head = data->lexer->next;
 	new_head->prev = NULL;
@@ -39,7 +39,7 @@ void	lex_del_first(t_data *data)
 
 void	clear_lexer(t_data *data)
 {
-	t_token	*start;
+	t_lexer	*start;
 
 	start = data->lexer;
 	while (data->lexer != NULL)

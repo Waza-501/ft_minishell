@@ -6,11 +6,20 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/29 14:10:30 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/25 15:54:32 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/06 10:59:28 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_free(char *s)
+{
+	if (s)
+	{
+		free(s);
+		s = NULL;
+	}
+}
 
 int	find_other_half(char *str, char delim, bool *delim_toggle)
 {

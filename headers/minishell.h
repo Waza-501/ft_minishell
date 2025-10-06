@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/03 17:16:52 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/06 16:42:52 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ typedef enum e_token_type
 	APPEND,
 }	t_token_type;
 
-typedef struct s_token
+typedef struct s_lexer
 {
 	int				id;
 	t_token_type	type;
 	char			*string;
 	bool			concat;
-	struct s_token	*next;
-	struct s_token	*prev;
-}			t_token;
+	struct s_lexer	*next;
+	struct s_lexer	*prev;
+}			t_lexer;
 
 typedef struct s_commands
 {
@@ -67,28 +67,36 @@ typedef struct s_data
 	char			*input;
 	t_cdllist		*envp_copy;
 	int				exit_code;
-	bool			debug;
 	bool			error;
-	t_token			*lexer;
+	t_lexer			*lexer;
 	struct s_data	*next;
 	struct s_data	*prev;
 }			t_data;
 
 /*TEMPORARY*/
-void		print_tokenlist(t_token *list);
+void		print_tokenlist(t_lexer *list);
 
 /*copy_env*/
 t_cdllist	*copy_envp(char **envp);
 
-/*command_list.c*/
+/*commands_list.c*/
+t_commands	*init_commands(void);
+t_commands	*command_list_last(t_commands *list);
+int			add_command_node(t_commands	**list);
+
+/*commands_list_utils.c*/
+
+/*setup_commands.c*/
 int			build_command_list(t_data *data);
 
 /*concatonate_strings*/
 bool		is_quotes(char c);
-char		*identify_quotes(char c);
-int			trim_quotes(t_token *node);
+bool		concatonate_strings(t_lexer *list);
+
+/*concatonate_utils.c*/
 bool		is_quotes(char c);
-bool		concatonate_strings(t_token *list);
+char		*identify_quotes(char c);
+int			trim_quotes(t_lexer *node);
 
 /*expand_args.c/expand_utils.c*/
 bool		expand_args(t_data *data);
@@ -97,15 +105,15 @@ int			find_dollar_sign(char *str);
 int			find_var_size(char *str);
 
 /*lexer_list_clear.c*/
-void		lex_del_node(t_token *node);
+void		lex_del_node(t_lexer *node);
 void		lex_del_first(t_data *data);
 void		clear_lexer(t_data *data);
 
 /*lexer_list.c*/
-t_token		*new_lex_node(char *str);
-t_token		*lex_last(t_token *list);
-void		lex_add_back(t_token **list, t_token *new);
-int			add_lex_node(char *str, t_token **lexer);
+t_lexer		*new_lex_node(char *str);
+t_lexer		*lex_last(t_lexer *list);
+void		lex_add_back(t_lexer **list, t_lexer *new);
+int			add_lex_node(char *str, t_lexer **lexer);
 
 /*lexer.c*/
 size_t		ft_strlen_delim(char *str, char delim);
@@ -113,23 +121,27 @@ char		*strcpy_delim(char *str, char delim1, char delim2, char delim3);
 bool		setup_lexer(t_data *data);
 
 /*handle_append.c*/
-bool		handle_append(t_token *lexer, t_data *data);
+bool		handle_append(t_lexer *lexer, t_data *data);
 
 /*handle_heredoc.c*/
-bool		handle_heredoc(t_token *lexer, t_data *data);
+bool		handle_heredoc(t_lexer *lexer, t_data *data);
 
 /*handle_input.c*/
-bool		handle_input(t_token *lexer, t_data *data);
+bool		handle_input(t_lexer *lexer, t_data *data);
 
 /*handle_output.c*/
-bool		handle_output(t_token *lexer, t_data *data);
+bool		handle_output(t_lexer *lexer, t_data *data);
 
 /*parsing.c*/
 int			is_whitespace(char c);
 bool		parse_input(t_data *data, char *str);
 
 /*set_redirect*/
-bool		set_redirect(t_token *lexer, t_data *data);
+bool		set_redirect(t_commands *list, t_lexer *lexer);
+
+/*exit_error.c*/
+void		todo_exit(t_data *data);
+void		free_structs(t_data *data);
 
 /*signals.c*/
 void		set_signals_interactive(void);
@@ -139,6 +151,7 @@ void		set_signals_noninteractive(void);
 bool		assign_type(t_data *data);
 
 /*utils.c*/
+void		ft_free(char *s);
 bool		find_matching_quotes(char *str, bool s_q, bool d_q);
 
 #endif

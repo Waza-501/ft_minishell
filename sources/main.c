@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/03 17:27:16 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/06 09:49:12 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ t_data	*init_data(void)
 	return (new);
 }
 
+// if (data->input[0] == 'f')
+// 	rl_clear_history();
 int	mini_loop(t_data *data)
 {
 	while (1)
@@ -44,11 +46,9 @@ int	mini_loop(t_data *data)
 		{
 			exit(1);
 		}
-		if (ft_strlen(data->input) >= 4 &&
-			(ft_strncmp(data->input, "exit", 4) == 0))
+		if (ft_strlen(data->input) >= 4
+			&& (ft_strncmp(data->input, "exit", 4) == 0))
 			break ;
-		// if (data->input[0] == 'f')
-		// 	rl_clear_history();
 		if (parse_input(data, data->input) == false)
 		{
 			if (data->error == true)

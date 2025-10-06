@@ -6,12 +6,13 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 10:37:41 by haianhle      #+#    #+#                 */
-/*   Updated: 2025/09/08 11:49:02 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/06 10:51:03 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*Created by haile <haile@student.codam.nl>*/
 char	**ft_arrdup(char **array)
 {
 	char	**new_array;

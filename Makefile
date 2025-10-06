@@ -9,12 +9,15 @@ LIBFT			:= ./libraries/libft
 CDLL			:= ./libraries/cd_ll
 
 SOURCES_DIR	:=	sources/
-SOURCES		:=	copy_env.c\
+SOURCES		:=	utils/copy_env.c\
 				lexer/lexer_list_clear.c\
 				lexer/lexer_list.c\
 				lexer/lexer.c\
-				parser/command_list.c\
+				commands/commands_list.c\
+				commands/commands_list_utils.c\
+				commands/setup_commands.c\
 				parser/concatonate_strings.c\
+				parser/concatonate_utils.c\
 				parser/expand_args.c\
 				parser/expand_utils.c\
 				parser/handle_append.c\
@@ -22,10 +25,11 @@ SOURCES		:=	copy_env.c\
 				parser/handle_input.c\
 				parser/handle_output.c\
 				parser/parsing.c\
+				utils/exit_error.c\
 				main.c\
-				signals.c\
+				utils/signals.c\
 				lexer/tokeniser.c\
-				utils.c\
+				utils/utils.c\
 # 				builtins/ft_cd.c\
 # 				builtins/ft_echo.c\
 # 				builtins/ft_pwd.c\

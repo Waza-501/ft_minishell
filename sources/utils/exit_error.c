@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   command_list.c                                     :+:    :+:            */
+/*   exit_error.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/03 17:16:10 by owhearn       ########   odam.nl         */
+/*   Created: 2025/08/29 12:24:27 by owhearn       #+#    #+#                 */
+/*   Updated: 2025/10/06 10:49:36 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*build new command list with only data that is needed, seperate nodes by pipes
-* when redirect is found, merge node if needed, else, set up redirection.*/
-int	build_command_list(t_data *data)
+/*to do: make a malloc_error function*/
+
+void	todo_exit(t_data *data)
 {
-	(void)data;
-	return (0);
+	free_structs(data);
+	exit(1);
+}
+
+void	free_structs(t_data *data)
+{
+	cdll_del_list(data->envp_copy);
+	clear_lexer(data);
+	free(data->input);
+	free(data);
 }

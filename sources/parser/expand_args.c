@@ -6,13 +6,13 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/03 17:30:17 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/06 11:29:00 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_arg_var(t_token *node, int idx)
+char	*get_arg_var(t_lexer *node, int idx)
 {
 	int				size;
 	char			*var_copy;
@@ -46,7 +46,7 @@ int	find_var_in_string(char *str, char *var)
 	return (idx);
 }
 
-bool	reform_string(t_token *node, char *start, char *end, char *middle)
+bool	reform_string(t_lexer *node, char *start, char *end, char *middle)
 {
 	char	*temp;
 
@@ -71,11 +71,11 @@ bool	reform_string(t_token *node, char *start, char *end, char *middle)
  * from the environment list.
  *
  * @param list Pointer to the environment variable list.
- * @param node Pointer to the t_token node whose string will be modified.
+ * @param node Pointer to the t_lexer node whose string will be modified.
  * @param arg_var The variable name to replace.
  * @return int Returns 0 on success, 1 on memory allocation failure or error.
  */
-int	replace_var(t_cdllist *list, t_token *node, char *arg_var)
+int	replace_var(t_cdllist *list, t_lexer *node, char *arg_var)
 {
 	t_cd_ll_node	*var;
 	int				idx;
@@ -95,7 +95,7 @@ int	replace_var(t_cdllist *list, t_token *node, char *arg_var)
 	return (0);
 }
 
-int	empty_space_dollar(char *start, int idx, int size, t_token *node)
+int	empty_space_dollar(char *start, int idx, int size, t_lexer *node)
 {
 	char	*end;
 
@@ -116,11 +116,11 @@ int	empty_space_dollar(char *start, int idx, int size, t_token *node)
  * handle its replacement, including special cases like "$?" or numeric
  * variables. May update the node if needed.
  *
- * @param node Pointer to the t_token node containing the string.
+ * @param node Pointer to the t_lexer node containing the string.
  * @param arg_var The variable name to search for and process.
  * @return int Returns 0 on success, 1 on memory allocation failure or error.
  */
-int	find_replace_type(t_token *node, char *arg_var)
+int	find_replace_type(t_lexer *node, char *arg_var)
 {
 	int				idx;
 	int				size;
@@ -155,10 +155,10 @@ int	find_replace_type(t_token *node, char *arg_var)
  * and returns false on error.
  *
  * @param data Pointer to the t_data structure containing environment variables.
- * @param node Pointer to the t_token node whose string will be expanded.
+ * @param node Pointer to the t_lexer node whose string will be expanded.
  * @return bool Returns true on success, false on failure.
  */
-bool	scan_expand(t_data *data, t_token *node)
+bool	scan_expand(t_data *data, t_lexer *node)
 {
 	size_t	idx;
 	char	*arg_var;
@@ -189,7 +189,7 @@ bool	scan_expand(t_data *data, t_token *node)
 
 bool	expand_args(t_data *data)
 {
-	t_token	*copy;
+	t_lexer	*copy;
 
 	copy = data->lexer;
 	while (copy)

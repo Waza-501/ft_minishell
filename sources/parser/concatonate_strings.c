@@ -6,46 +6,11 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/03 17:19:03 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/06 11:29:00 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	is_quotes(char c)
-{
-	if (c && (c == '\'' || c == '\"'))
-		return (true);
-	return (false);
-}
-
-char	*identify_quotes(char c)
-{
-	if (c == '\'')
-		return ("\'");
-	return ("\"");
-}
-
-/**
- * @brief Removes surrounding quotes from the node's string if present.
- *
- * @param node Pointer to the t_token node.
- * @return int 0 on success, 1 on memory allocation failure.
- */
-int	trim_quotes(t_token *node)
-{
-	char	*new;
-
-	new = NULL;
-	if (!node->string || is_quotes(node->string[0]) == false)
-		return (0);
-	new = ft_strtrim(node->string, identify_quotes(node->string[0]));
-	if (!new)
-		return (1);
-	free (node->string);
-	node->string = new;
-	return (0);
-}
 
 /**
  * @brief Merges the string of the given token node with its next node.
@@ -55,54 +20,85 @@ int	trim_quotes(t_token *node)
  * and removes the next node from the linked list. It also trims quotes from
  * the next node before merging.
  *
- * @param node Pointer to the current t_token node. Must have a valid next node.
+ * @param node Pointer to the current t_lexer node. Must have a valid next node.
  * @return int Returns 0 on success, 
  * 1 on failure (e.g., memory allocation error).
  */
-int	merge_nodes(t_token *node)
+int	merge_nodes(t_lexer *node)
 {
 	char	*new;
 
-	if (trim_quotes(node->next))
-		return (1);
 	new = ft_strjoin(node->string, node->next->string);
 	if (!new)
 		return (1);
-	free(node->string);
+	ft_free(node->string);
 	node->string = new;
 	node->concat = node->next->concat;
 	lex_del_node(node->next);
 	return (0);
 }
 
+int	configure_redirect(t_lexer *node)
+{
+	int		idx;
+	char	*tmp;
+
+	if (node->type == INPUT || node->type == OUTPUT)
+		idx = 1;
+	else
+		idx = 2;
+	if ((int)ft_strlen(node->string) == idx)
+	{
+		ft_bzero(node->string, idx);
+		if (node->next->type == PIPE)
+			return (0);
+		if (merge_nodes(node))
+			return (1);
+	}
+	else
+	{
+		tmp = ft_strdup(&node->string[idx]);
+		ft_free(node->string);
+		node->string = tmp;
+		if (!node->string)
+			return (1);
+	}
+	return (0);
+}
+
 /**
  * @brief Concatenates strings of token nodes in a linked list where needed.
  *
- * Iterates through the linked list of t_token nodes. For each node whose string
+ * Iterates through the linked list of t_lexer nodes. For each node whose string
  * starts with a quote, trims the quotes and merges with subsequent nodes marked
  * for concatenation. Updates the concat flag and removes merged nodes.
  *
- * @param list Pointer to the head of the t_token linked list.
+ * @param list Pointer to the head of the t_lexer linked list.
  * @return int Returns 0 on success, 
  * 1 on failure (e.g., memory allocation error).
  */
-bool	concatonate_strings(t_token	*list)
+bool	concatonate_strings(t_lexer	*list)
 {
-	t_token	*copy;
+	t_lexer	*copy;
 
 	copy = list;
 	while (copy)
 	{
-		if (copy && is_quotes(copy->string[0]) == true)
+		if (copy && copy->concat == true)
 		{
 			while (copy->concat == true)
 			{
-				if (trim_quotes(copy))
+				if (trim_quotes(copy) || trim_quotes(copy->next))
 					return (false);
 				copy->concat = false;
 				if (merge_nodes(copy))
 					return (false);
 			}
+		}
+		else if (copy && copy->type > 3)
+		{
+			if (configure_redirect(copy))
+				return (false);
 		}
 		copy = copy->next;
 	}

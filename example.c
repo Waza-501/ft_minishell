@@ -39,7 +39,7 @@ echo "hello this is an argument"' concat me! $PLS' arg2 arg3 > output_file.txt $
 ]
 
 // I highly recommend a function that would look something like this to get the tokens:
-t_token get_next_token(char** str)
+t_lexer get_next_token(char** str)
 {
 	... // I went a bit overboard here.. if you eventually need help I can give you an implementation example
 }

@@ -6,12 +6,13 @@
 /*   By: haianhle <haianhle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 10:37:58 by haianhle      #+#    #+#                 */
-/*   Updated: 2025/09/05 10:38:05 by haianhle      ########   odam.nl         */
+/*   Updated: 2025/10/06 10:51:24 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*Created by haile <haile@student.codam.nl>*/
 char	*ft_strjoin_free(char *s1, char *s2)
 {
 	size_t	len;

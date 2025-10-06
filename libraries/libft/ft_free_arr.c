@@ -6,12 +6,13 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 10:38:14 by haianhle      #+#    #+#                 */
-/*   Updated: 2025/09/05 10:40:52 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/06 10:51:10 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*Created by haile <haile@student.codam.nl>*/
 void	ft_free_arr(char **arr)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/07 14:20:24 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 15:56:08 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef struct s_data
 	char			*input;
 	t_cdllist		*envp_copy;
 	int				exit_code;
-	bool			error;
 	t_lexer			*lexer;
 	t_commands		*commands;
 	struct s_data	*next;

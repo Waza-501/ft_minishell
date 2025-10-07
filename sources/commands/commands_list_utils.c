@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:41:20 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/07 15:49:52 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 15:58:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,7 @@ void	print_command_list(t_commands *list)
 					printf(", ");
 			}
 		}
-		else
-			printf("no args? :(");
-		printf("]");
-		printf(" infile [%s]", copy->infile_s);
-		printf(" outfile [%s]\n", copy->outfile_s);
+		printf("] infile [%s] outfile [%s]\n", copy->infile_s, copy->outfile_s);
 		copy = copy->next;
 		i++;
 	}

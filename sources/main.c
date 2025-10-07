@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/07 15:50:59 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 15:56:40 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_data	*init_data(void)
 	new->input = NULL;
 	new->envp_copy = NULL;
 	new->exit_code = 0;
-	new->error = false;
 	new->lexer = NULL;
 	new->commands = NULL;
 	return (new);
@@ -51,7 +50,6 @@ int	mini_loop(t_data *data)
 			break ;
 		if (parse_input(data, data->input) == false)
 		{
-			//if (data->error == true)
 			clear_commands(data->commands);
 			clear_lexer(data);
 			perror("minishell$");
@@ -68,7 +66,7 @@ int	mini_loop(t_data *data)
 // void	print_envp(char **envp, t_cdllist *list)
 // {
 // 	int	i;
-
+//
 // 	i = 0;
 // 	while (envp[i])
 // 	{

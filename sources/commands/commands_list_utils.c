@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:41:20 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/07 11:19:34 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 14:15:37 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,21 @@ void	print_command_list(t_commands *list)
 	{
 		idx = 0;
 		printf("node %i: [", i);
-		while (copy->args[idx])
+		if (copy->args)
 		{
-			printf("%s", copy->args[idx]);
-			idx++;
-			if (copy->args[idx])
-				printf(", ");
+			while (copy->args[idx])
+			{
+				printf("%s", copy->args[idx]);
+				idx++;
+				if (copy->args[idx])
+					printf(", ");
+			}
 		}
-		printf("]\n");
+		else
+			printf("no args? :(");
+		printf("]");
+		printf(" infile [%s]", copy->infile_s);
+		printf(" outfile [%s]\n", copy->outfile_s);
 		copy = copy->next;
 		i++;
 	}
@@ -47,9 +54,17 @@ void	clear_commands(t_commands *list)
 		start = list->next;
 		ft_free_arr(list->args);
 		if (list->infile > 2)
-			close(list->infile);
+		{
+			ft_free(list->infile_s);
+			if (close(list->infile))
+				printf("write fail free error report thing\n");
+		}
 		if (list->outfile > 2)
-			close(list->outfile);
+		{
+			ft_free(list->outfile_s);
+			if (close(list->outfile))
+				printf("write fail free error report thing\n");
+		}
 		free(list);
 		list = start;
 	}

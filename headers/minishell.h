@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/07 11:01:45 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 14:20:24 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+# include <fcntl.h>
 
 # define DELIMS 	" \t\r\n\v\f"
 # define SPACE		' '
@@ -56,6 +57,8 @@ typedef struct s_lexer
 typedef struct s_commands
 {
 	char				**args;
+	char				*infile_s;
+	char				*outfile_s;
 	int					infile;
 	int					outfile;
 	struct s_commands	*next;
@@ -130,6 +133,7 @@ bool		handle_append(t_commands *list, t_lexer *node);
 bool		handle_heredoc(t_commands *list, t_lexer *node);
 
 /*handle_input.c*/
+int			close_existing_fd(t_commands *list);
 bool		handle_input(t_commands *list, t_lexer *node);
 
 /*handle_output.c*/

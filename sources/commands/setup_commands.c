@@ -6,12 +6,13 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/07 10:59:32 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 14:03:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*add possible free + false return function*/
 bool	set_redirect(t_commands	*list, t_lexer *node)
 {
 	if (node->type == INPUT)
@@ -80,6 +81,13 @@ int	add_arg_cmd(t_commands *list, t_lexer *node)
 	return (0);
 }
 
+int	check_commands(t_commands *list)
+{
+	(void)list;
+	printf("to do: check commands\n");
+	return (0);
+}
+
 /**
  * @brief Builds a linked list of command structures from the lexer tokens.
  *
@@ -117,5 +125,7 @@ int	build_command_list(t_data *data)
 		copy = copy->next;
 	}
 	data->commands = list;
+	if (check_commands(data->commands))
+		return (1);
 	return (0);
 }

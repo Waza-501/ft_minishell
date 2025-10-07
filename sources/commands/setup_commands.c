@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/06 16:51:27 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 10:59:32 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,46 @@ bool	set_redirect(t_commands	*list, t_lexer *node)
 	return (true);
 }
 
+int	add_arg_to_list(t_commands *list, t_lexer *node)
+{
+	char	**new_arr;
+	int		idx;
+
+	new_arr = NULL;
+	idx = 0;
+	while (list->args && list->args[idx])
+		idx++;
+	new_arr = malloc(sizeof(char *) * (idx + 2));
+	if (!new_arr)
+		return (1);
+	idx = 0;
+	while (list->args && list->args[idx])
+	{
+		new_arr[idx] = list->args[idx];
+		idx++;
+	}
+	new_arr[idx] = ft_strdup(node->string);
+	new_arr[idx + 1] = NULL;
+	if (!new_arr[idx])
+		return (free(new_arr), 1);
+	free(list->args);
+	list->args = new_arr;
+	return (0);
+}
 
 /*fix this either later, or tomorrow*/
 int	add_arg_cmd(t_commands *list, t_lexer *node)
 {
 	if (node->type > 3)
-		set_redirect(list, node);
+	{
+		if (set_redirect(list, node) == false)
+			return (1);
+	}
 	else
-
+	{
+		if (add_arg_to_list(list, node))
+			return (1);
+	}
 	return (0);
 }
 
@@ -79,10 +111,11 @@ int	build_command_list(t_data *data)
 		}
 		else
 		{
-			if (add_new_cmd(command_list_last(list), copy))
+			if (add_arg_cmd(command_list_last(list), copy))
 				return (1);
 		}
 		copy = copy->next;
 	}
+	data->commands = list;
 	return (0);
 }

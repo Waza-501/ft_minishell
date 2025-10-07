@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/06 09:49:12 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 11:00:06 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ t_data	*init_data(void)
 	new->input = NULL;
 	new->envp_copy = NULL;
 	new->exit_code = 0;
-	new->debug = true;
 	new->error = false;
 	new->lexer = NULL;
+	new->commands = NULL;
 	return (new);
 }
 

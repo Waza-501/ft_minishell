@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/06 16:42:52 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 11:01:45 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,14 @@ typedef struct s_data
 	int				exit_code;
 	bool			error;
 	t_lexer			*lexer;
+	t_commands		*commands;
 	struct s_data	*next;
 	struct s_data	*prev;
 }			t_data;
 
 /*TEMPORARY*/
 void		print_tokenlist(t_lexer *list);
+void		print_command_list(t_commands *list);
 
 /*copy_env*/
 t_cdllist	*copy_envp(char **envp);
@@ -85,6 +87,7 @@ t_commands	*command_list_last(t_commands *list);
 int			add_command_node(t_commands	**list);
 
 /*commands_list_utils.c*/
+void		clear_commands(t_commands *list);
 
 /*setup_commands.c*/
 int			build_command_list(t_data *data);
@@ -121,16 +124,16 @@ char		*strcpy_delim(char *str, char delim1, char delim2, char delim3);
 bool		setup_lexer(t_data *data);
 
 /*handle_append.c*/
-bool		handle_append(t_lexer *lexer, t_data *data);
+bool		handle_append(t_commands *list, t_lexer *node);
 
 /*handle_heredoc.c*/
-bool		handle_heredoc(t_lexer *lexer, t_data *data);
+bool		handle_heredoc(t_commands *list, t_lexer *node);
 
 /*handle_input.c*/
-bool		handle_input(t_lexer *lexer, t_data *data);
+bool		handle_input(t_commands *list, t_lexer *node);
 
 /*handle_output.c*/
-bool		handle_output(t_lexer *lexer, t_data *data);
+bool		handle_output(t_commands *list, t_lexer *node);
 
 /*parsing.c*/
 int			is_whitespace(char c);
@@ -141,7 +144,7 @@ bool		set_redirect(t_commands *list, t_lexer *lexer);
 
 /*exit_error.c*/
 void		todo_exit(t_data *data);
-void		free_structs(t_data *data);
+void		free_structs(t_data *data, t_commands *list);
 
 /*signals.c*/
 void		set_signals_interactive(void);

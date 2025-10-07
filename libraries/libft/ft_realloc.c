@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 12:47:11 by owen          #+#    #+#                 */
-/*   Updated: 2025/03/27 00:37:57 by owen          ########   odam.nl         */
+/*   Updated: 2025/10/07 09:48:01 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	*ft_realloc(void *src, size_t type, size_t size)
 	copy = ft_calloc(type, size);
 	if (!copy)
 		return (NULL);
-	printf("realloc\n");
 	ft_memcpy(copy, src, type * size);
 	free(src);
 	return (copy);

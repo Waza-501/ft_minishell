@@ -6,22 +6,22 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/07 14:20:07 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 15:03:51 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	close_existing_fd(t_commands *list)
-// {
-// 	if (list->infile == -1 || !list->infile_s)
-// 		return (0);
-// 	ft_free(list->infile_s);
-// 	if (close(list->infile))
-// 		return (1);
-// 	list->infile = -1;
-// 	return (0);
-// }
+int	close_existing_fd(t_commands *list)
+{
+	if (list->infile == -1 || !list->infile_s)
+		return (0);
+	ft_free(list->infile_s);
+	if (close(list->infile))
+		return (1);
+	list->infile = -1;
+	return (0);
+}
 
 bool	handle_input(t_commands *list, t_lexer *node)
 {

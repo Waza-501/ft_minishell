@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/07 11:53:24 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 15:40:37 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ bool	parse_input(t_data *data, char *str)
 		todo_exit(data);
 	copy = data->lexer;
 	print_tokenlist(copy);
-	build_command_list(data);
+	if (build_command_list(data))
+		return (false);
 	clear_lexer(data);
 	print_command_list(data->commands);
 	clear_commands(data->commands);

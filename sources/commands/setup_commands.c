@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/07 14:03:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/07 15:48:40 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,42 +89,37 @@ int	check_commands(t_commands *list)
 }
 
 /**
- * @brief Builds a linked list of command structures from the lexer tokens.
+ * @brief Builds a linked list of command structures from lexer tokens.
  *
- * Iterates through the lexer token list, creating a new command node
- * for each pipe token and adding arguments or redirections to the current
- * command node for other tokens. The resulting linked list represents the
- * sequence of commands to be executed,
- * separated by pipes.
+ * Parses the lexer token list, creating a new command node for each pipe token,
+ * and adding arguments or redirections to the current command node for other
+ * tokens. The resulting linked list represents the sequence of commands to be
+ * executed, separated by pipes.
  *
  * @param data Pointer to the main data structure containing the lexer tokens.
- * @return int Returns 0 on success, 
- * 1 on failure (e.g., memory allocation error).
+ * @return int 0 on success, 1 on failure (e.g., memory allocation error).
  */
 int	build_command_list(t_data *data)
 {
 	t_lexer		*copy;
-	t_commands	*list;
 
 	copy = data->lexer;
-	list = NULL;
-	if (add_command_node(&list))
+	if (add_command_node(&data->commands))
 		return (1);
 	while (copy)
 	{
 		if (copy->type == PIPE)
 		{
-			if (add_command_node(&list))
+			if (add_command_node(&data->commands))
 				return (1);
 		}
 		else
 		{
-			if (add_arg_cmd(command_list_last(list), copy))
+			if (add_arg_cmd(command_list_last(data->commands), copy))
 				return (1);
 		}
 		copy = copy->next;
 	}
-	data->commands = list;
 	if (check_commands(data->commands))
 		return (1);
 	return (0);

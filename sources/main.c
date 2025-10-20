@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/20 09:40:15 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 10:26:17 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	if (argc > 1)
 	{
-		printf("This is not a thing anymore\n");
+		printf("minishell$ This project only runs in interactive mode.\n");
 		exit(1);
 	}
 	else if (argc == 1)

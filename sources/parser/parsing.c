@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/20 09:39:13 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 10:31:32 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,5 @@ bool	parse_input(t_data *data, char *str)
 	clear_lexer(data);
 	print_command_list(data->commands);
 	clear_commands(data);
-	//data->commands = NULL;
-	printf("bingo\n");
 	return (true);
 }

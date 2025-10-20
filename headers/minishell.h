@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/20 09:29:45 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 11:00:09 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,11 @@ bool		handle_append(t_commands *list, t_lexer *node);
 bool		handle_heredoc(t_commands *list, t_lexer *node);
 
 /*handle_input.c*/
-int			close_existing_fd(t_commands *list);
+int			close_existing_fd_in(t_commands *list);
 bool		handle_input(t_commands *list, t_lexer *node);
 
 /*handle_output.c*/
+int			close_existing_fd_out(t_commands *list);
 bool		handle_output(t_commands *list, t_lexer *node);
 
 /*parsing.c*/

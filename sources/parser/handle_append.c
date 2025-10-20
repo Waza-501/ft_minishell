@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:49 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/07 09:34:19 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 11:00:18 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 bool	handle_append(t_commands *list, t_lexer *node)
 {
-	(void)list;
-	(void)node;
-
+	if (close_existing_fd_out(list))
+		return (false);
+	list->outfile_s = ft_strdup(node->string);
+	if (!list->outfile_s)
+		return (false);
+	list->outfile = open(list->outfile_s, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (list->outfile == -1)
+		return (false);
 	return (true);
 }

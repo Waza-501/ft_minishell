@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/07 15:56:40 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 09:40:15 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	mini_loop(t_data *data)
 			break ;
 		if (parse_input(data, data->input) == false)
 		{
-			clear_commands(data->commands);
+			clear_commands(data);
 			clear_lexer(data);
 			perror("minishell$");
 			exit (1);

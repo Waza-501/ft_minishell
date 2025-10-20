@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/14 12:13:49 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 09:39:13 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	parse_input(t_data *data, char *str)
 	t_lexer		*copy;
 
 	if (is_space(str))
-		return (false);
+		return (true);
 	add_history(data->input);
 	if (find_matching_quotes(str, false, false) == false)
 		return (false);
@@ -58,7 +58,8 @@ bool	parse_input(t_data *data, char *str)
 		return (false);
 	clear_lexer(data);
 	print_command_list(data->commands);
-	clear_commands(data->commands);
-	data->commands = NULL;
+	clear_commands(data);
+	//data->commands = NULL;
+	printf("bingo\n");
 	return (true);
 }

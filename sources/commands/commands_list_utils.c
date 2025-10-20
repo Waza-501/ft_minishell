@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:41:20 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/14 12:13:16 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 09:28:00 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,28 @@ void	print_command_list(t_commands *list)
 	}
 }
 
-void	clear_commands(t_commands *list)
+void	clear_commands(t_data *data)
 {
 	t_commands	*start;
 
-	start = list;
-	while (list != NULL)
+	start = data->commands;
+	while (data->commands != NULL)
 	{
-		start = list->next;
-		ft_free_arr(list->args);
-		ft_free(list->infile_s);
-		if (list->infile > 2)
+		start = data->commands->next;
+		ft_free_arr(data->commands->args);
+		ft_free(data->commands->infile_s);
+		if (data->commands->infile > 2)
 		{
-			if (close(list->infile))
+			if (close(data->commands->infile))
 				printf("write fail free error report thing\n");
 		}
-		ft_free(list->outfile_s);
-		if (list->outfile > 2)
+		ft_free(data->commands->outfile_s);
+		if (data->commands->outfile > 2)
 		{
-			if (close(list->outfile))
+			if (close(data->commands->outfile))
 				printf("write fail free error report thing\n");
 		}
-		free(list);
-		list = start;
+		free(data->commands);
+		data->commands = start;
 	}
 }

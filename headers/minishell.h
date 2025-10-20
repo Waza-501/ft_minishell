@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/07 15:56:08 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 09:29:45 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_commands	*command_list_last(t_commands *list);
 int			add_command_node(t_commands	**list);
 
 /*commands_list_utils.c*/
-void		clear_commands(t_commands *list);
+void		clear_commands(t_data *data);
 
 /*setup_commands.c*/
 int			build_command_list(t_data *data);
@@ -147,7 +147,7 @@ bool		set_redirect(t_commands *list, t_lexer *lexer);
 
 /*exit_error.c*/
 void		todo_exit(t_data *data);
-void		free_structs(t_data *data, t_commands *list);
+void		free_structs(t_data *data);
 
 /*signals.c*/
 void		set_signals_interactive(void);

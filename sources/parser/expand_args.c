@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/06 11:29:00 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/22 11:46:30 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ bool	reform_string(t_lexer *node, char *start, char *end, char *middle)
 	temp = ft_strjoin(start, middle);
 	if (!temp)
 		return (false);
-	free(node->string);
+	ft_free(&node->string);
 	node->string = ft_strjoin(temp, end);
+	ft_free(&temp);
 	if (!node->string)
-		return (free(temp), false);
-	free(temp);
+		return (false);
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/20 16:46:51 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/22 16:46:47 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	mini_loop(t_data *data)
 		}
 		/*execution would go here*/
 		free(data->input);
+		clear_commands(data);
 	}
 	free(data->input);
 	cdll_del_list(data->envp_copy);

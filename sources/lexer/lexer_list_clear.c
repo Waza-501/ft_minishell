@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/12 10:45:22 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/06 13:16:16 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/22 14:15:19 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ void	lex_del_node(t_lexer *node)
 		node->next->prev = node->prev;
 	node->prev->next = node->next;
 	if (node->string)
-		free(node->string);
-	free (node);
-	node = NULL;
+		ft_free(&node->string);
+	ft_free (&node);
 }
 
 void	lex_del_first(t_data *data)
@@ -32,8 +31,8 @@ void	lex_del_first(t_data *data)
 	new_head->prev = NULL;
 	old_head = data->lexer;
 	if (old_head->string)
-		free(old_head->string);
-	free(old_head);
+		ft_free(&old_head->string);
+	ft_free(&old_head);
 	data->lexer = new_head;
 }
 
@@ -45,8 +44,8 @@ void	clear_lexer(t_data *data)
 	while (data->lexer != NULL)
 	{
 		start = data->lexer->next;
-		free(data->lexer->string);
-		free(data->lexer);
+		ft_free(&data->lexer->string);
+		ft_free(&data->lexer);
 		data->lexer = start;
 	}
 }

@@ -6,18 +6,23 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/29 14:10:30 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/20 15:03:34 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/22 11:33:59 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free(char *s)
+void	ft_free(void *ptr)
 {
-	if (s)
+	void	**target;
+
+	if (!ptr)
+		return ;
+	target = (void **)ptr;
+	if (*target)
 	{
-		free(s);
-		s = NULL;
+		free(*target);
+		*target = NULL;
 	}
 }
 

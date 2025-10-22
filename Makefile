@@ -16,7 +16,6 @@ SOURCES		:=	lexer/lexer_list_clear.c\
 				commands/commands_list_utils.c\
 				commands/setup_commands.c\
 				parser/concatonate_strings.c\
-				parser/concatonate_utils.c\
 				parser/expand_args.c\
 				parser/expand_utils.c\
 				parser/handle_append.c\
@@ -24,6 +23,8 @@ SOURCES		:=	lexer/lexer_list_clear.c\
 				parser/handle_input.c\
 				parser/handle_output.c\
 				parser/parsing.c\
+				parser/redirect_utils.c\
+				parser/strip_quotes.c\
 				utils/copy_env.c\
 				utils/error_utils.c\
 				utils/exit_error.c\

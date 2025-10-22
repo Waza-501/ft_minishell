@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   concatonate_utils.c                                :+:    :+:            */
+/*   strip_quotes.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/10/06 10:11:20 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/06 11:29:00 by owhearn       ########   odam.nl         */
+/*   Created: 2025/10/22 13:19:53 by owhearn       #+#    #+#                 */
+/*   Updated: 2025/10/22 16:25:15 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,32 @@ char	*identify_quotes(char c)
 	return ("\"");
 }
 
-/**
- * @brief Removes surrounding quotes from the node's string if present.
- *
- * @param node Pointer to the t_lexer node.
- * @return int 0 on success, 1 on memory allocation failure.
- */
+char	*trim_quotes_str(char *src)
+{
+	char	*new;
+
+	new = NULL;
+	//printf("do I use this\n");
+	if (!src || is_quotes(src[0]) == false)
+		return (0);
+	new = ft_strtrim(src, identify_quotes(src[0]));
+	if (!new)
+		return (NULL);
+	return (new);
+}
+
 int	trim_quotes(t_lexer *node)
 {
 	char	*new;
 
 	new = NULL;
+	printf("do I use this\n");
 	if (!node->string || is_quotes(node->string[0]) == false)
 		return (0);
 	new = ft_strtrim(node->string, identify_quotes(node->string[0]));
 	if (!new)
 		return (1);
-	free (node->string);
+	ft_free (&node->string);
 	node->string = new;
 	return (0);
 }

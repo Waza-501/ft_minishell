@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/20 12:01:57 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/22 16:26:52 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	merge_nodes(t_lexer *node)
 	new = ft_strjoin(node->string, node->next->string);
 	if (!new)
 		return (1); /*implement error logging*/
-	ft_free(node->string);
+	ft_free(&node->string);
 	node->string = new;
 	node->concat = node->next->concat;
 	lex_del_node(node->next);

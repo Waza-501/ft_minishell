@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/20 16:35:18 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/22 16:48:09 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ bool	is_space(const char *str)
 	return (true);
 }
 
+/*damn :( this needs fixing*/
 bool	parse_input(t_data *data, char *str)
 {
 	t_lexer		*copy;
@@ -44,8 +45,9 @@ bool	parse_input(t_data *data, char *str)
 		return (false);
 	if (setup_lexer(data) == false)
 		todo_exit(data);/*implement error logging*/
-	if (assign_type(data) == false)
-		todo_exit(data);/*implement error logging*/
+	// if (assign_type(data) == false)
+	// 	todo_exit(data);/*implement error logging*/
+	assign_type(data);
 	copy = data->lexer;
 	if (expand_args(data) == false)
 		todo_exit(data);/*implement error logging*/
@@ -58,6 +60,5 @@ bool	parse_input(t_data *data, char *str)
 		return (false);/*implement error logging*/
 	clear_lexer(data);
 	print_command_list(data->commands);
-	clear_commands(data);
 	return (true);
 }

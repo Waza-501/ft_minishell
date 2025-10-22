@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:41:20 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/20 09:28:00 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/22 16:30:17 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ void	clear_commands(t_data *data)
 	{
 		start = data->commands->next;
 		ft_free_arr(data->commands->args);
-		ft_free(data->commands->infile_s);
+		ft_free(&data->commands->infile_s);
 		if (data->commands->infile > 2)
 		{
 			if (close(data->commands->infile))
 				printf("write fail free error report thing\n");
 		}
-		ft_free(data->commands->outfile_s);
+		ft_free(&data->commands->outfile_s);
 		if (data->commands->outfile > 2)
 		{
 			if (close(data->commands->outfile))
 				printf("write fail free error report thing\n");
 		}
-		free(data->commands);
+		ft_free(&data->commands);
 		data->commands = start;
 	}
 }

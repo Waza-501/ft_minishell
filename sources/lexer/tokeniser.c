@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/01 11:48:40 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/06 11:29:00 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/22 14:14:58 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int	identify_type(t_lexer *list)
 	{
 		if (list->string[1] && list->string[1] == '<')
 			list->type = HEREDOC;
-		// else if (list->string[1])
-		// 	return (printf("unexpected eof\n"), 1);
 		else
 			list->type = INPUT;
 	}
@@ -31,8 +29,6 @@ int	identify_type(t_lexer *list)
 	{
 		if (list->string[1] && list->string[1] == '>')
 			list->type = APPEND;
-		// else if (list->string[1])
-		// 	return (printf("unexpected eof\n"), 1);
 		else
 			list->type = OUTPUT;
 	}
@@ -75,8 +71,7 @@ bool	assign_type(t_data *data)
 	copy = data->lexer;
 	while (copy)
 	{
-		if (identify_type(copy))
-			exit(1);
+		identify_type(copy);
 		copy = copy->next;
 	}
 	copy = data->lexer;

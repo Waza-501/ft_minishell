@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/31 09:49:10 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/20 16:54:22 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/22 15:09:55 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ t_lexer	*new_lex_node(char *str)
 {
 	t_lexer		*new;
 
+	if (!str)
+		return (NULL);
 	new = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new)
 	{
-		free(str);
+		ft_free(str);
 		return (malloc_error("malloc"));
 	}
 	new->id = 0;

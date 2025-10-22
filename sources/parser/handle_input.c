@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/21 13:29:03 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/22 11:43:24 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	close_heredoc(t_commands *list)
 		return (1);
 	if (unlink(list->infile_s))
 		return (1);/*add print error here*/
-	ft_free(list->infile_s);
+	ft_free(&list->infile_s);
 	list->hd = false;
 	return (0);
 }
@@ -28,14 +28,14 @@ int	close_existing_fd_in(t_commands *list)
 {
 	if (list->infile == -1 || !list->infile_s)
 		return (0);
-	if (list->hd = true)
+	if (list->hd == true)
 	{
 		if (close_heredoc(list))
 			return (1);
 	}
 	else
 	{
-		ft_free(list->infile_s);
+		ft_free(&list->infile_s);
 		if (close(list->infile))
 			return (1);
 	}

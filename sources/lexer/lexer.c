@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 20:28:55 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/20 16:43:19 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/22 11:34:52 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ bool	setup_lexer(t_data *data)
 			idx += add_lex_node(&copy[idx], &(data->lexer));
 		if (idx == -1)
 		{
-			free (copy);
+			ft_free (&copy);
 			return (false);
 		}
 	}
-	free (copy);
+	ft_free (&copy);
 	return (true);
 }

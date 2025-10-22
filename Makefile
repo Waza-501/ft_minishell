@@ -9,8 +9,7 @@ LIBFT			:= ./libraries/libft
 CDLL			:= ./libraries/cd_ll
 
 SOURCES_DIR	:=	sources/
-SOURCES		:=	utils/copy_env.c\
-				lexer/lexer_list_clear.c\
+SOURCES		:=	lexer/lexer_list_clear.c\
 				lexer/lexer_list.c\
 				lexer/lexer.c\
 				commands/commands_list.c\
@@ -25,11 +24,13 @@ SOURCES		:=	utils/copy_env.c\
 				parser/handle_input.c\
 				parser/handle_output.c\
 				parser/parsing.c\
+				utils/copy_env.c\
+				utils/error_utils.c\
 				utils/exit_error.c\
-				main.c\
 				utils/signals.c\
-				lexer/tokeniser.c\
 				utils/utils.c\
+				main.c\
+				lexer/tokeniser.c\
 # 				builtins/ft_cd.c\
 # 				builtins/ft_echo.c\
 # 				builtins/ft_pwd.c\

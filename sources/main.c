@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/20 10:26:17 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 16:46:51 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	mini_loop(t_data *data)
 		set_signals_noninteractive();
 		if (!data->input)
 		{
+			ft_putendl_fd("exit", STDOUT_FILENO);
 			exit(1);
 		}
 		if (ft_strlen(data->input) >= 4
@@ -50,9 +51,7 @@ int	mini_loop(t_data *data)
 			break ;
 		if (parse_input(data, data->input) == false)
 		{
-			clear_commands(data);
-			clear_lexer(data);
-			perror("minishell$");
+			free_structs(data);
 			exit (1);
 		}
 		/*execution would go here*/

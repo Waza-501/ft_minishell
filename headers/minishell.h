@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/20 11:00:09 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/21 12:48:35 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_commands
 	char				*outfile_s;
 	int					infile;
 	int					outfile;
+	bool				hd;
 	struct s_commands	*next;
 	struct s_commands	*prev;
 }			t_commands;

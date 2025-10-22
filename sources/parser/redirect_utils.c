@@ -1,39 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   handle_heredoc.c                                   :+:    :+:            */
+/*   redirect_utils.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/10/03 16:08:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/22 11:19:27 by owhearn       ########   odam.nl         */
+/*   Created: 2025/10/21 13:10:19 by owhearn       #+#    #+#                 */
+/*   Updated: 2025/10/21 13:10:28 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	create_hd_file(t_commands *list)
-{
-	char		*filename;
-	char		*filenumber;
-	static int	i = 0;
-
-	filename = NULL;
-	filenumber = ft_itoa(i++);
-	if (!filenumber)
-		return (1);
-	filename = ft_strjoin("/tmp/heredoc_", filenumber);
-	if (!filename)
-		return (ft_free(filenumber), 1);
-	
-
-}
-
-bool	handle_heredoc(t_commands *list, t_lexer *node)
-{
-	if (close_existing_fd_in(list))
-		return (false);
-	
-
-	return (true);
-}

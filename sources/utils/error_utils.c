@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   handle_heredoc.c                                   :+:    :+:            */
+/*   error_utils.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/10/03 16:08:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/20 11:55:28 by owhearn       ########   odam.nl         */
+/*   Created: 2025/10/20 12:04:31 by owhearn       #+#    #+#                 */
+/*   Updated: 2025/10/20 16:36:54 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	handle_heredoc(t_commands *list, t_lexer *node)
+void	print_error(char *msg)
 {
-	(void)list;
-	(void)node;
+	ft_putstr_fd("minishell$ ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+}
 
-	return (true);
+void	*malloc_error(char *msg)
+{
+	ft_putstr_fd("minishell$ ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putstr_fd(": cannot allocate memory\n", STDERR_FILENO);
+	return (NULL);
 }

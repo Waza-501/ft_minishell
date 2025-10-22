@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/07 15:48:40 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 14:34:12 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	check_commands(t_commands *list)
 {
 	(void)list;
 	printf("to do: check commands\n");
-	return (0);
+	return (1);
 }
 
 /**

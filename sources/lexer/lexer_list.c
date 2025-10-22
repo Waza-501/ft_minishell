@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/31 09:49:10 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/06 13:15:48 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 16:54:22 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ t_lexer	*new_lex_node(char *str)
 
 	new = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new)
-		return (NULL);
+	{
+		free(str);
+		return (malloc_error("malloc"));
+	}
 	new->id = 0;
 	new->type = EMPTY;
 	new->string = str;
@@ -33,24 +36,29 @@ t_lexer	*lex_last(t_lexer *list)
 	t_lexer		*copy;
 
 	copy = list;
-	while (copy->next)
+	while (copy && copy->next)
 		copy = copy->next;
 	return (copy);
 }
 
-void	lex_add_back(t_lexer **list, t_lexer *new)
+int	lex_add_back(t_lexer **list, t_lexer *new)
 {
 	t_lexer	*end;
 
 	if (!*list)
 	{
+		if (!new)
+			return (1);
 		*list = new;
-		return ;
+		return (0);
 	}
+	if (!new)
+		return (1);
 	end = lex_last(*list);
 	end->next = new;
 	new->prev = end;
 	new->id = end->id + 1;
+	return (0);
 }
 
 int	add_lex_node(char *str, t_lexer **lexer)
@@ -60,27 +68,19 @@ int	add_lex_node(char *str, t_lexer **lexer)
 	dup_len = 0;
 	if (str[0] == S_Q)
 	{
-		lex_add_back(lexer, new_lex_node(strcpy_delim(str, S_Q, S_Q, S_Q)));
-		// dup_len = ft_strlen_delim(str, S_Q);
-		// printf("dup len is %i\n", dup_len);
-		// dup_len = ft_strlen(lex_last(*lexer)->string);
-		// printf("dup len is %i\n", dup_len);
+		if (lex_add_back(lexer, new_lex_node(strcpy_delim(str, S_Q, S_Q, S_Q))))
+			return (-1);
 	}
 	else if (str[0] == D_Q)
 	{
-		lex_add_back(lexer, new_lex_node(strcpy_delim(str, D_Q, D_Q, D_Q)));
-		// dup_len = ft_strlen_delim(str, D_Q);
-		// printf("dup len is %i\n", dup_len);
-		// dup_len = ft_strlen(lex_last(*lexer)->string);
-		// printf("dup len is %i\n", dup_len);
+		if (lex_add_back(lexer, new_lex_node(strcpy_delim(str, D_Q, D_Q, D_Q))))
+			return (-1);
 	}
 	else
 	{
-		lex_add_back(lexer, new_lex_node(strcpy_delim(str, SPACE, S_Q, D_Q)));
-		// dup_len = ft_strlen_delim(str, SPACE);
-		// printf("dup len is %i\n", dup_len);
-		// dup_len = ft_strlen(lex_last(*lexer)->string);
-		// printf("dup len is %i\n", dup_len);
+		if (lex_add_back(lexer, new_lex_node(
+					strcpy_delim(str, SPACE, S_Q, D_Q))))
+			return (-1);
 	}
 	dup_len = ft_strlen(lex_last(*lexer)->string);
 	if (str[dup_len])

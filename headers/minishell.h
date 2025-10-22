@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/20 11:00:09 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 16:45:35 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void		clear_lexer(t_data *data);
 /*lexer_list.c*/
 t_lexer		*new_lex_node(char *str);
 t_lexer		*lex_last(t_lexer *list);
-void		lex_add_back(t_lexer **list, t_lexer *new);
+int			lex_add_back(t_lexer **list, t_lexer *new);
 int			add_lex_node(char *str, t_lexer **lexer);
 
 /*lexer.c*/
@@ -145,6 +145,10 @@ bool		parse_input(t_data *data, char *str);
 
 /*set_redirect*/
 bool		set_redirect(t_commands *list, t_lexer *lexer);
+
+/*exit_utils.c*/
+void		print_error(char *msg);
+void		*malloc_error(char *msg);
 
 /*exit_error.c*/
 void		todo_exit(t_data *data);

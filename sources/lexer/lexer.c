@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 20:28:55 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/03 16:10:16 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/20 16:43:19 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*strcpy_delim(char *str, char delim1, char delim2, char delim3)
 			size++;
 	new = (char *)malloc(sizeof(char) * (size + 1));
 	if (!new)
-		return (NULL);
+		return (malloc_error("malloc"));
 	while (idx < size)
 	{
 		new[idx] = str[idx];
@@ -73,7 +73,7 @@ bool	setup_lexer(t_data *data)
 
 	copy = ft_strdup(data->input);
 	if (!copy)
-		exit (1);
+		return (malloc_error("ft_strdup"), false);
 	idx = 0;
 	while (copy[idx])
 	{
@@ -81,6 +81,11 @@ bool	setup_lexer(t_data *data)
 			idx++;
 		if (copy[idx])
 			idx += add_lex_node(&copy[idx], &(data->lexer));
+		if (idx == -1)
+		{
+			free (copy);
+			return (false);
+		}
 	}
 	free (copy);
 	return (true);

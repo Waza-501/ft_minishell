@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/24 10:42:22 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 12:53:32 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 {
 	//sig_handler(1); //Command out for now Max because of missing function
-    if (cmd->next != NULL)
+    printf("🔧 HANDLE_PIPES called for: %s\n", cmd->args[0]);//debug
+	if (cmd->next != NULL)
         ft_pipe(cmd->pipefd);
     cmd->pid = ft_fork();
     if (cmd->pid == 0)
@@ -163,9 +164,17 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
             close(cmd->pipefd[0]);
         }
         // if (handle_redirections(cmd, shell)) //Command out for now Max because of missing function
-        //     execute_cmd(cmd, shell);
+        execute_cmd(cmd, shell);
         exit(g_exit_code);
     }
+	else //debug part. Need to check
+	{
+    // Parent process - clean up file descriptors
+    if (prev_fd != -1)
+        close(prev_fd);  // Close the read end we passed to child
+    if (cmd->pipefd[1] != -1)
+        close(cmd->pipefd[1]);  // Close write end - child owns it now
+	}
 }
 
 /**
@@ -192,24 +201,29 @@ void	execute(t_shell *shell)
 	// Process heredocs before any command execution //command out for now Max because of missing function
 	// handle_heredocs(shell);
 
+    printf("=== EXECUTOR DEBUG ===\n");//debug
 	prev_fd = -1;
 	curr = shell->cmds; // Start with first command
 
 	// Optimization: handle single command without unnecessary forking
 	if (curr->next == NULL && single_cmd(shell))
 		return ;
-
+	int i = 0; //debug reason
+	printf("🚀 About to start main execution loop...\n");//debug
 	// Execute pipeline: iterate through all commands
 	while (curr && !shell->stop)
 	{
+		printf("🔄 Processing command: %s\n", curr->args[0]);//debgu
 		handle_pipes(curr, prev_fd, shell);
 
 		// Clean up file descriptors
 		close(prev_fd); // Close previous read end
 		prev_fd = curr->pipefd[0]; // Save current read end for next command
 		close(curr->pipefd[1]); // Close current write end
-
+        printf("Command %d: %s (n=%d, addr=%p)\n", i, curr->args[0], curr->n, curr);//debug
+		i++;//debug
 		curr = curr->next; // Move to next command
 	}
+	printf("======================\n");//debgug
 	ft_waitpid(shell); 	// Wait for all child processes to complete
 }

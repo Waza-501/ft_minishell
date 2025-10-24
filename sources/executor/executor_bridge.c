@@ -6,14 +6,14 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/14 12:28:15 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 11:45:21 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Initialize execution fields in t_commands structure
+ * @brief int init_commands_for_execution(t_commands *cmd_list)
  * @param cmd_list Parser's t_commands linked list
  * @return 0 on success, 1 on failure
  */
@@ -24,12 +24,14 @@ int init_commands_for_execution(t_commands *cmd_list)
     
     while (current)
     {
+        printf("🔧 INIT_COMMANDS_FOR_EXECUTION CALLED!\n");
         // Initialize execution fields that parser doesn't set
         current->pid = -1;              // No process yet
         current->pipefd[0] = -1;        // No pipe yet
         current->pipefd[1] = -1;
         current->n = cmd_number;        // Set command number
         //current->heredoc = NULL;        // Will be set by heredoc handler
+        printf("🔧 Setting command %p to number %d\n", current, cmd_number);
         current = current->next;
         cmd_number++;
     }

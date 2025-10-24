@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:41:20 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/22 16:30:17 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/24 16:31:00 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ void	clear_commands(t_data *data)
 		if (data->commands->infile > 2)
 		{
 			if (close(data->commands->infile))
-				printf("write fail free error report thing\n");
+				printf("write fail free error report thing using perror\n");
 		}
 		ft_free(&data->commands->outfile_s);
 		if (data->commands->outfile > 2)
 		{
 			if (close(data->commands->outfile))
-				printf("write fail free error report thing\n");
+				printf("write fail free error report thing using perror\n");
 		}
 		ft_free(&data->commands);
 		data->commands = start;

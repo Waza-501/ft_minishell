@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/07 11:00:05 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/09/08 11:50:43 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/24 16:11:30 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
-void	free_mem(char **mem);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
 int		nl_checker(const char *s);

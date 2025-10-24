@@ -6,12 +6,12 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/24 12:53:32 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 16:05:28 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
+//#include "libft.h"
 
 /**
  * @brief Execute command from current directory or with absolute/relative path

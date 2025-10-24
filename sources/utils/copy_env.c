@@ -6,24 +6,11 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/15 01:01:54 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/27 18:11:31 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/24 16:17:33 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_mem(char **data)
-{
-	int	idx;
-
-	idx = 0;
-	while (data[idx])
-	{
-		free(data[idx]);
-		idx++;
-	}
-	free(data);
-}
 
 char	**ft_split_env(char const *s, char c)
 {

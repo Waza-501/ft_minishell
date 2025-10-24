@@ -6,64 +6,44 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 20:28:55 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/22 11:34:52 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/24 16:19:28 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_strlen_delim(char *str, char delim)
+int	to_be_split(t_lexer *node)
 {
-	size_t	size;
-
-	size = 0;
-	if (delim == S_Q || delim == D_Q)
-		size++;
-	while (str[size] && str[size] != delim)
-		size++;
-	if (delim == SPACE)
-		return (size);
-	return (size + 1);
-}
-
-char	*strcpy_delim(char *str, char delim1, char delim2, char delim3)
-{
-	size_t	idx;
-	size_t	size;
-	char	*new;
+	int	idx;
 
 	idx = 0;
-	size = 0;
-	if (is_quotes(delim1) == true)
-		size = ft_strlen_delim(str, delim1);
-	else
-		while (str[size] && str[size] != delim1 && str[size] != delim2
-			&& str[size] != delim3)
-			size++;
-	new = (char *)malloc(sizeof(char) * (size + 1));
-	if (!new)
-		return (malloc_error("malloc"));
-	while (idx < size)
+	while (node->string[idx])
 	{
-		new[idx] = str[idx];
+		if (node->string[idx] == '|')
+			if (node->string[idx + 1] || idx != 0)
+				return (idx);
 		idx++;
 	}
-	new[idx] = '\0';
-	return (new);
+	return (0);
 }
 
-bool	id_token(char *str)
+int	split_pipes(t_data *data)
 {
-	int		idx;
+	t_lexer	*copy;
+	int		i;
 
-	idx = 0;
-	if (str[idx] == '|')
-		return (true);
-	else if (str[idx] == '<')
-		return (true);
-	else if (str[idx] == '>')
-		return (true);
-	return (false);
+	copy = data->lexer;
+	while (copy)
+	{
+		i = to_be_split(copy);
+		if (i)
+		{
+			printf("%s must be split\n", copy->string);
+
+		}
+		copy = copy->next;
+	}
+	return (0);
 }
 
 bool	setup_lexer(t_data *data)
@@ -73,7 +53,7 @@ bool	setup_lexer(t_data *data)
 
 	copy = ft_strdup(data->input);
 	if (!copy)
-		return (malloc_error("ft_strdup"), false);
+		return (malloc_error(data, true), false);
 	idx = 0;
 	while (copy[idx])
 	{
@@ -84,9 +64,11 @@ bool	setup_lexer(t_data *data)
 		if (idx == -1)
 		{
 			ft_free (&copy);
-			return (false);
+			malloc_error(data, false);
 		}
 	}
 	ft_free (&copy);
+	if (split_pipes(data))
+		return (false);
 	return (true);
 }

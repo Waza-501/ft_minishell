@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/31 09:49:10 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/22 15:09:55 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/24 15:21:34 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_lexer	*new_lex_node(char *str)
 	if (!new)
 	{
 		ft_free(str);
-		return (malloc_error("malloc"));
+		return (malloc_error(NULL, true));
 	}
 	new->id = 0;
 	new->type = EMPTY;
@@ -41,6 +41,21 @@ t_lexer	*lex_last(t_lexer *list)
 	while (copy && copy->next)
 		copy = copy->next;
 	return (copy);
+}
+
+int	lex_add_next(t_lexer *list, t_lexer *new)
+{
+	t_lexer	*old_next;
+
+	if (!new)
+		return (1);
+	old_next = list->next;
+	list->next = new;
+	new->next = old_next;
+	new->prev = list;
+	if (old_next)
+		old_next->prev = new;
+	return (0);
 }
 
 int	lex_add_back(t_lexer **list, t_lexer *new)

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/01 11:48:40 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/22 14:14:58 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/24 14:15:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,16 @@ bool	assign_type(t_data *data)
 		copy = copy->next;
 	}
 	copy = data->lexer;
+	while (copy)
+	{
+		if ((copy->type == PIPE && !copy->next)
+			|| (copy->type == PIPE && !copy->prev)
+			|| (copy->type == PIPE && copy->next->type == PIPE))
+		{
+			print_error(SYNTAX);
+			return (false);
+		}
+		copy = copy->next;
+	}
 	return (true);
 }

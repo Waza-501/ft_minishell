@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/08 17:18:26 by owen          #+#    #+#                 */
-/*   Updated: 2025/09/05 10:33:00 by haianhle      ########   odam.nl         */
+/*   Updated: 2025/10/24 16:10:56 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	count_words(const char *s, char c)
 	return (count);
 }
 
-void	free_mem(char **data)
+static void	free_mem(char **data)
 {
 	int	idx;
 

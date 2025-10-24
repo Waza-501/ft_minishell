@@ -11,7 +11,9 @@ CDLL			:= ./libraries/cd_ll
 SOURCES_DIR	:=	sources/
 SOURCES		:=	lexer/lexer_list_clear.c\
 				lexer/lexer_list.c\
+				lexer/lexer_utils.c\
 				lexer/lexer.c\
+				lexer/tokeniser.c\
 				commands/commands_list.c\
 				commands/commands_list_utils.c\
 				commands/setup_commands.c\
@@ -26,12 +28,11 @@ SOURCES		:=	lexer/lexer_list_clear.c\
 				parser/redirect_utils.c\
 				parser/strip_quotes.c\
 				utils/copy_env.c\
-				utils/error_utils.c\
-				utils/exit_error.c\
+				utils/error_print.c\
+				utils/error.c\
 				utils/signals.c\
 				utils/utils.c\
 				main.c\
-				lexer/tokeniser.c\
 				builtins/ft_echo.c\
 				builtins/ft_pwd.c\
 				builtins/ft_env.c\

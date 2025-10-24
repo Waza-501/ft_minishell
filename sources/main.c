@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/24 10:48:54 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 16:29:59 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,18 @@
 #include <readline/history.h>
 
 int	g_exit_code = 0;
+
+/*wipe all data from data*/
+int	reset_data(t_data *data)
+{
+	//printf("resetting data\n");
+	ft_free(&data->input);
+	if (data->lexer)
+		clear_lexer(data);
+	if (data->commands)
+		clear_commands(data);
+	return (0);
+}
 
 t_data	*init_data(void)
 {
@@ -46,24 +58,20 @@ int	mini_loop(t_data *data)
 		if (!data->input)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
-			exit(1);
+			exit(0);
 		}
 		if (ft_strlen(data->input) >= 4
 			&& (ft_strncmp(data->input, "exit", 4) == 0))
 			break ;
-		if (parse_input(data, data->input) == false)
-		{
-			free_structs(data);
+		if (parse_input(data, data->input))
+			/*theoretically, this should no longer be possible*/
 			exit (1);
-		}
-		/*execution would go here*/
-		if (data->commands)
-		{
-			printf("Commands ready for execution\n");
-			execute_commands(data);
-		}
-		free(data->input);
-		clear_commands(data);
+		//if (data->commands)
+		//{
+		//	printf("Commands ready for execution\n");
+		//	execute_commands(data);
+		//}
+		reset_data(data);
 	}
 	free(data->input);
 	cdll_del_list(data->envp_copy);
@@ -104,10 +112,10 @@ int	main(int argc, char **argv, char **envp)
 	if (argc > 1)
 	{
 		printf("minishell$ This project only runs in interactive mode.\n");
-		exit(1);
+		exit(0);
 	}
 	else if (argc == 1)
 		mini_loop(data);
-	free(data);
+	ft_free(&data);
 	return (0);
 }

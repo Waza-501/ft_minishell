@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/24 10:43:52 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 15:50:10 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define D_Q		34
 # define EOF_SQ		"unexpected EOF while looking for matching \'\n"
 # define EOF_DQ		"unexpected EOF while looking for matching \"\n"
+# define SYNTAX		"syntax error: unexpected end of file\n"
 
 # ifndef PATH_MAX
 #  define PATH_MAX 1024
@@ -143,9 +144,11 @@ t_lexer		*lex_last(t_lexer *list);
 int			lex_add_back(t_lexer **list, t_lexer *new);
 int			add_lex_node(char *str, t_lexer **lexer);
 
-/*lexer.c*/
+/*lexer_utils.c*/
 size_t		ft_strlen_delim(char *str, char delim);
 char		*strcpy_delim(char *str, char delim1, char delim2, char delim3);
+
+/*lexer.c*/
 bool		setup_lexer(t_data *data);
 
 /*handle_append.c*/
@@ -164,18 +167,19 @@ bool		handle_output(t_commands *list, t_lexer *node);
 
 /*parsing.c*/
 int			is_whitespace(char c);
-bool		parse_input(t_data *data, char *str);
+int			parse_input(t_data *data, char *str);
 
 /*set_redirect*/
 bool		set_redirect(t_commands *list, t_lexer *lexer);
 
-/*exit_utils.c*/
+/*error_print.c*/
 void		print_error(char *msg);
-void		*malloc_error(char *msg);
+void		*malloc_error_print(char *msg);
 
-/*exit_error.c*/
+/*error.c*/
 void		todo_exit(t_data *data);
 void		free_structs(t_data *data);
+void		*malloc_error(t_data *data, bool print);
 
 /*signals.c*/
 void		set_signals_interactive(void);
@@ -187,6 +191,9 @@ bool		assign_type(t_data *data);
 /*utils.c*/
 void		ft_free(void *ptr);
 bool		find_matching_quotes(char *str, bool s_q, bool d_q);
+
+/*main.c*/
+int			reset_data(t_data *data);
 
 // Updated function prototypes Max
 bool        is_builtin(t_commands *cmd);

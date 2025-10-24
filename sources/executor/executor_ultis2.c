@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/08/27 11:23:45 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/14 12:19:21 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
  * This function always exits the process - never returns to caller.
  */
 
-void	ft_execve(t_cmds *cmd, t_shell *shell, char **path)
+void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 {
 	int		i;
 	char	*tmp;
@@ -46,21 +46,21 @@ void	ft_execve(t_cmds *cmd, t_shell *shell, char **path)
 	while (path && path[i])
 	{
 		tmp = ft_strjoin(path[i], "/");
-		tmp = ft_strjoin_free(tmp, cmd->str[0]);
+		tmp = ft_strjoin_free(tmp, cmd->args[0]);
 		if (access(tmp, F_OK) == 0
-			&& execve(tmp, cmd->str, shell->env) == -1)
+			&& execve(tmp, cmd->args, shell->env) == -1)
 		{
 			ft_free_arr(path);
-			perror(cmd->str[0]);
+			perror(cmd->args[0]);
 			exit(-1);
 		}
 		free(tmp);
 		i++;
 	}
 	ft_free_arr(path);
-	ft_putstr_fd("minishell: ", STDERR);
-	ft_putstr_fd(cmd->str[0], STDERR);
-	ft_putstr_fd(": command not found\n", STDERR);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(cmd->args[0], STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	exit(127);
 }
 
@@ -84,12 +84,12 @@ void	ft_execve(t_cmds *cmd, t_shell *shell, char **path)
  * - If any process exits with 130 or 131, sets shell->stop = true
  * - This prevents further command execution in interactive mode
  *
- * Uses global g_return_value to store the final exit status
+ * Uses global g_exit_code to store the final exit status
  */
 
 void	ft_waitpid(t_shell *shell)
 {
-	t_cmds	*curr;
+	t_commands	*curr;
 	int		status;
 	int		sig;
 
@@ -98,16 +98,16 @@ void	ft_waitpid(t_shell *shell)
 	{
 		waitpid(curr->pid, &status, 0);
 		if (WIFEXITED(status))
-			g_return_value = WEXITSTATUS(status);
+			g_exit_code = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 		{
 			sig = WTERMSIG(status);
 			if (sig == SIGINT)
-				g_return_value = 130;
+				g_exit_code = 130;
 			else if (sig == SIGQUIT)
-				g_return_value = 131;
+				g_exit_code = 131;
 		}
-		if (g_return_value == 130 || g_return_value == 131)
+		if (g_exit_code == 130 || g_exit_code == 131)
 			shell->stop = true;
 		curr = curr->next;
 	}
@@ -138,12 +138,12 @@ bool	single_cmd(t_shell *shell)
 
 	if (is_builtin(shell->cmds))
 	{
-		save_stdin = ft_dup(STDIN);
-		save_stdout = ft_dup(STDOUT);
+		save_stdin = ft_dup(STDIN_FILENO);
+		save_stdout = ft_dup(STDOUT_FILENO);
 		if (handle_redirections(shell->cmds, shell))
 			execute_builtin(shell->cmds, shell);
-		ft_dup2(save_stdin, STDIN);
-		ft_dup2(save_stdout, STDOUT);
+		ft_dup2(save_stdin, STDIN_FILENO);
+		ft_dup2(save_stdout, STDOUT_FILENO);
 		return (true);
 	}
 	return (false);

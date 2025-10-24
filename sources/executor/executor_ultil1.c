@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:39 by haile         #+#    #+#                 */
-/*   Updated: 2025/08/27 11:23:40 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/14 12:19:21 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,23 @@
  * Used for command routing to determine execution method
  */
 
-bool	is_builtin(t_cmds *cmd)
+bool	is_builtin(t_commands *cmd)
 {
-	if (ft_strncmp(cmd->str[0], "pwd", 4) == 0)
+	if (!cmd || !cmd->args || !cmd->args[0])
+		return (false); //Copilot suggested this line
+	if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
 		return (true);
-	else if (ft_strncmp(cmd->str[0], "echo", 5) == 0)
+	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
 		return (true);
-	else if (ft_strncmp(cmd->str[0], "cd", 3) == 0)
+	else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
 		return (true);
-	else if (ft_strncmp(cmd->str[0], "export", 7) == 0)
+	else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
 		return (true);
-	else if (ft_strncmp(cmd->str[0], "unset", 6) == 0)
+	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
 		return (true);
-	else if (ft_strncmp(cmd->str[0], "env", 4) == 0)
+	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
 		return (true);
-	else if (ft_strncmp(cmd->str[0], "exit", 5) == 0)
+	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
 		return (true);
 	return (false);
 }

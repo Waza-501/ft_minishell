@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/08/27 11:23:50 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/14 12:19:21 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,27 @@
  * - File accessibility checks before execution
  * - Direct execve() calls for path-based commands
  */
-static bool	execute_currdir(t_cmds *cmd, t_shell *shell)
+static bool	execute_currdir(t_commands *cmd, t_shell *shell)
 {
 	// Handle empty command case
-	if (cmd->str[0][0] == '\0')
+	if (cmd->args[0][0] == '\0')
 	{
-		ft_putstr_fd("minishell: : command not found\n", STDERR);
+		ft_putstr_fd("minishell: : command not found\n", STDERR_FILENO);
 		exit(127);
 	}
 
 	// Only handle commands with path separators
-	if (ft_strchr(cmd->str[0], '/') == NULL)
+	if (ft_strchr(cmd->args[0], '/') == NULL)
 		return (false);
 
 	// Check if file exists and is accessible
-	if (access(cmd->str[0], F_OK) == 0)
+	if (access(cmd->args[0], F_OK) == 0)
 	{
 		// Execute the command directly with full path
-		if (execve(cmd->str[0], cmd->str, shell->env) == -1)
+		if (execve(cmd->args[0], cmd->args, shell->env) == -1)
 		{
-			ft_putstr_fd("minishell: ", STDERR);
-			perror(cmd->str[0]);
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			perror(cmd->args[0]);
 			exit(126);
 		}
 	}
@@ -67,24 +67,24 @@ static bool	execute_currdir(t_cmds *cmd, t_shell *shell)
  * - env: Display environment variables
  * - exit: Exit the shell
  *
- * Uses global g_return_value to store the exit status of executed built-ins
+ * Uses global g_exit_code to store the exit status of executed built-ins
  */
-int	execute_builtin(t_cmds *cmd, t_shell *shell)
+int	execute_builtin(t_commands *cmd, t_shell *shell)
 {
-	if (ft_strncmp(cmd->str[0], "pwd", 4) == 0)
-		g_return_value = ft_pwd();
-	else if (ft_strncmp(cmd->str[0], "echo", 5) == 0)
-		g_return_value = ft_echo(cmd);
-	else if (ft_strncmp(cmd->str[0], "cd", 3) == 0)
-		g_return_value = ft_cd(cmd, shell);
-	else if (ft_strncmp(cmd->str[0], "export", 7) == 0)
-		g_return_value = ft_export(cmd, shell, 0);
-	else if (ft_strncmp(cmd->str[0], "unset", 6) == 0)
-		g_return_value = ft_unset(cmd, shell);
-	else if (ft_strncmp(cmd->str[0], "env", 4) == 0)
-		g_return_value = ft_env(shell->env);
-	else if (ft_strncmp(cmd->str[0], "exit", 5) == 0)
-		g_return_value = ft_exit(cmd);
+	if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
+		g_exit_code = ft_pwd();
+	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
+		g_exit_code = ft_echo(cmd);
+	else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
+		g_exit_code = ft_cd(cmd, shell);
+	else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
+		g_exit_code = ft_export(cmd, shell, 0);
+	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
+		g_exit_code = ft_unset(cmd, shell);
+	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
+		g_exit_code = ft_env(shell->env);
+	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
+		g_exit_code = ft_exit(cmd);
 	else
 		return (0); // Not a built-in command
 	return (1); // Successfully executed built-in
@@ -104,13 +104,13 @@ int	execute_builtin(t_cmds *cmd, t_shell *shell)
  *
  * This function always exits the process after execution attempt
  */
-static void	execute_cmd(t_cmds *cmd, t_shell *shell)
+static void	execute_cmd(t_commands *cmd, t_shell *shell)
 {
 	int		i;
 
 	i = 0;
 	// Handle empty command
-	if (!cmd->str[0])
+	if (!cmd->args[0])
 		exit(0);
 
 	// Try built-in first, then current directory execution
@@ -129,7 +129,7 @@ static void	execute_cmd(t_cmds *cmd, t_shell *shell)
 			ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
 		ft_execve(cmd, shell, NULL);
 	}
-	exit(g_return_value);
+	exit(g_exit_code);
 }
 
 /**
@@ -146,7 +146,7 @@ static void	execute_cmd(t_cmds *cmd, t_shell *shell)
  * - Handles redirections before command execution
  * - Parent returns immediately to continue pipeline setup
  */
-static void	handle_pipes(t_cmds *cmd, int prev_fd, t_shell *shell)
+static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 {}
 
 /**
@@ -167,7 +167,7 @@ static void	handle_pipes(t_cmds *cmd, int prev_fd, t_shell *shell)
  */
 void	execute(t_shell *shell)
 {
-	t_cmds	*curr;
+	t_commands *curr;
 	int		prev_fd;
 
 	// Process heredocs before any command execution

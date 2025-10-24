@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 12:00:55 by haile         #+#    #+#                 */
-/*   Updated: 2025/09/16 13:35:17 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/14 12:19:21 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,18 @@ static bool in_env(char *str, char **env)
  * @param shell Shell state
  * @return 0 on success, -1 on error
  */
-int ft_unset(t_cmds *cmd, t_shell *shell)
+int ft_unset(t_commands *cmd, t_shell *shell)
 {
     int i;
     int j;
     char **rtn;
 
     j = 1;
-    if (!cmd->str[1])
+    if (!cmd->args[1])
         return (0);
-    while (cmd->str[j])
+    while (cmd->args[j])
     {
-        if (in_env(cmd->str[j], shell->env))
+        if (in_env(cmd->args[j], shell->env))
         {
             i = 0;
             while (shell->env[i])
@@ -87,7 +87,7 @@ int ft_unset(t_cmds *cmd, t_shell *shell)
             rtn = ft_calloc(i, sizeof(char *));
             if (!rtn)
                 return (-1);
-            unset_array(shell->env, rtn, cmd->str[j]);
+            unset_array(shell->env, rtn, cmd->args[j]);
             ft_free_arr(shell->env);
             shell->env = rtn;
         }

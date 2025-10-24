@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:18 by haile         #+#    #+#                 */
-/*   Updated: 2025/08/27 12:49:14 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 09:05:43 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,29 +91,29 @@ int change_path(char *path, t_shell *shell, int type)
     }
     return (1);
 }
-int    ft_cd(t_cmds *cmd, t_shell *shell)
+int    ft_cd(t_commands *cmd, t_shell *shell)
 {
     char	*path;
     int		ret;
 
-    if (!cmd->str[1])
+    if (!cmd->args[1])
     {
         if (!change_path("HOME=", shell, 1))
             ft_putstr_fd("minishell: cd: HOME not set\n", 2);
     }
-    else if (cmd->str[1])
+    else if (cmd->args[1])
     {
-        if (ft_strncmp(cmd->str[1], "-", 1) == 0)
+        if (ft_strncmp(cmd->args[1], "-", 1) == 0)
         {
             if (!change_path("OLDPWD=", shell, 1))
                 ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
         }
         else
         {
-            if (!change_path(cmd->str[1], shell, 2))
+            if (!change_path(cmd->args[1], shell, 2))
             {
                 ft_putstr_fd("minishell: cd: ", 2);
-                perror(cmd->str[1]);
+                perror(cmd->args[1]);
                 return (1); 
             }
         }

@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:25 by haile         #+#    #+#                 */
-/*   Updated: 2025/08/27 11:23:26 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/14 12:19:21 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@
  * an invalid flag or reaches the end of -n flags. This handles bash behavior
  * where multiple -n flags can be chained together.
  */
-static int	last_check(int i, t_cmds *cmd)
+static int	last_check(int i, t_commands *cmd)
 {
 	int	j;
-	while ((ft_strncmp(cmd->str[i], "-n", 2) == 0))
+	while ((ft_strncmp(cmd->args[i], "-n", 2) == 0))
 	{
 		j = 1;
-		while (cmd->str[i][j] == 'n')
+		while (cmd->args[i][j] == 'n')
 			j++;
-		if (cmd->str[i][j] != 0)
+		if (cmd->args[i][j] != 0)
 			break ;
 		else
 			i++;
@@ -51,13 +51,13 @@ static int	last_check(int i, t_cmds *cmd)
  * If valid, sets the newline suppression flag and advances to check
  * for additional consecutive -n flags via last_check().
  */
-static int	check_n(t_cmds *cmd, int i, int *check, int *n)
+static int	check_n(t_commands *cmd, int i, int *check, int *n)
 {
-	if ((ft_strncmp(cmd->str[i], "-n", 2) == 0) && i == 1)
+	if ((ft_strncmp(cmd->args[i], "-n", 2) == 0) && i == 1)
 	{
-		while (cmd->str[i][*check] && cmd->str[i][*check] == 'n')
+		while (cmd->args[i][*check] && cmd->args[i][*check] == 'n')
 			*check += 1;
-		if (cmd->str[i][*check] == 0)
+		if (cmd->args[i][*check] == 0)
 		{
 			*check = 0;
 			*n = 0;
@@ -88,7 +88,7 @@ static int	check_n(t_cmds *cmd, int i, int *check, int *n)
  *   echo -nn hello world    -> "hello world"
  *   echo -n -n hello world  -> "hello world"
  */
-int	ft_echo(t_cmds *cmd)
+int	ft_echo(t_commands *cmd)
 {
 	int	i;
 	int	n;
@@ -97,10 +97,10 @@ int	ft_echo(t_cmds *cmd)
 	n = 1;
 	check = 1;
 	i = check_n(cmd, i, &check, &n);
-	while (cmd->str[i])
+	while (cmd->args[i])
 	{
-		ft_putstr_fd(cmd->str[i], 1);
-		if (cmd->str[i + 1] != 0)
+		ft_putstr_fd(cmd->args[i], 1);
+		if (cmd->args[i + 1] != 0)
 			ft_putchar_fd(' ', 1);
 		i++;
 	}

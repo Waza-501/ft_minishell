@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:40:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/07 13:10:27 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/24 09:09:02 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ t_commands	*init_commands(void)
 	new->outfile = -1;
 	new->next = NULL;
 	new->prev = NULL;
+	//new fields for execution
+	new->n = 0;
+	new->pid = -1;
+	new->pipefd[0] = -1;
+	new->pipefd[1] = -1;
 	return (new);
 }
 

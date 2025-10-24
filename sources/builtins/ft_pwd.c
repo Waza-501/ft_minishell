@@ -6,12 +6,11 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:31 by haile         #+#    #+#                 */
-/*   Updated: 2025/08/27 11:23:32 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 09:33:44 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
 
 /**
  * @brief Get current working directory using system call wrapper

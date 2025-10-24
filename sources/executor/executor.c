@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/14 12:19:21 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 10:42:22 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,16 @@ int	execute_builtin(t_commands *cmd, t_shell *shell)
 		g_exit_code = ft_pwd();
 	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
 		g_exit_code = ft_echo(cmd);
-	else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
-		g_exit_code = ft_cd(cmd, shell);
-	else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
-		g_exit_code = ft_export(cmd, shell, 0);
+	// else if (ft_strncmp(cmd->args[0], "cd", 3) == 0) //Command out for now Max because of missing function
+	// 	g_exit_code = ft_cd(cmd, shell);
+	// else if (ft_strncmp(cmd->args[0], "export", 7) == 0) //Command out for now Max because of missing function
+	// 	g_exit_code = ft_export(cmd, shell, 0);
 	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
 		g_exit_code = ft_unset(cmd, shell);
 	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
 		g_exit_code = ft_env(shell->env);
-	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
-		g_exit_code = ft_exit(cmd);
+	// else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)//Command out for now Max because of missing function
+	// 	g_exit_code = ft_exit(cmd);
 	else
 		return (0); // Not a built-in command
 	return (1); // Successfully executed built-in
@@ -147,7 +147,26 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
  * - Parent returns immediately to continue pipeline setup
  */
 static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
-{}
+{
+	//sig_handler(1); //Command out for now Max because of missing function
+    if (cmd->next != NULL)
+        ft_pipe(cmd->pipefd);
+    cmd->pid = ft_fork();
+    if (cmd->pid == 0)
+    {
+        //sig_handler(2); //Command out for now Max because of missing function
+        if (cmd->n > 1)
+            ft_dup2(prev_fd, STDIN);
+        if (cmd->next != NULL)
+        {
+            ft_dup2(cmd->pipefd[1], STDOUT);
+            close(cmd->pipefd[0]);
+        }
+        // if (handle_redirections(cmd, shell)) //Command out for now Max because of missing function
+        //     execute_cmd(cmd, shell);
+        exit(g_exit_code);
+    }
+}
 
 /**
  * @brief Main execution entry point - connects entire command pipeline
@@ -170,8 +189,8 @@ void	execute(t_shell *shell)
 	t_commands *curr;
 	int		prev_fd;
 
-	// Process heredocs before any command execution
-	handle_heredocs(shell);
+	// Process heredocs before any command execution //command out for now Max because of missing function
+	// handle_heredocs(shell);
 
 	prev_fd = -1;
 	curr = shell->cmds; // Start with first command

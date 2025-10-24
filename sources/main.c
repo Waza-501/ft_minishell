@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/24 09:10:40 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 10:48:54 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
+int	g_exit_code = 0;
 
 t_data	*init_data(void)
 {

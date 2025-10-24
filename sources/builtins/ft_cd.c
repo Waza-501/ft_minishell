@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:18 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/24 09:05:43 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 10:00:24 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int add_path(t_shell *shell, char *new_path)
         i++;
     }
     if (old || p)
-        modify_path(shell, old, p, pwd);
+        modify_path(shell, pwd, old, p);
     return (0);
 }
 char    *extract_path(char *path, t_shell *shell)

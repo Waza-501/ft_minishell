@@ -1,6 +1,6 @@
 NAME		:=	minishell
 CC			:=	cc
-FLAGS		:=	-Wall -Werror -Wextra -g -fsanitize=address
+FLAGS		:=	-g -fsanitize=address
 
 LIBRARIES		:=	./libraries/libft/libft.a ./libraries/cd_ll/cd_ll.a\
 
@@ -32,17 +32,19 @@ SOURCES		:=	lexer/lexer_list_clear.c\
 				utils/utils.c\
 				main.c\
 				lexer/tokeniser.c\
-# 				builtins/ft_cd.c\
-# 				builtins/ft_echo.c\
-# 				builtins/ft_pwd.c\
-# 				executor/executor.c\
-# 				executor/execute_ultil1.c\
-# 				execute/execute_ultil2.c\
+				builtins/ft_echo.c\
+				builtins/ft_pwd.c\
+				builtins/ft_env.c\
+				builtins/ft_unset.c\
+				executor/executor_bridge.c\
+				executor/executor.c\
+				executor/executor_ultil1.c\
+				executor/executor_ultis2.c\
 
 OBJECTS_DIR	:=	objects/
 OBJECTS		:=	$(addprefix $(OBJECTS_DIR), $(SOURCES:.c=.o))
 HEADER_DIR	:=	headers/
-HEADERS		:=	-I $(HEADER_DIR)
+HEADERS		:=	-I $(HEADER_DIR) -I ./libraries/libft
 
 all:		libraries $(NAME)
 

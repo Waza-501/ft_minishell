@@ -6,13 +6,11 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:58:34 by haile         #+#    #+#                 */
-/*   Updated: 2025/09/05 11:58:43 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 09:34:22 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
-#include "libft.h"
 
 static int	check_identifier(char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/14 12:19:21 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/24 10:37:16 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,8 @@ bool	single_cmd(t_shell *shell)
 	{
 		save_stdin = ft_dup(STDIN_FILENO);
 		save_stdout = ft_dup(STDOUT_FILENO);
-		if (handle_redirections(shell->cmds, shell))
-			execute_builtin(shell->cmds, shell);
+		// if (handle_redirections(shell->cmds, shell)) //Command out for now Max because of missing function
+		// 	execute_builtin(shell->cmds, shell);
 		ft_dup2(save_stdin, STDIN_FILENO);
 		ft_dup2(save_stdout, STDOUT_FILENO);
 		return (true);

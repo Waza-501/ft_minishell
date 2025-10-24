@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/22 16:21:54 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/24 09:01:55 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ typedef struct s_commands
 	bool				hd;
 	struct s_commands	*next;
 	struct s_commands	*prev;
+	int					n; // command number in pipeline
+	pid_t				pid; //process id when executed
+	int					pipefd[2]; //pipe file descriptors (read, write)
 }			t_commands;
 
 typedef struct s_data
@@ -76,6 +79,13 @@ typedef struct s_data
 	struct s_data	*next;
 	struct s_data	*prev;
 }			t_data;
+
+typedef struct s_shell
+{
+	char	**env; //enviroment variables array
+	t_commands	*cmds;
+	bool	stop; //stop flag for early termination
+}			t_shell;
 
 /*TEMPORARY*/
 void		print_tokenlist(t_lexer *list);
@@ -165,5 +175,26 @@ bool		assign_type(t_data *data);
 /*utils.c*/
 void		ft_free(void *ptr);
 bool		find_matching_quotes(char *str, bool s_q, bool d_q);
+
+// Updated function prototypes Max
+bool        is_builtin(t_commands *cmd);
+int         execute_builtin(t_commands *cmd, t_shell *shell);
+void        ft_execve(t_commands *cmd, t_shell *shell, char **path);
+void        ft_waitpid(t_shell *shell);
+bool        single_cmd(t_shell *shell);
+void        execute(t_shell *shell);
+
+// Updated builtin prototypes Max
+int         ft_echo(t_commands *cmd);
+int         ft_cd(t_commands *cmd, t_shell *shell);
+int         ft_export(t_commands *cmd, t_shell *shell, char *str);
+int         ft_unset(t_commands *cmd, t_shell *shell);
+int         ft_exit(t_commands *cmd);
+
+// Bridge functions Max
+int         execute_commands(t_data *data);
+int         init_shell_for_execution(t_shell *shell, t_data *data);
+char        **convert_cdll_to_env_array(t_cdllist *env_list);
+void        cleanup_shell(t_shell *shell);
 
 #endif

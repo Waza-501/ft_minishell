@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/22 16:46:47 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/24 09:10:40 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ int	mini_loop(t_data *data)
 			exit (1);
 		}
 		/*execution would go here*/
+		if (data->commands)
+		{
+			printf("Commands ready for execution\n");
+			execute_commands(data);
+		}
 		free(data->input);
 		clear_commands(data);
 	}

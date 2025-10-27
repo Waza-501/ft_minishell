@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/24 15:50:10 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/27 12:00:03 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void		clear_lexer(t_data *data);
 /*lexer_list.c*/
 t_lexer		*new_lex_node(char *str);
 t_lexer		*lex_last(t_lexer *list);
+int			lex_add_next(t_lexer *list, t_lexer *new);
 int			lex_add_back(t_lexer **list, t_lexer *new);
 int			add_lex_node(char *str, t_lexer **lexer);
 

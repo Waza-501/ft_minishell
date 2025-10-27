@@ -6,25 +6,68 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 20:28:55 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/24 16:19:28 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/27 15:11:43 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	to_be_split(t_lexer *node)
+static int	insert_new_node(t_lexer *node, char *new, char *str)
+{
+	if (lex_add_next(node, new_lex_node(new)))
+	{
+		ft_free(str);
+		malloc_error(NULL, true);
+		return (-1);
+	}
+	ft_free(&node->string);
+	node->string = str;
+	return (0);
+}
+
+int	to_be_named(t_lexer	*node, int n)
+{
+	char	*new;
+	char	*old;
+
+	if (n == 0)
+	{
+		old = ft_strdup("|");
+		new = ft_strdup(&node->string[1]);
+	}
+	else
+	{
+		old = (char *)malloc((size_t)n + 1);
+		new = ft_strdup(&node->string[n]);
+	}
+	if (!new || !old)
+	{
+		ft_free(&new);
+		ft_free(&old);
+		malloc_error(NULL, true);
+		return (-1);
+	}
+	if (n != 0)
+		ft_strlcpy(old, node->string, (size_t)n + 1);
+	return (insert_new_node(node, new, old));
+}
+
+int	to_be_split(char *str)
 {
 	int	idx;
 
 	idx = 0;
-	while (node->string[idx])
+	if (ft_strlen(str) == 1)
+		return (-1);
+	while (str[idx])
 	{
-		if (node->string[idx] == '|')
-			if (node->string[idx + 1] || idx != 0)
+		if (str[idx] == '|' && (str[idx + 1] != '|'))
 				return (idx);
+		if (str[idx] == '|' && str[idx + 1] == '|')
+			idx++;
 		idx++;
 	}
-	return (0);
+	return (-1);
 }
 
 int	split_pipes(t_data *data)
@@ -35,12 +78,10 @@ int	split_pipes(t_data *data)
 	copy = data->lexer;
 	while (copy)
 	{
-		i = to_be_split(copy);
-		if (i)
-		{
-			printf("%s must be split\n", copy->string);
-
-		}
+		i = to_be_split(copy->string);
+		if (i >= 0)
+			if (to_be_named(copy, i))
+				malloc_error(data, false);
 		copy = copy->next;
 	}
 	return (0);

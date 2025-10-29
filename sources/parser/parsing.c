@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/24 15:33:53 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/29 14:01:46 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	parse_input(t_data *data, char *str)
 	if (find_matching_quotes(str, false, false) == false)
 		return (0);
 	if (setup_lexer(data) == false)
-		//todo_exit(data);/*implement error logging*/
 		return (reset_data(data));
 	copy = data->lexer;
 	print_tokenlist(copy);

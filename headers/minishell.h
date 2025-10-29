@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/27 12:00:03 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/29 16:24:08 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ bool		check_env_char(char c);
 int			find_dollar_sign(char *str);
 int			find_var_size(char *str);
 
-/*lexer_list_clear.c*/
+/*lexer_list_utils.c*/
+int			insert_new_node(t_lexer *node, char *new, char *str);
 void		lex_del_node(t_lexer *node);
 void		lex_del_first(t_data *data);
 void		clear_lexer(t_data *data);

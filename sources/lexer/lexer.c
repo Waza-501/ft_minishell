@@ -6,23 +6,37 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 20:28:55 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/27 15:11:43 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/29 16:33:09 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	insert_new_node(t_lexer *node, char *new, char *str)
+int	double_token(t_lexer *node, int n)
 {
-	if (lex_add_next(node, new_lex_node(new)))
+	char	*old;
+	char	*new;
+
+	if (n == 0)
 	{
-		ft_free(str);
+		old = ft_substr(node->string, 0, 2);
+		new = ft_strdup(&node->string[2]);
+	}
+	else
+	{
+		old = (char *)malloc((size_t)n + 1);
+		new = ft_strdup(&node->string[n]);
+	}
+	if (!new || !old)
+	{
+		ft_free(&new);
+		ft_free(&old);
 		malloc_error(NULL, true);
 		return (-1);
 	}
-	ft_free(&node->string);
-	node->string = str;
-	return (0);
+	if (n != 0)
+		ft_strlcpy(old, node->string, (size_t)n + 1);
+	return (insert_new_node(node, new, old));
 }
 
 int	to_be_named(t_lexer	*node, int n)
@@ -30,9 +44,11 @@ int	to_be_named(t_lexer	*node, int n)
 	char	*new;
 	char	*old;
 
+	if (node->string[n] == node->string[n + 1] && node->string[n] != '|')
+		return (double_token(node, n));
 	if (n == 0)
 	{
-		old = ft_strdup("|");
+		old = ft_chardup(node->string[0]);
 		new = ft_strdup(&node->string[1]);
 	}
 	else
@@ -57,20 +73,18 @@ int	to_be_split(char *str)
 	int	idx;
 
 	idx = 0;
-	if (ft_strlen(str) == 1)
+	if (ft_strlen(str) == 1 || (str[idx] == S_Q || str[idx] == D_Q))
 		return (-1);
 	while (str[idx])
 	{
-		if (str[idx] == '|' && (str[idx + 1] != '|'))
-				return (idx);
-		if (str[idx] == '|' && str[idx + 1] == '|')
-			idx++;
+		if (str[idx] == '|' || str[idx] == '<' || str[idx] == '>')
+			return (idx);
 		idx++;
 	}
 	return (-1);
 }
 
-int	split_pipes(t_data *data)
+int	split_operators(t_data *data)
 {
 	t_lexer	*copy;
 	int		i;
@@ -109,7 +123,7 @@ bool	setup_lexer(t_data *data)
 		}
 	}
 	ft_free (&copy);
-	if (split_pipes(data))
+	if (split_operators(data))
 		return (false);
 	return (true);
 }

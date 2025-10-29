@@ -1,6 +1,7 @@
 SRCS	=		ft_atoi.c\
 				ft_bzero.c\
 				ft_calloc.c\
+				ft_chardup.c\
 				ft_isalnum.c\
 				ft_isalpha.c\
 				ft_isascii.c\
@@ -44,8 +45,10 @@ SRCS	=		ft_atoi.c\
 				ft_lstmap.c\
 				get_next_line_utils.c\
 				get_next_line.c\
-				ft_malloc.c ft_arrdup.c ft_free_arr.c ft_strjoin_free.c\
-
+				ft_malloc.c\
+				ft_arrdup.c\
+				ft_free_arr.c\
+				ft_strjoin_free.c\
 
 NAME	=	libft.a
 CC		=	cc
@@ -56,17 +59,19 @@ OBJS	=	$(SRCS:%.c=%.o)
 all:		$(NAME)
 			$(info Finished compiling libft!)
 
-$(NAME):	$(OBJS)
-				$(AR) $(NAME) $(OBJS)
-$(OBJS):	$(SRCS)
-				$(CC) $(CFLAGS) $(SRCS)
+$(NAME): $(OBJS)
+			@$(AR) $(NAME) $(OBJS)
+			@echo "Library created: $(NAME)"
+
+%.o: %.c libft.h
+			@$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-			@rm -rf $(OBJS)
+			@rm -f $(OBJS)
 			@echo Removed libft object files.
 
 fclean:		clean
-			@rm -rf $(NAME)
+			@rm -f $(NAME)
 			@echo Removed all made libft functions.
 
 re:	fclean all

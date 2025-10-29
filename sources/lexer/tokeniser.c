@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/01 11:48:40 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/24 14:15:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/29 12:46:34 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,15 @@ void	print_tokenlist(t_lexer *list)
 	printf("-------------------------\n\n");
 }
 
+int	check_syntax(t_data *data)
+{
+	t_lexer	*copy;
+
+	copy = data->lexer;
+
+	return (0);
+}
+
 bool	assign_type(t_data *data)
 {
 	t_lexer	*copy;
@@ -75,6 +84,7 @@ bool	assign_type(t_data *data)
 		copy = copy->next;
 	}
 	copy = data->lexer;
+	check_syntax(data);
 	while (copy)
 	{
 		if ((copy->type == PIPE && !copy->next)

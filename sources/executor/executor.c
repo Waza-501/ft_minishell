@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/24 16:05:28 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/30 11:01:30 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,22 +113,57 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 	if (!cmd->args[0])
 		exit(0);
 
-	// Try built-in first, then current directory execution
-	if (!execute_builtin(cmd, shell) && !execute_currdir(cmd, shell))
-	{
-		// Search for PATH environment variable
-		while (shell->env && shell->env[i])
-		{
-			if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)
-				break ;
-			i++;
-		}
+	printf("EXECUTING: %s\n", cmd->args[0]); //debug
+    // Try built-in first
+    if (execute_builtin(cmd, shell))
+    {
+        printf("✅ Built-in executed\n"); // Debug
+        exit(g_exit_code);
+    }
 
-		// Execute with PATH if found, otherwise try without PATH
-		if (shell->env[i])
-			ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
-		ft_execve(cmd, shell, NULL);
-	}
+    // Try current directory execution
+    if (execute_currdir(cmd, shell))
+    {
+        printf("✅ Current dir executed\n"); // Debug
+        exit(g_exit_code);
+    }
+
+    // Search for PATH environment variable
+    while (shell->env && shell->env[i])
+    {
+        if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)
+            break;
+        i++;
+    }
+
+    // Execute with PATH if found
+    if (shell->env[i])
+    {
+        printf("🔍 Searching PATH...\n"); // Debug
+        ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
+    }
+    
+    // Try without PATH as fallback
+    printf("⚠️  No PATH, trying direct execution\n"); // Debug
+    ft_execve(cmd, shell, NULL);
+	
+	// Command out to debug
+	// // Try built-in first, then current directory execution
+	// if (!execute_builtin(cmd, shell) && !execute_currdir(cmd, shell))
+	// {
+	// 	// Search for PATH environment variable
+	// 	while (shell->env && shell->env[i])
+	// 	{
+	// 		if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)
+	// 			break ;
+	// 		i++;
+	// 	}
+
+	// 	// Execute with PATH if found, otherwise try without PATH
+	// 	if (shell->env[i])
+	// 		ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
+	// 	ft_execve(cmd, shell, NULL);
+	// }
 	exit(g_exit_code);
 }
 
@@ -152,9 +187,11 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
     printf("🔧 HANDLE_PIPES called for: %s\n", cmd->args[0]);//debug
 	if (cmd->next != NULL)
         ft_pipe(cmd->pipefd);
+	printf("🚀 About to fork for command: %s (n=%d)\n", cmd->args[0], cmd->n);//debug
     cmd->pid = ft_fork();
     if (cmd->pid == 0)
     {
+		printf("👶 CHILD PROCESS for: %s (pid=%d)\n", cmd->args[0], getpid());//debug
         //sig_handler(2); //Command out for now Max because of missing function
         if (cmd->n > 1)
             ft_dup2(prev_fd, STDIN);

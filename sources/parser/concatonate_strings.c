@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/22 16:26:52 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/30 16:11:06 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,8 @@ bool	concatonate_strings(t_lexer	*list)
 					return (false);
 			}
 		}
-		else if (copy && copy->type > 3)
-		{
-			if (configure_redirect(copy))
-				return (false);
-		}
+		if (trim_quotes(copy))
+			return (false);
 		copy = copy->next;
 	}
 	return (true);

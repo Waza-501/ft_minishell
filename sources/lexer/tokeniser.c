@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/01 11:48:40 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/29 12:46:34 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/30 13:52:46 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,24 @@ int	check_syntax(t_data *data)
 	t_lexer	*copy;
 
 	copy = data->lexer;
-
+	while (copy)
+	{
+		if (copy->type > 2)
+		{
+			if (!copy->next)
+			{
+				print_syntax_error(SYNTAX, "newline");
+				print_error(SYNTAX_EOF);
+				return (1);
+			}
+			else if (copy->next->type > 2)
+			{
+				print_syntax_error(SYNTAX, copy->next->string);
+				return (1);
+			}
+		}
+		copy = copy->next;
+	}
 	return (0);
 }
 
@@ -84,17 +101,7 @@ bool	assign_type(t_data *data)
 		copy = copy->next;
 	}
 	copy = data->lexer;
-	check_syntax(data);
-	while (copy)
-	{
-		if ((copy->type == PIPE && !copy->next)
-			|| (copy->type == PIPE && !copy->prev)
-			|| (copy->type == PIPE && copy->next->type == PIPE))
-		{
-			print_error(SYNTAX);
-			return (false);
-		}
-		copy = copy->next;
-	}
+	if (check_syntax(data))
+		return (false);
 	return (true);
 }

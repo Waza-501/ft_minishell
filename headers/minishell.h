@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/29 16:24:08 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/30 17:15:39 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 # define D_Q		34
 # define EOF_SQ		"unexpected EOF while looking for matching \'\n"
 # define EOF_DQ		"unexpected EOF while looking for matching \"\n"
-# define SYNTAX		"syntax error: unexpected end of file\n"
+# define SYNTAX		"syntax error near unexpected token "
+# define SYNTAX_EOF	"syntax error: unexpected end of file\n"
 
 # ifndef PATH_MAX
 #  define PATH_MAX 1024
@@ -95,9 +96,9 @@ typedef struct s_data
 
 typedef struct s_shell
 {
-	char	**env; //enviroment variables array
+	char		**env; //enviroment variables array
 	t_commands	*cmds;
-	bool	stop; //stop flag for early termination
+	bool		stop; //stop flag for early termination
 }			t_shell;
 
 /*TEMPORARY*/
@@ -132,6 +133,8 @@ bool		expand_args(t_data *data);
 bool		check_env_char(char c);
 int			find_dollar_sign(char *str);
 int			find_var_size(char *str);
+int			find_var_in_string(char *str, char *var);
+bool		reform_string(t_lexer *node, char *start, char *end, char *middle);
 
 /*lexer_list_utils.c*/
 int			insert_new_node(t_lexer *node, char *new, char *str);
@@ -175,6 +178,7 @@ int			parse_input(t_data *data, char *str);
 bool		set_redirect(t_commands *list, t_lexer *lexer);
 
 /*error_print.c*/
+void		print_syntax_error(char *msg, char *token);
 void		print_error(char *msg);
 void		*malloc_error_print(char *msg);
 

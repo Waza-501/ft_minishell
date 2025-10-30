@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/30 16:11:06 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/30 17:41:46 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,7 @@ int	configure_redirect(t_lexer *node)
 	return (0);
 }
 
-/**
- * @brief Concatenates strings of token nodes in a linked list where needed.
- *
- * Iterates through the linked list of t_lexer nodes. For each node whose string
- * starts with a quote, trims the quotes and merges with subsequent nodes marked
- * for concatenation. Updates the concat flag and removes merged nodes.
- *
- * @param list Pointer to the head of the t_lexer linked list.
- * @return int Returns 0 on success, 
- * 1 on failure (e.g., memory allocation error).
- */
+/*rework documentation*/
 bool	concatonate_strings(t_lexer	*list)
 {
 	t_lexer	*copy;
@@ -97,6 +87,11 @@ bool	concatonate_strings(t_lexer	*list)
 					return (false);
 			}
 		}
+		// else if (copy && copy->type > 3)
+		// {
+		// 	if (configure_redirect(copy))
+		// 		return (false);
+		// }
 		if (trim_quotes(copy))
 			return (false);
 		copy = copy->next;

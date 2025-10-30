@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/30 16:25:28 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/30 17:38:29 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	parse_input(t_data *data, char *str)
 		return (reset_data(data));
 	if (concatonate_strings(data->lexer) == false)
 		todo_exit(data);
+		//reset_data(data);
 	copy = data->lexer;
 	print_tokenlist(copy);
 	if (build_command_list(data))

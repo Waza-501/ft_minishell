@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/30 17:18:09 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/30 17:45:26 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	g_exit_code = 0;
 /*wipe all data from data*/
 int	reset_data(t_data *data)
 {
-	//printf("resetting data\n");
 	ft_free(&data->input);
 	if (data->lexer)
 		clear_lexer(data);
@@ -63,9 +62,7 @@ int	mini_loop(t_data *data)
 		if (ft_strlen(data->input) >= 4
 			&& (ft_strncmp(data->input, "exit", 4) == 0))
 			break ;
-		if (parse_input(data, data->input))
-			/*theoretically, this should no longer be possible*/
-			exit (1);
+		parse_input(data, data->input);
 		if (data->commands)
 		{
 			printf("Commands ready for execution\n");
@@ -73,7 +70,7 @@ int	mini_loop(t_data *data)
 		}
 		reset_data(data);
 	}
-	free(data->input);
+	//ft_free(&data->input);
 	cdll_del_list(data->envp_copy);
 	return (0);
 }

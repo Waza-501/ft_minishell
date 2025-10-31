@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/22 13:19:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/31 17:02:49 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 17:05:31 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*identify_quotes(char c)
 // 	return (new);
 // }
 
-int	trim_quotes(t_lexer *node, t_token_type type)
+int	trim_qt(t_lexer *node, t_token_type type)
 {
 	char	*new;
 

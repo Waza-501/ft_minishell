@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/31 17:01:49 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 17:06:03 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ bool		concatonate_strings(t_data *data);
 /*concatonate_utils.c*/
 bool		is_quotes(char c);
 char		*identify_quotes(char c);
-int			trim_quotes(t_lexer *node, t_token_type type);
+int			trim_qt(t_lexer *node, t_token_type type);
 
 /*expand_args.c/expand_utils.c*/
 bool		expand_args(t_data *data);

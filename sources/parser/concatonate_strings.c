@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/31 17:02:27 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 17:05:45 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ bool	concatonate_strings(t_data *data)
 		{
 			while (copy->concat == true)
 			{
-				if (trim_quotes(copy, EMPTY) || trim_quotes(copy->next, copy->type))
+				if (trim_qt(copy, EMPTY) || trim_qt(copy->next, copy->type))
 					malloc_error(data, false);
 				copy->concat = false;
 				if (merge_nodes(copy))
@@ -77,7 +77,7 @@ bool	concatonate_strings(t_data *data)
 			}
 		}
 		if (copy->type < 3)
-			if (trim_quotes(copy, EMPTY))
+			if (trim_qt(copy, EMPTY))
 				malloc_error(data, false);
 		copy = copy->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/30 17:15:39 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 11:24:14 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ typedef struct s_data
 {
 	char			*input;
 	t_cdllist		*envp_copy;
-	int				exit_code;
 	t_lexer			*lexer;
 	t_commands		*commands;
+	int				exit_code;
 	struct s_data	*next;
 	struct s_data	*prev;
 }			t_data;
@@ -199,7 +199,7 @@ void		ft_free(void *ptr);
 bool		find_matching_quotes(char *str, bool s_q, bool d_q);
 
 /*main.c*/
-int			reset_data(t_data *data);
+int			reset_data(t_data *data, int code);
 
 // Updated function prototypes Max
 bool        is_builtin(t_commands *cmd);

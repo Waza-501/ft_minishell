@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/22 11:43:07 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 14:25:27 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	create_hd_file(t_commands *list)
 	return (0);
 }
 
-bool	handle_heredoc(t_commands *list, t_lexer *node)
+bool	handle_heredoc(t_data *data, t_commands *list, t_lexer *node)
 {
 	(void)node;
-	if (close_existing_fd_in(list))
+	if (close_existing_fd_in(data, list))
 		return (false);
 	if (create_hd_file(list))
 		return (false);

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/31 11:24:14 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 17:01:49 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
+# include <errno.h>
 # include <limits.h> /* LONG_MAX */
 # include <signal.h> /* SIQQUIT, SIGINT*/
 #include <sys/types.h> /*waitpid*/
@@ -68,6 +69,13 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }			t_lexer;
 
+typedef struct s_files
+{
+	char			*filename;
+	t_token_type	type;
+	struct s_files	*next;
+}			t_files;
+
 typedef struct s_commands
 {
 	char				**args;
@@ -75,6 +83,8 @@ typedef struct s_commands
 	char				*outfile_s;
 	int					infile;
 	int					outfile;
+	t_files				*infiles;
+	t_files				*outfiles;
 	bool				hd;
 	struct s_commands	*next;
 	struct s_commands	*prev;
@@ -121,12 +131,12 @@ int			build_command_list(t_data *data);
 
 /*concatonate_strings*/
 bool		is_quotes(char c);
-bool		concatonate_strings(t_lexer *list);
+bool		concatonate_strings(t_data *data);
 
 /*concatonate_utils.c*/
 bool		is_quotes(char c);
 char		*identify_quotes(char c);
-int			trim_quotes(t_lexer *node);
+int			trim_quotes(t_lexer *node, t_token_type type);
 
 /*expand_args.c/expand_utils.c*/
 bool		expand_args(t_data *data);
@@ -157,25 +167,25 @@ char		*strcpy_delim(char *str, char delim1, char delim2, char delim3);
 bool		setup_lexer(t_data *data);
 
 /*handle_append.c*/
-bool		handle_append(t_commands *list, t_lexer *node);
+bool		handle_append(t_data *data, t_commands *list, t_lexer *node);
 
 /*handle_heredoc.c*/
-bool		handle_heredoc(t_commands *list, t_lexer *node);
+bool		handle_heredoc(t_data *data, t_commands *list, t_lexer *node);
 
 /*handle_input.c*/
-int			close_existing_fd_in(t_commands *list);
-bool		handle_input(t_commands *list, t_lexer *node);
+int			close_existing_fd_in(t_data *data, t_commands *list);
+bool		handle_input(t_data *data, t_commands *list, t_lexer *node);
 
 /*handle_output.c*/
-int			close_existing_fd_out(t_commands *list);
-bool		handle_output(t_commands *list, t_lexer *node);
+int			close_existing_fd_out(t_data *data, t_commands *list);
+bool		handle_output(t_data *data, t_commands *list, t_lexer *node);
 
 /*parsing.c*/
 int			is_whitespace(char c);
 int			parse_input(t_data *data, char *str);
 
 /*set_redirect*/
-bool		set_redirect(t_commands *list, t_lexer *lexer);
+bool		set_redirect(t_data *data, t_commands *list, t_lexer *lexer);
 
 /*error_print.c*/
 void		print_syntax_error(char *msg, char *token);
@@ -185,6 +195,7 @@ void		*malloc_error_print(char *msg);
 /*error.c*/
 void		todo_exit(t_data *data);
 void		free_structs(t_data *data);
+void		perror_exit(t_data *data);
 void		*malloc_error(t_data *data, bool print);
 
 /*signals.c*/

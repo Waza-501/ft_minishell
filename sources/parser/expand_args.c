@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/30 17:29:54 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 12:39:17 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,15 @@ char	*get_arg_var(t_lexer *node, int idx)
 	int				size;
 	char			*var_copy;
 
-	size = (find_var_size(&node->string[idx + 1]) + 1);
+	//size = (find_var_size(&node->string[idx + 1]) + 1);
+	size = (find_var_size(&node->string[idx + 1]));
 	var_copy = (char *)malloc(sizeof(char) * (size + 1));
 	if (!var_copy)
 		return (malloc_error(NULL, true));
 	ft_strlcpy(var_copy, &node->string[idx + 1], size);
-	// if (!var_copy)
-	// 	return (malloc_error(NULL, true));
 	return (var_copy);
 }
 
-/**
- * @brief Replaces a variable in a token's string with its 
- * value from the environment.
- *
- * Finds the specified variable in the token's string, 
- * extracts the parts before and after the variable,
- * and reconstructs the string with the variable's value
- * from the environment list.
- *
- * @param list Pointer to the environment variable list.
- * @param node Pointer to the t_lexer node whose string will be modified.
- * @param arg_var The variable name to replace.
- * @return int Returns 0 on success, 1 on memory allocation failure or error.
- */
 int	replace_var(t_cdllist *list, t_lexer *node, char *arg_var)
 {
 	t_cd_ll_node	*var;
@@ -57,7 +42,7 @@ int	replace_var(t_cdllist *list, t_lexer *node, char *arg_var)
 	{
 		ft_free(&start);
 		ft_free(&end);
-		malloc_error(NULL, true);
+		return (malloc_error(NULL, true), 1);
 	}
 	if (reform_string(node, start, end, var->var_2) == false)
 	{

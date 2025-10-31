@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 16:59:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/30 17:14:23 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 15:48:13 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,7 @@
 
 bool	check_env_char(char c)
 {
-	printf("am I used?\n");
-	if (ft_isalpha(c))
-		return (true);
-	else if (ft_isdigit(c))
-		return (true);
-	else if (c == '_')
-		return (true);
-	else if (c == '$')
-		return (true);
-	else if (c == '?')
+	if (ft_isalpha(c) || ft_isdigit(c) || c == '_' || c == '$' || c == '?')
 		return (true);
 	return (false);
 }
@@ -52,7 +43,6 @@ int	find_var_size(char *str)
 	return (idx);
 }
 
-
 int	find_var_in_string(char *str, char *var)
 {
 	int	idx;
@@ -60,7 +50,7 @@ int	find_var_in_string(char *str, char *var)
 	idx = 0;
 	while (str[idx])
 	{
-		while (str[idx] != '$')
+		while (str[idx] && str[idx] != '$')
 			idx++;
 		if (str[idx] == '$')
 		{

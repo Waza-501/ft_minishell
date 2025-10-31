@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/29 12:24:27 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/30 17:37:08 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 13:19:28 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ void	free_structs(t_data *data)
 	if (data->commands)
 		clear_commands(data);
 	ft_free(&data);
+}
+
+void	perror_exit(t_data *data)
+{
+	perror("minishell: ");
+	free_structs(data);
+	exit(errno);
 }
 
 void	*malloc_error(t_data *data, bool print)

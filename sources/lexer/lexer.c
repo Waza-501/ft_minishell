@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 20:28:55 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/03 09:01:39 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/03 14:48:10 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	find_pipe_in_string(char *str)
 
 	idx = 0;
 	if (ft_strlen(str) == 1 || (str[idx] == S_Q || str[idx] == D_Q))
+		return (-1);
+	else if (ft_strlen(str) == 2 && (!ft_strncmp(str, "<<", 2) || !ft_strncmp(str, ">>", 2)))
 		return (-1);
 	while (str[idx])
 	{

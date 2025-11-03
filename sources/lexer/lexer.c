@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 20:28:55 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/27 15:11:43 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/27 15:15:04 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	to_be_named(t_lexer	*node, int n)
 	return (insert_new_node(node, new, old));
 }
 
-int	to_be_split(char *str)
+int	find_pipe_in_string(char *str)
 {
 	int	idx;
 
@@ -78,7 +78,7 @@ int	split_pipes(t_data *data)
 	copy = data->lexer;
 	while (copy)
 	{
-		i = to_be_split(copy->string);
+		i = find_pipe_in_string(copy->string);
 		if (i >= 0)
 			if (to_be_named(copy, i))
 				malloc_error(data, false);

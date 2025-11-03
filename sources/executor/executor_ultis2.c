@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/24 10:37:16 by haile         ########   odam.nl         */
+/*   Updated: 2025/10/30 11:26:08 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,44 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 	char	*tmp;
 
 	i = 0;
+	printf("🔍 ft_execve called for: %s\n", cmd->args[0]); // Debug
 	while (path && path[i])
 	{
+		printf("   Trying path[%d]: %s\n", i, path[i]); // Debug
 		tmp = ft_strjoin(path[i], "/");
+        if (!tmp) //debug
+        {
+            ft_free_arr(path);
+            exit(1);
+        }		
 		tmp = ft_strjoin_free(tmp, cmd->args[0]);
-		if (access(tmp, F_OK) == 0
-			&& execve(tmp, cmd->args, shell->env) == -1)
-		{
-			ft_free_arr(path);
-			perror(cmd->args[0]);
-			exit(-1);
-		}
+        if (!tmp) //debug
+        {
+            ft_free_arr(path);
+            exit(1);
+        }
+		printf("   Full path: %s\n", tmp); // Debug
+        if (access(tmp, X_OK) == 0) //debug
+        {
+            printf("   Found executable: %s\n", tmp); // Debug
+            
+            // Try to execute - this never returns on success
+            execve(tmp, cmd->args, shell->env);
+            
+            // If we reach here, execve failed
+            perror("execve");
+            ft_free_arr(path);
+            free(tmp);
+            exit(126); // Permission denied or exec format error
+        }
+		// Uncommand to debug
+		// if (access(tmp, F_OK) == 0
+		// 	&& execve(tmp, cmd->args, shell->env) == -1)
+		// {
+		// 	ft_free_arr(path);
+		// 	perror(cmd->args[0]);
+		// 	exit(-1);
+		// }
 		free(tmp);
 		i++;
 	}
@@ -141,7 +168,7 @@ bool	single_cmd(t_shell *shell)
 		save_stdin = ft_dup(STDIN_FILENO);
 		save_stdout = ft_dup(STDOUT_FILENO);
 		// if (handle_redirections(shell->cmds, shell)) //Command out for now Max because of missing function
-		// 	execute_builtin(shell->cmds, shell);
+		execute_builtin(shell->cmds, shell);
 		ft_dup2(save_stdin, STDIN_FILENO);
 		ft_dup2(save_stdout, STDOUT_FILENO);
 		return (true);

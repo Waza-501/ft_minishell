@@ -9,7 +9,7 @@ LIBFT			:= ./libraries/libft
 CDLL			:= ./libraries/cd_ll
 
 SOURCES_DIR	:=	sources/
-SOURCES		:=	lexer/lexer_list_clear.c\
+SOURCES		:=	lexer/lexer_list_utils.c\
 				lexer/lexer_list.c\
 				lexer/lexer_utils.c\
 				lexer/lexer.c\
@@ -61,12 +61,12 @@ libraries:
 			@$(MAKE) -C $(CDLL)
 
 clean:
-			@rm -rf $(OBJECTS)
+			@rm -f $(OBJECTS)
 			@$(MAKE) -C $(LIBFT) clean
 			@$(MAKE) -C $(CDLL) clean
 
 fclean:		clean
-			@rm -rf $(NAME)
+			@rm -f $(NAME)
 			@$(MAKE) -C $(LIBFT) fclean
 			@$(MAKE) -C $(CDLL) fclean
 			@if [ -d "$(OBJECTS_DIR)" ]; then rm -drf $(OBJECTS_DIR); fi

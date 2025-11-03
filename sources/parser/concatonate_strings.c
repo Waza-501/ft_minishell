@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/22 16:26:52 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 17:05:45 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ int	merge_nodes(t_lexer *node)
 {
 	char	*new;
 
-	if (!node->next)
-		return (1); /*implement error logging*/
 	new = ft_strjoin(node->string, node->next->string);
 	if (!new)
-		return (1); /*implement error logging*/
+		return (malloc_error(NULL, true), 1);
 	ft_free(&node->string);
 	node->string = new;
 	node->concat = node->next->concat;
@@ -40,68 +38,47 @@ int	merge_nodes(t_lexer *node)
 	return (0);
 }
 
-int	configure_redirect(t_lexer *node)
+int	configure_redirect(t_data *data, t_lexer *node)
 {
-	int		idx;
-	char	*tmp;
-
-	if (node->type == INPUT || node->type == OUTPUT)
-		idx = 1;
-	else
-		idx = 2;
-	if ((int)ft_strlen(node->string) == idx)
-	{
-		ft_bzero(node->string, idx);
-		if (node->next && node->next->type == PIPE)
-			return (0);
-		if (merge_nodes(node))
-			return (1);
-	}
-	else
-	{
-		tmp = ft_strdup(&node->string[idx]);
-		ft_free(node->string);
-		node->string = tmp;
-		if (!node->string)
-			return (1);
-	}
+	ft_free(&node->string);
+	if (merge_nodes(node))
+		malloc_error(data, false);
 	return (0);
 }
 
-/**
- * @brief Concatenates strings of token nodes in a linked list where needed.
- *
- * Iterates through the linked list of t_lexer nodes. For each node whose string
- * starts with a quote, trims the quotes and merges with subsequent nodes marked
- * for concatenation. Updates the concat flag and removes merged nodes.
- *
- * @param list Pointer to the head of the t_lexer linked list.
- * @return int Returns 0 on success, 
- * 1 on failure (e.g., memory allocation error).
- */
-bool	concatonate_strings(t_lexer	*list)
+/*rework documentation*/
+		// else if (copy && copy->type > 3)
+		// {
+		// 	if (configure_redirect(copy))
+		// 		return (false);
+		// }
+/*us this snippet for setting up redirection
+
+A heredoc must start and end with a quote, if one is given.
+Otherwise, this is a syntax error*/
+bool	concatonate_strings(t_data *data)
 {
 	t_lexer	*copy;
 
-	copy = list;
+	copy = data->lexer;
 	while (copy)
 	{
+		if (copy && copy->type > 3)
+			configure_redirect(data, copy);
 		if (copy && copy->concat == true)
 		{
 			while (copy->concat == true)
 			{
-				if (trim_quotes(copy) || trim_quotes(copy->next))
-					return (false);
+				if (trim_qt(copy, EMPTY) || trim_qt(copy->next, copy->type))
+					malloc_error(data, false);
 				copy->concat = false;
 				if (merge_nodes(copy))
-					return (false);
+					malloc_error(data, false);
 			}
 		}
-		else if (copy && copy->type > 3)
-		{
-			if (configure_redirect(copy))
-				return (false);
-		}
+		if (copy->type < 3)
+			if (trim_qt(copy, EMPTY))
+				malloc_error(data, false);
 		copy = copy->next;
 	}
 	return (true);

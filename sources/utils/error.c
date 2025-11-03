@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/29 12:24:27 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/27 13:12:39 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 13:19:28 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ void	free_structs(t_data *data)
 	ft_free(&data);
 }
 
+void	perror_exit(t_data *data)
+{
+	perror("minishell: ");
+	free_structs(data);
+	exit(errno);
+}
+
 void	*malloc_error(t_data *data, bool print)
 {
 	if (print == true)
@@ -40,5 +47,4 @@ void	*malloc_error(t_data *data, bool print)
 		return (NULL);
 	free_structs(data);
 	exit(1);
-	return (NULL);
 }

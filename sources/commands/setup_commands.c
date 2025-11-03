@@ -6,39 +6,47 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/22 13:57:40 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 15:17:33 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*add possible free + false return function*/
-bool	set_redirect(t_commands	*list, t_lexer *node)
+bool	simplified_redir(t_data *data, t_commands *list, t_lexer *node)
 {
-	if (node->type == INPUT)
+	if (node->type == INPUT || node->type == HEREDOC)
 	{
-		if (handle_input(list, node) == false)
-			return (false);
+		ft_free(&list->infile_s);
+		if (node->type == INPUT)
+			list->infile_s = ft_strjoin("<", node->string);
+		else
+			list->infile_s = ft_strjoin("<<", node->string);
 	}
-	else if (node->type == OUTPUT)
+	else if (node->type == OUTPUT || node->type == APPEND)
 	{
-		if (handle_output(list, node) == false)
-			return (false);
-	}
-	else if (node->type == APPEND)
-	{
-		if (handle_output(list, node) == false)
-			return (false);
-	}
-	else if (node->type == HEREDOC)
-	{
-		if (handle_output(list, node) == false)
-			return (false);
+		ft_free(&list->outfile_s);
+		if (node->type == OUTPUT)
+		if (node->type == APPEND)
+			list->outfile_s = ft_strjoin(">>", node->string);
 	}
 	return (true);
 }
 
-int	add_arg_to_list(t_commands *list, t_lexer *node)
+/*nope. It's easier to handle things like that later on*/
+bool	set_redirect(t_data *data, t_commands	*list, t_lexer *node)
+{
+	return (simplified_redir(data, list, node));
+	if (node->type == INPUT)
+		return (handle_input(data, list, node));
+	else if (node->type == OUTPUT)
+		return (handle_output(data, list, node));
+	else if (node->type == APPEND)
+		return (handle_output(data, list, node));
+	else if (node->type == HEREDOC)
+		return (handle_output(data, list, node));
+}
+
+int	add_arg_to_list(t_data *data, t_commands *list, t_lexer *node)
 {
 	char	**new_arr;
 	int		idx;
@@ -49,7 +57,7 @@ int	add_arg_to_list(t_commands *list, t_lexer *node)
 		idx++;
 	new_arr = malloc(sizeof(char *) * (idx + 2));
 	if (!new_arr)
-		return (1);
+		malloc_error(data, true);
 	idx = 0;
 	while (list->args && list->args[idx])
 	{
@@ -57,25 +65,25 @@ int	add_arg_to_list(t_commands *list, t_lexer *node)
 		idx++;
 	}
 	new_arr[idx] = ft_strdup(node->string);
-	new_arr[idx + 1] = NULL;
 	if (!new_arr[idx])
-		return (free(new_arr), 1);
+		return (ft_free(new_arr), malloc_error(data, true), 1);
+	new_arr[idx + 1] = NULL;
 	ft_free(&list->args);
 	list->args = new_arr;
 	return (0);
 }
 
 /*fix this either later, or tomorrow*/
-int	add_arg_cmd(t_commands *list, t_lexer *node)
+int	add_arg_cmd(t_data *data, t_commands *list, t_lexer *node)
 {
 	if (node->type > 3)
 	{
-		if (set_redirect(list, node) == false)
+		if (set_redirect(data, list, node) == false)
 			return (1);
 	}
 	else
 	{
-		if (add_arg_to_list(list, node))
+		if (add_arg_to_list(data, list, node))
 			return (1);
 	}
 	return (0);
@@ -115,7 +123,7 @@ int	build_command_list(t_data *data)
 		}
 		else
 		{
-			if (add_arg_cmd(command_list_last(data->commands), copy))
+			if (add_arg_cmd(data, command_list_last(data->commands), copy))
 				return (1);
 		}
 		copy = copy->next;

@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/27 12:25:35 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 15:57:12 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@
 int	g_exit_code = 0;
 
 /*wipe all data from data*/
-int	reset_data(t_data *data)
+int	reset_data(t_data *data, int code)
 {
-	//printf("resetting data\n");
 	ft_free(&data->input);
 	if (data->lexer)
 		clear_lexer(data);
 	if (data->commands)
 		clear_commands(data);
+	data->exit_code = code;
 	return (0);
 }
 
@@ -40,9 +40,9 @@ t_data	*init_data(void)
 		return (NULL);
 	new->input = NULL;
 	new->envp_copy = NULL;
-	new->exit_code = 0;
 	new->lexer = NULL;
 	new->commands = NULL;
+	new->exit_code = 0;
 	return (new);
 }
 
@@ -55,6 +55,7 @@ int	mini_loop(t_data *data)
 		set_signals_interactive();
 		data->input = readline("minishell$ ");
 		set_signals_noninteractive();
+		printf("last exit code: %i\n", data->exit_code);
 		if (!data->input)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
@@ -63,17 +64,15 @@ int	mini_loop(t_data *data)
 		if (ft_strlen(data->input) >= 4
 			&& (ft_strncmp(data->input, "exit", 4) == 0))
 			break ;
-		if (parse_input(data, data->input))
-			/*theoretically, this should no longer be possible*/
-			exit (1);
+		parse_input(data, data->input);
 		if (data->commands)
 		{
 			printf("Commands ready for execution\n");
 			//execute_commands(data);
+			reset_data(data, 0);
 		}
-		reset_data(data);
 	}
-	free(data->input);
+	ft_free(&data->input);/*only here for the exit escape to avoid mem leaks*/
 	cdll_del_list(data->envp_copy);
 	return (0);
 }

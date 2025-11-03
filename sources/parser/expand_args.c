@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/22 11:46:30 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 12:39:17 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,64 +17,15 @@ char	*get_arg_var(t_lexer *node, int idx)
 	int				size;
 	char			*var_copy;
 
-	size = (find_var_size(&node->string[idx + 1]) + 1);
+	//size = (find_var_size(&node->string[idx + 1]) + 1);
+	size = (find_var_size(&node->string[idx + 1]));
 	var_copy = (char *)malloc(sizeof(char) * (size + 1));
 	if (!var_copy)
-		return (NULL);
+		return (malloc_error(NULL, true));
 	ft_strlcpy(var_copy, &node->string[idx + 1], size);
-	if (!var_copy)
-		return (NULL);
 	return (var_copy);
 }
 
-int	find_var_in_string(char *str, char *var)
-{
-	int	idx;
-
-	idx = 0;
-	while (str[idx])
-	{
-		while (str[idx] != '$')
-			idx++;
-		if (str[idx] == '$')
-		{
-			if (!ft_strncmp(&str[idx + 1], var, ft_strlen(var)))
-				return (idx);
-			idx++;
-		}
-	}
-	return (idx);
-}
-
-bool	reform_string(t_lexer *node, char *start, char *end, char *middle)
-{
-	char	*temp;
-
-	temp = ft_strjoin(start, middle);
-	if (!temp)
-		return (false);
-	ft_free(&node->string);
-	node->string = ft_strjoin(temp, end);
-	ft_free(&temp);
-	if (!node->string)
-		return (false);
-	return (true);
-}
-
-/**
- * @brief Replaces a variable in a token's string with its 
- * value from the environment.
- *
- * Finds the specified variable in the token's string, 
- * extracts the parts before and after the variable,
- * and reconstructs the string with the variable's value
- * from the environment list.
- *
- * @param list Pointer to the environment variable list.
- * @param node Pointer to the t_lexer node whose string will be modified.
- * @param arg_var The variable name to replace.
- * @return int Returns 0 on success, 1 on memory allocation failure or error.
- */
 int	replace_var(t_cdllist *list, t_lexer *node, char *arg_var)
 {
 	t_cd_ll_node	*var;
@@ -88,10 +39,19 @@ int	replace_var(t_cdllist *list, t_lexer *node, char *arg_var)
 	end = ft_substr(node->string, (idx + ft_strlen(arg_var) + 1),
 			ft_strlen(&node->string[(idx + ft_strlen(arg_var) + 1)]));
 	if (!start || !end)
+	{
+		ft_free(&start);
+		ft_free(&end);
+		return (malloc_error(NULL, true), 1);
+	}
+	if (reform_string(node, start, end, var->var_2) == false)
+	{
+		ft_free(&start);
+		ft_free(&end);
 		return (1);
-	reform_string(node, start, end, var->var_2);
-	free(start);
-	free(end);
+	}
+	ft_free(&start);
+	ft_free(&end);
 	return (0);
 }
 
@@ -102,63 +62,44 @@ int	empty_space_dollar(char *start, int idx, int size, t_lexer *node)
 	end = ft_substr(node->string, (idx + size),
 			ft_strlen(&node->string[(idx + size)]));
 	if (!end)
-		return (1);
+		return (malloc_error(NULL, true), 1);
 	if (reform_string(node, start, end, "") == false)
-		return (free(end), 1);
-	free(end);
+	{
+		ft_free(&end);
+		return (1);
+	}
+	ft_free(&end);
 	return (0);
 }
 
-/**
- * @brief Determines the type of variable replacement needed in a token string.
- *
- * Searches for the variable in the node's string and decides how to
- * handle its replacement, including special cases like "$?" or numeric
- * variables. May update the node if needed.
- *
- * @param node Pointer to the t_lexer node containing the string.
- * @param arg_var The variable name to search for and process.
- * @return int Returns 0 on success, 1 on memory allocation failure or error.
- */
-int	find_replace_type(t_lexer *node, char *arg_var)
+/*redo documentation*/
+int	find_replace_type(t_data *data, t_lexer *node, char *arg_var)
 {
 	int				idx;
 	int				size;
 	char			*start;
 
 	idx = find_var_in_string(node->string, arg_var);
+	size = ft_strlen(arg_var);
+	if (size == 1 || !ft_strncmp(&node->string[idx], "$?", 2))
+		return (0);
 	start = ft_substr(node->string, 0, idx);
 	if (!start)
-		return (1);
-	size = ft_strlen(arg_var);
-	if (size == 1)
-		return (0);
-	if (!ft_strncmp(&node->string[idx], "$?", 2))
-		return (0);
+		malloc_error(data, true);
 	if (ft_isdigit(node->string[idx + 1]) || node->string[idx + 1] == '$')
 	{
 		if (empty_space_dollar(start, idx, 2, node))
-			return (free(start), 1);
+			malloc_error(data, false);
 	}
 	else
 		if (empty_space_dollar(start, idx, ft_strlen(arg_var) + 1, node))
-			return (free(start), 1);
-	free(start);
+			malloc_error(data, false);
+	ft_free(&start);
 	return (0);
 }
 
-/**
- * @brief Expands environment variables in a token's string.
- *
- * Iterates through the string of the given token node, finds variables to expand,
- * and replaces them with their values from the environment. Handles special cases
- * and returns false on error.
- *
- * @param data Pointer to the t_data structure containing environment variables.
- * @param node Pointer to the t_lexer node whose string will be expanded.
- * @return bool Returns true on success, false on failure.
- */
-bool	scan_expand(t_data *data, t_lexer *node)
+/*redo documentation*/
+int	scan_expand(t_data *data, t_lexer *node)
 {
 	size_t	idx;
 	char	*arg_var;
@@ -169,22 +110,22 @@ bool	scan_expand(t_data *data, t_lexer *node)
 	{
 		idx += find_dollar_sign(&node->string[idx]);
 		if (idx == ft_strlen(node->string))
-			return (true);
+			return (0);
 		arg_var = get_arg_var(node, idx);
 		if (!arg_var)
-			return (false);
+			malloc_error(data, false);
 		if (!cdll_get_node(data->envp_copy, false, arg_var))
 		{
-			if (find_replace_type(node, arg_var) == 1)
-				return (free(arg_var), false);
+			if (find_replace_type(data, node, arg_var) == 1)
+				return (ft_free(&arg_var), 1);
 		}
 		else
 			if (replace_var(data->envp_copy, node, arg_var) == 1)
-				return (free(arg_var), false);
-		free(arg_var);
+				return (ft_free(&arg_var), 1);
+		ft_free(&arg_var);
 		idx++;
 	}
-	return (true);
+	return (0);
 }
 
 bool	expand_args(t_data *data)
@@ -198,7 +139,7 @@ bool	expand_args(t_data *data)
 			copy = copy->next;
 		else
 		{
-			if (scan_expand(data, copy) == false)
+			if (scan_expand(data, copy))
 				return (false);
 			copy = copy->next;
 		}

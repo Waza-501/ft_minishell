@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/27 12:00:03 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/31 17:06:03 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
+# include <errno.h>
 # include <limits.h> /* LONG_MAX */
 # include <signal.h> /* SIQQUIT, SIGINT*/
 #include <sys/types.h> /*waitpid*/
@@ -32,7 +33,8 @@
 # define D_Q		34
 # define EOF_SQ		"unexpected EOF while looking for matching \'\n"
 # define EOF_DQ		"unexpected EOF while looking for matching \"\n"
-# define SYNTAX		"syntax error: unexpected end of file\n"
+# define SYNTAX		"syntax error near unexpected token "
+# define SYNTAX_EOF	"syntax error: unexpected end of file\n"
 
 # ifndef PATH_MAX
 #  define PATH_MAX 1024
@@ -67,6 +69,13 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }			t_lexer;
 
+typedef struct s_files
+{
+	char			*filename;
+	t_token_type	type;
+	struct s_files	*next;
+}			t_files;
+
 typedef struct s_commands
 {
 	char				**args;
@@ -74,6 +83,8 @@ typedef struct s_commands
 	char				*outfile_s;
 	int					infile;
 	int					outfile;
+	t_files				*infiles;
+	t_files				*outfiles;
 	bool				hd;
 	struct s_commands	*next;
 	struct s_commands	*prev;
@@ -86,18 +97,18 @@ typedef struct s_data
 {
 	char			*input;
 	t_cdllist		*envp_copy;
-	int				exit_code;
 	t_lexer			*lexer;
 	t_commands		*commands;
+	int				exit_code;
 	struct s_data	*next;
 	struct s_data	*prev;
 }			t_data;
 
 typedef struct s_shell
 {
-	char	**env; //enviroment variables array
+	char		**env; //enviroment variables array
 	t_commands	*cmds;
-	bool	stop; //stop flag for early termination
+	bool		stop; //stop flag for early termination
 }			t_shell;
 
 /*TEMPORARY*/
@@ -120,20 +131,23 @@ int			build_command_list(t_data *data);
 
 /*concatonate_strings*/
 bool		is_quotes(char c);
-bool		concatonate_strings(t_lexer *list);
+bool		concatonate_strings(t_data *data);
 
 /*concatonate_utils.c*/
 bool		is_quotes(char c);
 char		*identify_quotes(char c);
-int			trim_quotes(t_lexer *node);
+int			trim_qt(t_lexer *node, t_token_type type);
 
 /*expand_args.c/expand_utils.c*/
 bool		expand_args(t_data *data);
 bool		check_env_char(char c);
 int			find_dollar_sign(char *str);
 int			find_var_size(char *str);
+int			find_var_in_string(char *str, char *var);
+bool		reform_string(t_lexer *node, char *start, char *end, char *middle);
 
-/*lexer_list_clear.c*/
+/*lexer_list_utils.c*/
+int			insert_new_node(t_lexer *node, char *new, char *str);
 void		lex_del_node(t_lexer *node);
 void		lex_del_first(t_data *data);
 void		clear_lexer(t_data *data);
@@ -153,33 +167,35 @@ char		*strcpy_delim(char *str, char delim1, char delim2, char delim3);
 bool		setup_lexer(t_data *data);
 
 /*handle_append.c*/
-bool		handle_append(t_commands *list, t_lexer *node);
+bool		handle_append(t_data *data, t_commands *list, t_lexer *node);
 
 /*handle_heredoc.c*/
-bool		handle_heredoc(t_commands *list, t_lexer *node);
+bool		handle_heredoc(t_data *data, t_commands *list, t_lexer *node);
 
 /*handle_input.c*/
-int			close_existing_fd_in(t_commands *list);
-bool		handle_input(t_commands *list, t_lexer *node);
+int			close_existing_fd_in(t_data *data, t_commands *list);
+bool		handle_input(t_data *data, t_commands *list, t_lexer *node);
 
 /*handle_output.c*/
-int			close_existing_fd_out(t_commands *list);
-bool		handle_output(t_commands *list, t_lexer *node);
+int			close_existing_fd_out(t_data *data, t_commands *list);
+bool		handle_output(t_data *data, t_commands *list, t_lexer *node);
 
 /*parsing.c*/
 int			is_whitespace(char c);
 int			parse_input(t_data *data, char *str);
 
 /*set_redirect*/
-bool		set_redirect(t_commands *list, t_lexer *lexer);
+bool		set_redirect(t_data *data, t_commands *list, t_lexer *lexer);
 
 /*error_print.c*/
+void		print_syntax_error(char *msg, char *token);
 void		print_error(char *msg);
 void		*malloc_error_print(char *msg);
 
 /*error.c*/
 void		todo_exit(t_data *data);
 void		free_structs(t_data *data);
+void		perror_exit(t_data *data);
 void		*malloc_error(t_data *data, bool print);
 
 /*signals.c*/
@@ -194,7 +210,7 @@ void		ft_free(void *ptr);
 bool		find_matching_quotes(char *str, bool s_q, bool d_q);
 
 /*main.c*/
-int			reset_data(t_data *data);
+int			reset_data(t_data *data, int code);
 
 // Updated function prototypes Max
 bool        is_builtin(t_commands *cmd);

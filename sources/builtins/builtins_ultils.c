@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 13:57:55 by haile         #+#    #+#                 */
-/*   Updated: 2025/08/27 14:01:09 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/04 10:34:34 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int    modify_path(t_shell *shell, char *temp, int code, int code2)
     add_path(shell, temp);
     return (0);
 }
-
+/**
+ * @brief Get current working directory
+ * @return Allocated string with current directory or NULL on failure
+ */
 char    *get_pwd(void)
 {
     char    *buf;

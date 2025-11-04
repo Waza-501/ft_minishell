@@ -39,6 +39,7 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				builtins/ft_pwd.c\
 				builtins/ft_env.c\
 				builtins/ft_unset.c\
+				builtins/ft_export.c\
 				executor/executor_bridge.c\
 				executor/executor.c\
 				executor/executor_ultil1.c\

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:41:20 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/24 16:31:00 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 12:02:22 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	print_command_list(t_commands *list)
 					printf(", ");
 			}
 		}
-		printf("] infile [%s] outfile [%s]\n", copy->infile_s, copy->outfile_s);
+		printf("]");
+		print_file_list(copy->infiles, "infiles");
+		print_file_list(copy->outfiles, "outfiles");
+		printf("\n");
 		copy = copy->next;
 		i++;
 	}
@@ -61,6 +64,7 @@ void	clear_commands(t_data *data)
 			if (close(data->commands->outfile))
 				printf("write fail free error report thing using perror\n");
 		}
+		delete_files_list(data->commands);
 		ft_free(&data->commands);
 		data->commands = start;
 	}

@@ -22,12 +22,13 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				parser/expand_utils.c\
 				parser/parsing.c\
 				parser/strip_quotes.c\
+				redirection/files_list_utils.c\
+				redirection/files_list.c\
 				redirection/handle_append.c\
 				redirection/handle_heredoc.c\
 				redirection/handle_input.c\
 				redirection/handle_output.c\
 				redirection/redirect_utils.c\
-				redirection/files_list.c\
 				utils/copy_env.c\
 				utils/error_print.c\
 				utils/error.c\

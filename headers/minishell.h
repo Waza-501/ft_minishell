@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 09:04:23 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/04 11:37:56 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct s_shell
 }			t_shell;
 
 /*TEMPORARY*/
+void		print_file_list(t_files *files, char *str);
 void		print_tokenlist(t_lexer *list);
 void		print_command_list(t_commands *list);
 
@@ -168,7 +169,13 @@ char		*strcpy_delim(char *str, char delim1, char delim2, char delim3);
 
 /*lexer.c*/
 bool		setup_lexer(t_data *data);
+/*REDIRECTION*/
+/*files_list_utils.c*/
 
+/*files_list.c*/
+t_files		*get_last_file(t_files *list);
+void		delete_files_list(t_commands *cmd);
+int			add_file_node(t_files **list, t_lexer *lexer);
 /*handle_append.c*/
 bool		handle_append(t_data *data, t_commands *list, t_lexer *node);
 
@@ -176,11 +183,11 @@ bool		handle_append(t_data *data, t_commands *list, t_lexer *node);
 bool		handle_heredoc(t_data *data, t_commands *list, t_lexer *node);
 
 /*handle_input.c*/
-int			close_existing_fd_in(t_data *data, t_commands *list);
+int			close_existing_fd_in(t_commands *list);
 bool		handle_input(t_data *data, t_commands *list, t_lexer *node);
 
 /*handle_output.c*/
-int			close_existing_fd_out(t_data *data, t_commands *list);
+int			close_existing_fd_out(t_commands *list);
 bool		handle_output(t_data *data, t_commands *list, t_lexer *node);
 
 /*parsing.c*/

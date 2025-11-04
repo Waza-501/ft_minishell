@@ -6,13 +6,13 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/03 15:14:25 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 08:33:44 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 12:02:38 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_files	*new_files_node(char *str)
+static t_files	*new_files_node(char *str)
 {
 	t_files	*new;
 
@@ -38,6 +38,29 @@ t_files	*get_last_file(t_files *list)
 	return (copy);
 }
 
+void	delete_files_list(t_commands *cmd)
+{
+	t_files	*copy;
+	t_files	*next;
+
+	copy = cmd->infiles;
+	while (copy)
+	{
+		next = copy->next;
+		ft_free(&copy->filename);
+		ft_free(&copy);
+		copy = next;
+	}
+	copy = cmd->outfiles;
+	while (copy)
+	{
+		next = copy->next;
+		ft_free(&copy->filename);
+		ft_free(&copy);
+		copy = next;
+	}
+}
+
 int	add_file_node(t_files **list, t_lexer *lexer)
 {
 	t_files	*new;
@@ -51,7 +74,7 @@ int	add_file_node(t_files **list, t_lexer *lexer)
 		*list = new;
 		return (0);
 	}
-	copy = get_last_file(list);
+	copy = get_last_file(*list);
 	copy->next = new;
 	new->prev = copy;
 	return (0);

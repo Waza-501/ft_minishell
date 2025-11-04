@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 09:03:44 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/04 12:05:12 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,11 @@ bool	simplified_redir(t_data *data, t_commands *list, t_lexer *node)
 		if (add_file_node(&list->infiles, node))
 			malloc_error(data, false);
 	}
-	// {
-	// 	ft_free(&list->infile_s);
-	// 	if (node->type == INPUT)
-	// 		list->infile_s = ft_strjoin("<", node->string);
-	// 	else
-	// 		list->infile_s = ft_strjoin("<<", node->string);
-	// }
 	else if (node->type == OUTPUT || node->type == APPEND)
 	{
 		if (add_file_node(&list->outfiles, node))
 			malloc_error(data, false);
 	}
-	// {
-	// 	ft_free(&list->outfile_s);
-	// 	if (node->type == OUTPUT)
-	// 	if (node->type == APPEND)
-	// 		list->outfile_s = ft_strjoin(">>", node->string);
-	// }
 	return (true);
 }
 
@@ -105,17 +92,7 @@ int	check_commands(t_commands *list)
 	return (0);
 }
 
-/**
- * @brief Builds a linked list of command structures from lexer tokens.
- *
- * Parses the lexer token list, creating a new command node for each pipe token,
- * and adding arguments or redirections to the current command node for other
- * tokens. The resulting linked list represents the sequence of commands to be
- * executed, separated by pipes.
- *
- * @param data Pointer to the main data structure containing the lexer tokens.
- * @return int 0 on success, 1 on failure (e.g., memory allocation error).
- */
+
 int	build_command_list(t_data *data)
 {
 	t_lexer		*copy;
@@ -137,7 +114,7 @@ int	build_command_list(t_data *data)
 		}
 		copy = copy->next;
 	}
-	if (check_commands(data->commands))
-		return (1);
+	//if (check_commands(data->commands))
+		//return (1);
 	return (0);
 }

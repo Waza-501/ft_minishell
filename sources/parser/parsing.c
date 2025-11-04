@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/04 13:40:50 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 16:28:36 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	parse_input(t_data *data, char *str)
 		return (reset_data(data, 2));
 	if (expand_args(data) == false)
 		return (reset_data(data, 2));
-	if (concatonate_strings(data) == false)
+	if (concatenate_strings(data) == false)
 		reset_data(data, 1);
 	if (finalize_list(data))
 		reset_data(data, 1);

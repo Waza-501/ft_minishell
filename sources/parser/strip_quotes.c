@@ -6,18 +6,11 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/22 13:19:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 13:08:28 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 16:05:34 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	is_quotes(char c)
-{
-	if (c && (c == '\'' || c == '\"'))
-		return (true);
-	return (false);
-}
 
 static size_t	strlen_without_quotes(char *str)
 {

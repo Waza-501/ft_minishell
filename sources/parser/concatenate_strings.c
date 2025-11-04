@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 13:04:27 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 16:27:23 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ int	merge_nodes(t_lexer *node)
 	return (0);
 }
 
-int	configure_redirect(t_data *data, t_lexer *node)
-{
-	ft_free(&node->string);
-	if (merge_nodes(node))
-		malloc_error(data, false);
-	return (0);
-}
+// int	configure_redirect(t_data *data, t_lexer *node)
+// {
+// 	ft_free(&node->string);
+// 	if (merge_nodes(node))
+// 		malloc_error(data, false);
+// 	return (0);
+// }
 
-bool	concatonate_strings(t_data *data)
+bool	concatenate_strings(t_data *data)
 {
 	t_lexer	*copy;
 

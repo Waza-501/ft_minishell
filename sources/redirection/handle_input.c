@@ -6,11 +6,12 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 15:09:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:27:18 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "redirect.h"
 
 int	close_heredoc(t_commands *list)
 {

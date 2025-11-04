@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:12:51 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 14:44:51 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 16:27:12 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,21 @@ void	print_tokenlist(t_lexer *list)
 	{
 		printf("Type: ");
 		if (list->type == EMPTY)
-			printf("[EMPTY][CONCATONATE = %i]: String [%s]\n", list->concat, list->string);
+			printf("[EMPTY][concatenate = %i]: String [%s]\n", list->concat, list->string);
 		else if (list->type == ARG)
-			printf("[ARG][CONCATONATE = %i]: String [%s]\n", list->concat, list->string);
+			printf("[ARG][concatenate = %i]: String [%s]\n", list->concat, list->string);
 		else if (list->type == NOEXPAND)
-			printf("[NOEXPAND][CONCATONATE = %i]: String [%s]\n", list->concat, list->string);
+			printf("[NOEXPAND][concatenate = %i]: String [%s]\n", list->concat, list->string);
 		else if (list->type == PIPE)
-			printf("[PIPE][CONCATONATE = %i]: String [%s]\n", list->concat, list->string);
+			printf("[PIPE][concatenate = %i]: String [%s]\n", list->concat, list->string);
 		else if (list->type == INPUT)
-			printf("[INPUT][CONCATONATE = %i]: String [%s]\n", list->concat, list->string);
+			printf("[INPUT][concatenate = %i]: String [%s]\n", list->concat, list->string);
 		else if (list->type == OUTPUT)
-			printf("[OUTPUT][CONCATONATE = %i]: String [%s]\n", list->concat, list->string);
+			printf("[OUTPUT][concatenate = %i]: String [%s]\n", list->concat, list->string);
 		else if (list->type == HEREDOC)
-			printf("[HEREDOC][CONCATONATE = %i]: String [%s]\n", list->concat, list->string);
+			printf("[HEREDOC][concatenate = %i]: String [%s]\n", list->concat, list->string);
 		else if (list->type == APPEND)
-			printf("[APPEND][CONCATONATE = %i]: String [%s]\n", list->concat, list->string);
+			printf("[APPEND][concatenate = %i]: String [%s]\n", list->concat, list->string);
 		list = list->next;
 	}
 	printf("-------------------------\n\n");

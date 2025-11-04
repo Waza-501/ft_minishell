@@ -6,13 +6,13 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 15:09:21 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 17:01:38 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	simplified_redir(t_data *data, t_commands *list, t_lexer *node)
+int	simplified_redir(t_data *data, t_commands *list, t_lexer *node)
 {
 	if (node->type == INPUT || node->type == HEREDOC)
 	{
@@ -24,10 +24,10 @@ bool	simplified_redir(t_data *data, t_commands *list, t_lexer *node)
 		if (add_file_node(&list->outfiles, node))
 			malloc_error(data, false);
 	}
-	return (true);
+	return (0);
 }
 
-int	add_arg_to_list(t_data *data, t_commands *list, t_lexer *node)
+static int	add_arg_to_list(t_data *data, t_commands *list, t_lexer *node)
 {
 	char	**new_arr;
 	int		idx;
@@ -54,22 +54,25 @@ int	add_arg_to_list(t_data *data, t_commands *list, t_lexer *node)
 	return (0);
 }
 
-/*fix this either later, or tomorrow*/
-int	add_arg_cmd(t_data *data, t_commands *list, t_lexer *node)
+static int	add_arg_cmd(t_data *data, t_commands *list, t_lexer *node)
 {
 	if (node->type > 3)
-	{
-		if (simplified_redir(data, list, node) == false)
-			return (1);
-	}
+		simplified_redir(data, list, node);
 	else
-	{
-		if (add_arg_to_list(data, list, node))
-			return (1);
-	}
+		add_arg_to_list(data, list, node);
 	return (0);
 }
 
+/*		if (copy->type == PIPE)
+		{
+			if (add_command_node(&data->commands))
+				return (1);
+		}
+		else
+		{
+			if (add_arg_cmd(data, command_list_last(data->commands), copy))
+				return (1);
+		}*/
 int	build_command_list(t_data *data)
 {
 	t_lexer		*copy;
@@ -80,15 +83,9 @@ int	build_command_list(t_data *data)
 	while (copy)
 	{
 		if (copy->type == PIPE)
-		{
-			if (add_command_node(&data->commands))
-				return (1);
-		}
+			add_command_node(&data->commands);
 		else
-		{
-			if (add_arg_cmd(data, command_list_last(data->commands), copy))
-				return (1);
-		}
+			add_arg_cmd(data, command_list_last(data->commands), copy);
 		copy = copy->next;
 	}
 	return (0);

@@ -6,11 +6,12 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/24 15:47:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/24 15:48:22 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 16:08:26 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
 size_t	ft_strlen_delim(char *str, char delim)
 {
@@ -50,18 +51,4 @@ char	*strcpy_delim(char *str, char delim1, char delim2, char delim3)
 	}
 	new[idx] = '\0';
 	return (new);
-}
-
-bool	id_token(char *str)
-{
-	int		idx;
-
-	idx = 0;
-	if (str[idx] == '|')
-		return (true);
-	else if (str[idx] == '<')
-		return (true);
-	else if (str[idx] == '>')
-		return (true);
-	return (false);
 }

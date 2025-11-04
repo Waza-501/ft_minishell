@@ -6,11 +6,12 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/31 09:49:10 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/24 15:21:34 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 16:01:03 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
 t_lexer	*new_lex_node(char *str)
 {

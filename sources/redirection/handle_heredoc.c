@@ -6,11 +6,12 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 10:52:06 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:27:13 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "redirect.h"
 
 int	create_hd_file(t_data *data, t_commands *list)
 {

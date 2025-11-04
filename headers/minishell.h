@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 15:07:35 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:26:37 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,47 +55,6 @@ void		print_command_list(t_commands *list);
 /*copy_env*/
 t_cdllist	*copy_envp(char **envp);
 
-/*concatonate_strings*/
-int			merge_nodes(t_lexer *node);
-bool		is_quotes(char c);
-bool		concatonate_strings(t_data *data);
-
-/*concatonate_utils.c*/
-bool		is_quotes(char c);
-char		*identify_quotes(char c);
-int			remove_quotes(t_lexer *node);
-int			trim_quotes(t_lexer *node);
-
-/*lexer_utils.c*/
-size_t		ft_strlen_delim(char *str, char delim);
-char		*strcpy_delim(char *str, char delim1, char delim2, char delim3);
-
-/*lexer.c*/
-bool		setup_lexer(t_data *data);
-
-/*REDIRECTION*/
-/*files_list.c*/
-t_files		*get_last_file(t_files *list);
-void		delete_files_list(t_commands *cmd);
-int			add_file_node(t_files **list, t_lexer *lexer);
-
-/*handle_append.c*/
-bool		handle_append(t_data *data, t_commands *list, t_lexer *node);
-
-/*handle_heredoc.c*/
-bool		handle_heredoc(t_data *data, t_commands *list, t_lexer *node);
-
-/*handle_input.c*/
-int			close_existing_fd_in(t_commands *list);
-bool		handle_input(t_data *data, t_commands *list, t_lexer *node);
-
-/*handle_output.c*/
-int			close_existing_fd_out(t_commands *list);
-bool		handle_output(t_data *data, t_commands *list, t_lexer *node);
-
-/*set_redirect*/
-bool		set_redirect(t_data *data, t_commands *list, t_lexer *lexer);
-
 /*error_print.c*/
 void		print_syntax_error(char *msg, char *token);
 void		print_error(char *msg);
@@ -109,9 +68,6 @@ void		*malloc_error(t_data *data, bool print);
 /*signals.c*/
 void		set_signals_interactive(void);
 void		set_signals_noninteractive(void);
-
-/*tokeniser.c*/
-bool		assign_type(t_data *data);
 
 /*utils.c*/
 void		ft_free(void *ptr);

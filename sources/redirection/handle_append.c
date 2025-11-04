@@ -6,11 +6,12 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:49 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 10:49:40 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:27:09 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "redirect.h"
 
 bool	handle_append(t_data *data, t_commands *list, t_lexer *node)
 {

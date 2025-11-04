@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 13:45:54 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 17:40:07 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static char	*get_arg_var(t_lexer *node, int idx)
 	if (!var_copy)
 		return (malloc_error(NULL, true));
 	ft_strlcpy(var_copy, &node->string[idx + 1], size);
+	printf("%s\n", var_copy);
 	return (var_copy);
 }
 
@@ -114,6 +115,7 @@ int	scan_expand(t_data *data, t_lexer *node)
 		arg_var = get_arg_var(node, idx);
 		if (!arg_var)
 			malloc_error(data, false);
+			printf("arg_var is %s\n", arg_var);
 		if (!cdll_get_node(data->envp_copy, false, arg_var))
 		{
 			if (find_replace_type(data, node, arg_var) == 1)

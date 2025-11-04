@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:28:02 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 15:04:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 16:21:45 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,15 @@ int			build_command_list(t_data *data);
 
 /*commands_list.c*/
 // t_commands	*init_commands(void);
-// t_commands	*command_list_last(t_commands *list);
+t_commands	*command_list_last(t_commands *list);
+void		clear_commands(t_data *data);
 int			add_command_node(t_commands	**list);
 
 /*lexer_list_utils.c*/
+int			merge_nodes(t_lexer *node);
 int			insert_new_node(t_lexer *node, char *new, char *str);
 void		lex_del_node(t_lexer *node);
-void		lex_del_first(t_data *data);
+//void		lex_del_first(t_data *data);
 void		clear_lexer(t_data *data);
 
 /*lexer_list.c*/
@@ -105,6 +107,10 @@ t_lexer		*lex_last(t_lexer *list);
 int			lex_add_next(t_lexer *list, t_lexer *new);
 int			lex_add_back(t_lexer **list, t_lexer *new);
 int			add_lex_node(char *str, t_lexer **lexer);
+
+/*files_list.c*/
+void		delete_files_list(t_commands *cmd);
+int			add_file_node(t_files **list, t_lexer *lexer);
 
 /*data.c*/
 void		free_data(t_data *data);

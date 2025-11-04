@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/18 22:11:26 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/27 14:57:30 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 17:30:46 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ t_cd_ll_node	*cdll_get_node(t_cdllist *list, bool clear, char *name)
 		return (copy);
 	else
 	{
-		while (list->size >= i && cdll_strncmp(copy->var_1, name, cdll_strlen(name)))
+		while (list->size >= i
+			&& cdll_strncmp(copy->var_1, name, cdll_strlen(name)))
 		{
 			copy = copy->next;
 			i++;

@@ -6,11 +6,12 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/03 15:14:25 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 12:02:38 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:26:57 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "redirect.h"
 
 static t_files	*new_files_node(char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/22 13:19:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/03 13:23:32 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 13:08:28 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@ bool	is_quotes(char c)
 		return (true);
 	return (false);
 }
-
-// char	*identify_quotes(char c)
-// {
-// 	if (c == '\'')
-// 		return ("\'");
-// 	return ("\"");
-// }
 
 static size_t	strlen_without_quotes(char *str)
 {
@@ -69,7 +62,7 @@ static int	reform_str(char *str, char *new)
 		if (str[i] == S_Q || str[i] == D_Q)
 		{
 			quote = str[i++];
-			while(str[i] && str[i] != quote)
+			while (str[i] && str[i] != quote)
 				new[j++] = str[i++];
 			if (str[i] == quote)
 				i++;
@@ -97,19 +90,3 @@ int	remove_quotes(t_lexer *node)
 	node->string = new;
 	return (0);
 }
-
-// int	trim_quotes(t_lexer *node)
-// {
-// 	char	*new;
-
-// 	new = NULL;
-// 	if (!node->string || is_quotes(node->string[0]) == false
-// 		|| node->type == HEREDOC)
-// 		return (0);
-// 	new = ft_strtrim(node->string, identify_quotes(node->string[0]));
-// 	if (!new)
-// 		return (malloc_error(NULL, true), 1);
-// 	ft_free (&node->string);
-// 	node->string = new;
-// 	return (0);
-// }

@@ -6,32 +6,14 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/03 15:12:27 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 13:40:50 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
-
-int	is_whitespace(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\v'
-		|| c == '\f');
-}
-
-bool	is_space(const char *str)
-{
-	if (!str)
-		return (true);
-	while (*str)
-	{
-		if (!is_whitespace(*str))
-			return (false);
-		str++;
-	}
-	return (true);
-}
+#include "readline.h"
+#include "parser.h"
+#include "expand.h"
 
 static int	finalize_list(t_data *data)
 {
@@ -49,7 +31,7 @@ static int	finalize_list(t_data *data)
 				malloc_error(data, false);
 		}
 		if (copy->type != HEREDOC && (copy->string[0] != '\''
-			&& copy->string[ft_strlen(copy->string) - 1] != '\''))
+				&& copy->string[ft_strlen(copy->string) - 1] != '\''))
 		{
 			if (remove_quotes(copy))
 				malloc_error(data, false);
@@ -82,7 +64,7 @@ int	parse_input(t_data *data, char *str)
 	copy = data->lexer;
 	print_tokenlist(copy);
 	if (build_command_list(data))
-		return (0);/*implement error logging*/
+		return (0);
 	clear_lexer(data);
 	print_command_list(data->commands);
 	return (0);

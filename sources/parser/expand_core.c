@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   files_list_utils.c                                 :+:    :+:            */
+/*   expand_core.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/11/04 11:03:42 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 12:58:23 by owhearn       ########   odam.nl         */
+/*   Created: 2025/11/04 13:32:49 by owhearn       #+#    #+#                 */
+/*   Updated: 2025/11/04 13:38:36 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "expand.h"
 
-void	print_file_list(t_files *files, char *str)
+bool	expand_args(t_data *data)
 {
-	t_files	*copy;
+	t_lexer	*copy;
 
-	printf(" %s [", str);
-	copy = files;
-	if (copy)
+	copy = data->lexer;
+	while (copy)
 	{
-		while (copy)
+		if (copy->type == NOEXPAND)
+			copy = copy->next;
+		else
 		{
-			printf("%s", copy->filename);
-			if (copy->next)
-				printf(", ");
+			if (scan_expand(data, copy))
+				return (false);
 			copy = copy->next;
 		}
 	}
-	printf("]");
+	return (true);
 }

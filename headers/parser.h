@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   files_list_utils.c                                 :+:    :+:            */
+/*   parser.h                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/11/04 11:03:42 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 12:58:23 by owhearn       ########   odam.nl         */
+/*   Created: 2025/11/04 13:18:22 by owhearn       #+#    #+#                 */
+/*   Updated: 2025/11/04 13:33:23 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef PARSER_H
+# define PARSER_H
 
-void	print_file_list(t_files *files, char *str)
-{
-	t_files	*copy;
+# include "structs.h"
 
-	printf(" %s [", str);
-	copy = files;
-	if (copy)
-	{
-		while (copy)
-		{
-			printf("%s", copy->filename);
-			if (copy->next)
-				printf(", ");
-			copy = copy->next;
-		}
-	}
-	printf("]");
-}
+/*parsing_utils, should probably be turned into is*/
+int		is_whitespace(char c);
+bool	is_space(const char *str);
+
+/*parsing.c*/
+int		parse_input(t_data *data, char *str);
+
+#endif

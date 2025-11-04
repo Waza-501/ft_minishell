@@ -19,7 +19,9 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				commands/setup_commands.c\
 				parser/concatonate_strings.c\
 				parser/expand_args.c\
+				parser/expand_core.c\
 				parser/expand_utils.c\
+				parser/parsing_utils.c\
 				parser/parsing.c\
 				parser/strip_quotes.c\
 				redirection/files_list_utils.c\
@@ -43,6 +45,7 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				executor/executor.c\
 				executor/executor_ultil1.c\
 				executor/executor_ultis2.c\
+				printing.c\
 
 OBJECTS_DIR	:=	objects/
 OBJECTS		:=	$(addprefix $(OBJECTS_DIR), $(SOURCES:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:40:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 11:44:30 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 14:45:15 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ t_commands	*init_commands(void)
 	new->args = NULL;
 	new->infile_s = NULL;
 	new->outfile_s = NULL;
-	new->infile = -1;/*potentially set this to stdin*/
-	new->outfile = -1;/*potentially set this to stdout*/
+	new->infile = -1;
+	new->outfile = -1;
 	new->infiles = NULL;
 	new->outfiles = NULL;
 	new->next = NULL;
 	new->prev = NULL;
-	//new fields for execution
 	new->n = 0;
 	new->pid = -1;
 	new->pipefd[0] = -1;

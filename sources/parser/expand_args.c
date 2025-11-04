@@ -6,18 +6,18 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/31 12:39:17 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 13:45:54 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "expand.h"
 
-char	*get_arg_var(t_lexer *node, int idx)
+static char	*get_arg_var(t_lexer *node, int idx)
 {
 	int				size;
 	char			*var_copy;
 
-	//size = (find_var_size(&node->string[idx + 1]) + 1);
 	size = (find_var_size(&node->string[idx + 1]));
 	var_copy = (char *)malloc(sizeof(char) * (size + 1));
 	if (!var_copy)
@@ -26,7 +26,7 @@ char	*get_arg_var(t_lexer *node, int idx)
 	return (var_copy);
 }
 
-int	replace_var(t_cdllist *list, t_lexer *node, char *arg_var)
+static int	replace_var(t_cdllist *list, t_lexer *node, char *arg_var)
 {
 	t_cd_ll_node	*var;
 	int				idx;
@@ -55,7 +55,7 @@ int	replace_var(t_cdllist *list, t_lexer *node, char *arg_var)
 	return (0);
 }
 
-int	empty_space_dollar(char *start, int idx, int size, t_lexer *node)
+static int	empty_space_dollar(char *start, int idx, int size, t_lexer *node)
 {
 	char	*end;
 
@@ -73,7 +73,7 @@ int	empty_space_dollar(char *start, int idx, int size, t_lexer *node)
 }
 
 /*redo documentation*/
-int	find_replace_type(t_data *data, t_lexer *node, char *arg_var)
+static int	find_replace_type(t_data *data, t_lexer *node, char *arg_var)
 {
 	int				idx;
 	int				size;
@@ -126,23 +126,4 @@ int	scan_expand(t_data *data, t_lexer *node)
 		idx++;
 	}
 	return (0);
-}
-
-bool	expand_args(t_data *data)
-{
-	t_lexer	*copy;
-
-	copy = data->lexer;
-	while (copy)
-	{
-		if (copy->type == NOEXPAND)
-			copy = copy->next;
-		else
-		{
-			if (scan_expand(data, copy))
-				return (false);
-			copy = copy->next;
-		}
-	}
-	return (true);
 }

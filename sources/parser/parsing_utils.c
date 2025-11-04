@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   files_list_utils.c                                 :+:    :+:            */
+/*   parsing_utils.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/11/04 11:03:42 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 12:58:23 by owhearn       ########   odam.nl         */
+/*   Created: 2025/11/04 13:13:56 by owhearn       #+#    #+#                 */
+/*   Updated: 2025/11/04 13:25:03 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_file_list(t_files *files, char *str)
+int	is_whitespace(char c)
 {
-	t_files	*copy;
+	return (c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\v'
+		|| c == '\f');
+}
 
-	printf(" %s [", str);
-	copy = files;
-	if (copy)
+bool	is_space(const char *str)
+{
+	if (!str)
+		return (true);
+	while (*str)
 	{
-		while (copy)
-		{
-			printf("%s", copy->filename);
-			if (copy->next)
-				printf(", ");
-			copy = copy->next;
-		}
+		if (!is_whitespace(*str))
+			return (false);
+		str++;
 	}
-	printf("]");
+	return (true);
 }

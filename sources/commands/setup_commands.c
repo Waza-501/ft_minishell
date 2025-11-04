@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 12:05:12 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 14:46:00 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ bool	simplified_redir(t_data *data, t_commands *list, t_lexer *node)
 	return (true);
 }
 
-/*nope. It's easier to handle things like that later on*/
-bool	set_redirect(t_data *data, t_commands	*list, t_lexer *node)
-{
-	return (simplified_redir(data, list, node));
-	if (node->type == INPUT)
-		return (handle_input(data, list, node));
-	else if (node->type == OUTPUT)
-		return (handle_output(data, list, node));
-	else if (node->type == APPEND)
-		return (handle_output(data, list, node));
-	else if (node->type == HEREDOC)
-		return (handle_output(data, list, node));
-}
+// /*nope. It's easier to handle things like that later on*/
+// bool	set_redirect(t_data *data, t_commands	*list, t_lexer *node)
+// {
+// 	return (simplified_redir(data, list, node));
+// 	if (node->type == INPUT)
+// 		return (handle_input(data, list, node));
+// 	else if (node->type == OUTPUT)
+// 		return (handle_output(data, list, node));
+// 	else if (node->type == APPEND)
+// 		return (handle_output(data, list, node));
+// 	else if (node->type == HEREDOC)
+// 		return (handle_output(data, list, node));
+// }
 
 int	add_arg_to_list(t_data *data, t_commands *list, t_lexer *node)
 {
@@ -74,7 +74,7 @@ int	add_arg_cmd(t_data *data, t_commands *list, t_lexer *node)
 	if (node->type > 3)
 	{
 
-		if (set_redirect(data, list, node) == false)
+		if (simplified_redir(data, list, node) == false)
 			return (1);
 	}
 	else
@@ -84,14 +84,6 @@ int	add_arg_cmd(t_data *data, t_commands *list, t_lexer *node)
 	}
 	return (0);
 }
-
-int	check_commands(t_commands *list)
-{
-	(void)list;
-	printf("to do: check commands. Make sure they don't end on a pipe\n");
-	return (0);
-}
-
 
 int	build_command_list(t_data *data)
 {
@@ -114,7 +106,5 @@ int	build_command_list(t_data *data)
 		}
 		copy = copy->next;
 	}
-	//if (check_commands(data->commands))
-		//return (1);
 	return (0);
 }

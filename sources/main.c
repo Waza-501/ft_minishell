@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/04 12:06:08 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 12:53:22 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ t_data	*init_data(void)
 	return (new);
 }
 
-// if (data->input[0] == 'f')
-// 	rl_clear_history();
 int	mini_loop(t_data *data)
 {
 	while (1)
@@ -72,30 +70,9 @@ int	mini_loop(t_data *data)
 			reset_data(data, 0);
 		}
 	}
-	ft_free(&data->input);/*only here for the exit escape to avoid mem leaks*/
-	cdll_del_list(data->envp_copy);
+	free_structs(data);
 	return (0);
 }
-
-// void	print_envp(char **envp, t_cdllist *list)
-// {
-// 	int	i;
-//
-// 	i = 0;
-// 	while (envp[i])
-// 	{
-// 		printf("%s\n", envp[i]);
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (i < list->size)
-// 	{
-// 		printf("%s\n", list->current->var_1);
-// 		list->current = list->current->next;
-// 		i++;
-// 	}
-// 	list->current = list->head;
-// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -115,6 +92,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else if (argc == 1)
 		mini_loop(data);
-	ft_free(&data);
 	return (0);
 }

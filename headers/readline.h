@@ -1,32 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   files_list_utils.c                                 :+:    :+:            */
+/*   readline.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/11/04 11:03:42 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 12:58:23 by owhearn       ########   odam.nl         */
+/*   Created: 2025/11/04 13:16:00 by owhearn       #+#    #+#                 */
+/*   Updated: 2025/11/04 13:16:02 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef READLINE_H
+# define READLINE_H
 
-void	print_file_list(t_files *files, char *str)
-{
-	t_files	*copy;
+# include <readline/readline.h>
+# include <readline/history.h>
 
-	printf(" %s [", str);
-	copy = files;
-	if (copy)
-	{
-		while (copy)
-		{
-			printf("%s", copy->filename);
-			if (copy->next)
-				printf(", ");
-			copy = copy->next;
-		}
-	}
-	printf("]");
-}
+#endif

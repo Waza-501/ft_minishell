@@ -6,16 +6,16 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/04 12:53:22 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 13:31:45 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
+#include "readline.h"
+#include "parser.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
 int	g_exit_code = 0;
 

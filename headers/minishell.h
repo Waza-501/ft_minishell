@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 11:37:56 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 13:39:54 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include "../libraries/libft/libft.h"
-# include "../libraries/cd_ll/headers/cd_ll.h"
+# include "structs.h"
 # include <stdbool.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -24,8 +24,8 @@
 # include <errno.h>
 # include <limits.h> /* LONG_MAX */
 # include <signal.h> /* SIQQUIT, SIGINT*/
-#include <sys/types.h> /*waitpid*/
-#include <sys/wait.h> /*waitpid*/
+# include <sys/types.h> /*waitpid*/
+# include <sys/wait.h> /*waitpid*/
 
 # define DELIMS 	" \t\r\n\v\f"
 # define SPACE		' '
@@ -46,71 +46,6 @@
 
 /*global variable*/
 extern int		g_exit_code;
-
-typedef enum e_token_type
-{
-	EMPTY = 0,
-	ARG,
-	NOEXPAND,
-	PIPE,
-	INPUT,
-	OUTPUT,
-	HEREDOC,
-	APPEND,
-}	t_token_type;
-
-typedef struct s_lexer
-{
-	int				id;
-	t_token_type	type;
-	char			*string;
-	bool			concat;
-	struct s_lexer	*next;
-	struct s_lexer	*prev;
-}			t_lexer;
-
-typedef struct s_files
-{
-	char			*filename;
-	t_token_type	type;
-	struct s_files	*next;
-	struct s_files	*prev;
-}			t_files;
-
-typedef struct s_commands
-{
-	char				**args;
-	char				*infile_s;
-	char				*outfile_s;
-	int					infile;
-	int					outfile;
-	t_files				*infiles;
-	t_files				*outfiles;
-	bool				hd;
-	struct s_commands	*next;
-	struct s_commands	*prev;
-	int					n; // command number in pipeline
-	pid_t				pid; //process id when executed
-	int					pipefd[2]; //pipe file descriptors (read, write)
-}			t_commands;
-
-typedef struct s_data
-{
-	char			*input;
-	t_cdllist		*envp_copy;
-	t_lexer			*lexer;
-	t_commands		*commands;
-	int				exit_code;
-	struct s_data	*next;
-	struct s_data	*prev;
-}			t_data;
-
-typedef struct s_shell
-{
-	char		**env; //enviroment variables array
-	t_commands	*cmds;
-	bool		stop; //stop flag for early termination
-}			t_shell;
 
 /*TEMPORARY*/
 void		print_file_list(t_files *files, char *str);
@@ -142,14 +77,6 @@ char		*identify_quotes(char c);
 int			remove_quotes(t_lexer *node);
 int			trim_quotes(t_lexer *node);
 
-/*expand_args.c/expand_utils.c*/
-bool		expand_args(t_data *data);
-bool		check_env_char(char c);
-int			find_dollar_sign(char *str);
-int			find_var_size(char *str);
-int			find_var_in_string(char *str, char *var);
-bool		reform_string(t_lexer *node, char *start, char *end, char *middle);
-
 /*lexer_list_utils.c*/
 int			insert_new_node(t_lexer *node, char *new, char *str);
 void		lex_del_node(t_lexer *node);
@@ -169,9 +96,8 @@ char		*strcpy_delim(char *str, char delim1, char delim2, char delim3);
 
 /*lexer.c*/
 bool		setup_lexer(t_data *data);
-/*REDIRECTION*/
-/*files_list_utils.c*/
 
+/*REDIRECTION*/
 /*files_list.c*/
 t_files		*get_last_file(t_files *list);
 void		delete_files_list(t_commands *cmd);
@@ -189,10 +115,6 @@ bool		handle_input(t_data *data, t_commands *list, t_lexer *node);
 /*handle_output.c*/
 int			close_existing_fd_out(t_commands *list);
 bool		handle_output(t_data *data, t_commands *list, t_lexer *node);
-
-/*parsing.c*/
-int			is_whitespace(char c);
-int			parse_input(t_data *data, char *str);
 
 /*set_redirect*/
 bool		set_redirect(t_data *data, t_commands *list, t_lexer *lexer);

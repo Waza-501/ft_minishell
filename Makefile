@@ -30,13 +30,13 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				redirection/handle_heredoc.c\
 				redirection/handle_input.c\
 				redirection/handle_output.c\
-				redirection/redirect_utils.c\
 				utils/copy_env.c\
 				utils/error_print.c\
 				utils/error.c\
 				utils/signals.c\
 				utils/utils.c\
 				main.c\
+				data.c\
 				builtins/ft_echo.c\
 				builtins/ft_pwd.c\
 				builtins/ft_env.c\

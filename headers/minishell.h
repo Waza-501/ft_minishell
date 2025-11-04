@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 13:39:54 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:04:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,6 @@ void		print_command_list(t_commands *list);
 /*copy_env*/
 t_cdllist	*copy_envp(char **envp);
 
-/*commands_list.c*/
-t_commands	*init_commands(void);
-t_commands	*command_list_last(t_commands *list);
-int			add_command_node(t_commands	**list);
-
-/*commands_list_utils.c*/
-void		clear_commands(t_data *data);
-
-/*setup_commands.c*/
-int			build_command_list(t_data *data);
-
 /*concatonate_strings*/
 int			merge_nodes(t_lexer *node);
 bool		is_quotes(char c);
@@ -76,19 +65,6 @@ bool		is_quotes(char c);
 char		*identify_quotes(char c);
 int			remove_quotes(t_lexer *node);
 int			trim_quotes(t_lexer *node);
-
-/*lexer_list_utils.c*/
-int			insert_new_node(t_lexer *node, char *new, char *str);
-void		lex_del_node(t_lexer *node);
-void		lex_del_first(t_data *data);
-void		clear_lexer(t_data *data);
-
-/*lexer_list.c*/
-t_lexer		*new_lex_node(char *str);
-t_lexer		*lex_last(t_lexer *list);
-int			lex_add_next(t_lexer *list, t_lexer *new);
-int			lex_add_back(t_lexer **list, t_lexer *new);
-int			add_lex_node(char *str, t_lexer **lexer);
 
 /*lexer_utils.c*/
 size_t		ft_strlen_delim(char *str, char delim);
@@ -102,6 +78,7 @@ bool		setup_lexer(t_data *data);
 t_files		*get_last_file(t_files *list);
 void		delete_files_list(t_commands *cmd);
 int			add_file_node(t_files **list, t_lexer *lexer);
+
 /*handle_append.c*/
 bool		handle_append(t_data *data, t_commands *list, t_lexer *node);
 
@@ -125,8 +102,7 @@ void		print_error(char *msg);
 void		*malloc_error_print(char *msg);
 
 /*error.c*/
-void		todo_exit(t_data *data);
-void		free_structs(t_data *data);
+void		free_data(t_data *data);
 void		perror_exit(t_data *data);
 void		*malloc_error(t_data *data, bool print);
 
@@ -145,36 +121,35 @@ bool		find_matching_quotes(char *str, bool s_q, bool d_q);
 int			reset_data(t_data *data, int code);
 
 // Updated function prototypes Max
-bool        is_builtin(t_commands *cmd);
-int         execute_builtin(t_commands *cmd, t_shell *shell);
-void        ft_execve(t_commands *cmd, t_shell *shell, char **path);
-void        ft_waitpid(t_shell *shell);
-bool        single_cmd(t_shell *shell);
-void        execute(t_shell *shell);
+bool		is_builtin(t_commands *cmd);
+int			execute_builtin(t_commands *cmd, t_shell *shell);
+void		ft_execve(t_commands *cmd, t_shell *shell, char **path);
+void		ft_waitpid(t_shell *shell);
+bool		single_cmd(t_shell *shell);
+void		execute(t_shell *shell);
 
 // Updated builtin prototypes Max
-int         ft_echo(t_commands *cmd);
-int         ft_cd(t_commands *cmd, t_shell *shell);
-int         ft_export(t_commands *cmd, t_shell *shell, char *str);
-int         ft_unset(t_commands *cmd, t_shell *shell);
-int         ft_exit(t_commands *cmd);
-int		 	ft_pwd(void);
-int		 	ft_env(char **env);
-int    		modify_path(t_shell *shell, char *temp, int code, int code2);
-char        *get_pwd(void);
+int			ft_echo(t_commands *cmd);
+int			ft_cd(t_commands *cmd, t_shell *shell);
+int			ft_export(t_commands *cmd, t_shell *shell, char *str);
+int			ft_unset(t_commands *cmd, t_shell *shell);
+int			ft_exit(t_commands *cmd);
+int			ft_pwd(void);
+int			ft_env(char **env);
+int			modify_path(t_shell *shell, char *temp, int code, int code2);
+char		*get_pwd(void);
 void		check_and_send(t_shell *shell, char *str);
 
 // Executor - Bridge functions Max
-int         execute_commands(t_data *data);
-int         init_shell_for_execution(t_shell *shell, t_data *data);
-char        **convert_cdll_to_env_array(t_cdllist *env_list);
-void        cleanup_shell(t_shell *shell);
-void	ft_dup2(int fd1, int fd2);
-pid_t	ft_fork(void);
-void	ft_pipe(int fd[2]);
-int	ft_dup(int fd);
-void	ft_waitpid(t_shell *shell);
-
-int	add_file_node(t_files **list, t_lexer *lexer);
+int			execute_commands(t_data *data);
+int			init_shell_for_execution(t_shell *shell, t_data *data);
+char		**convert_cdll_to_env_array(t_cdllist *env_list);
+void		cleanup_shell(t_shell *shell);
+void		ft_dup2(int fd1, int fd2);
+pid_t		ft_fork(void);
+void		ft_pipe(int fd[2]);
+int			ft_dup(int fd);
+void		ft_waitpid(t_shell *shell);
+int			add_file_node(t_files **list, t_lexer *lexer);
 
 #endif

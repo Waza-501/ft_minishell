@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/04 13:31:45 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:04:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,6 @@
 
 int	g_exit_code = 0;
 
-/*wipe all data from data*/
-int	reset_data(t_data *data, int code)
-{
-	ft_free(&data->input);
-	if (data->lexer)
-		clear_lexer(data);
-	if (data->commands)
-		clear_commands(data);
-	data->exit_code = code;
-	return (0);
-}
-
-t_data	*init_data(void)
-{
-	t_data	*new;
-
-	new = (t_data *)malloc(sizeof(t_data));
-	if (!new)
-		return (NULL);
-	new->input = NULL;
-	new->envp_copy = NULL;
-	new->lexer = NULL;
-	new->commands = NULL;
-	new->exit_code = 0;
-	return (new);
-}
-
 int	mini_loop(t_data *data)
 {
 	while (1)
@@ -53,7 +26,7 @@ int	mini_loop(t_data *data)
 		set_signals_interactive();
 		data->input = readline("minishell$ ");
 		set_signals_noninteractive();
-		printf("last exit code: %i\n", data->exit_code);
+		printf("last exit code: %i REMOVE AFTER TESTING\n", data->exit_code);
 		if (!data->input)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
@@ -70,7 +43,7 @@ int	mini_loop(t_data *data)
 			reset_data(data, 0);
 		}
 	}
-	free_structs(data);
+	free_data(data);
 	return (0);
 }
 

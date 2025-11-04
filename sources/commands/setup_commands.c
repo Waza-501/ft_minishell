@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 14:46:00 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 14:49:04 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,6 @@ bool	simplified_redir(t_data *data, t_commands *list, t_lexer *node)
 	}
 	return (true);
 }
-
-// /*nope. It's easier to handle things like that later on*/
-// bool	set_redirect(t_data *data, t_commands	*list, t_lexer *node)
-// {
-// 	return (simplified_redir(data, list, node));
-// 	if (node->type == INPUT)
-// 		return (handle_input(data, list, node));
-// 	else if (node->type == OUTPUT)
-// 		return (handle_output(data, list, node));
-// 	else if (node->type == APPEND)
-// 		return (handle_output(data, list, node));
-// 	else if (node->type == HEREDOC)
-// 		return (handle_output(data, list, node));
-// }
 
 int	add_arg_to_list(t_data *data, t_commands *list, t_lexer *node)
 {

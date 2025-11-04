@@ -6,36 +6,42 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/29 12:24:27 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/31 13:19:28 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:04:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*to do: make a malloc_error function*/
-
-void	todo_exit(t_data *data)
+/*add : ft_putstr_fd("syntax error: unexpected end of file", STDERR_FILENO)*/
+/*add : ft_putstr_fd("syntax error near unexpected token `|'", STDERR_FILENO)
+		with token being pipe, or redirects*/
+void	print_syntax_error(char *msg, char *token)
 {
-	free_structs(data);
-	printf("this should not be used anymore\n");
-	exit(1);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putchar_fd('`', STDERR_FILENO);
+	ft_putstr_fd(token, STDERR_FILENO);
+	ft_putendl_fd("'", STDERR_FILENO);
 }
 
-void	free_structs(t_data *data)
+void	print_error(char *msg)
 {
-	cdll_del_list(data->envp_copy);
-	ft_free(&data->input);
-	if (data->lexer)
-		clear_lexer(data);
-	if (data->commands)
-		clear_commands(data);
-	ft_free(&data);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+}
+
+void	*malloc_error_print(char *msg)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putstr_fd(": cannot allocate memory\n", STDERR_FILENO);
+	return (NULL);
 }
 
 void	perror_exit(t_data *data)
 {
 	perror("minishell: ");
-	free_structs(data);
+	free_data(data);
 	exit(errno);
 }
 
@@ -45,6 +51,6 @@ void	*malloc_error(t_data *data, bool print)
 		malloc_error_print("malloc");
 	if (!data)
 		return (NULL);
-	free_structs(data);
+	free_data(data);
 	exit(1);
 }

@@ -20,13 +20,13 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				parser/concatonate_strings.c\
 				parser/expand_args.c\
 				parser/expand_utils.c\
-				parser/handle_append.c\
-				parser/handle_heredoc.c\
-				parser/handle_input.c\
-				parser/handle_output.c\
 				parser/parsing.c\
-				parser/redirect_utils.c\
 				parser/strip_quotes.c\
+				redirection/handle_append.c\
+				redirection/handle_heredoc.c\
+				redirection/handle_input.c\
+				redirection/handle_output.c\
+				redirection/redirect_utils.c\
 				utils/copy_env.c\
 				utils/error_print.c\
 				utils/error.c\

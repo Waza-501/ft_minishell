@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/03 14:43:59 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/03 16:00:19 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_files
 	char			*filename;
 	t_token_type	type;
 	struct s_files	*next;
+	struct s_files	*prev;
 }			t_files;
 
 typedef struct s_commands

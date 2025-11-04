@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/31 13:06:11 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/03 15:12:27 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,32 @@ bool	is_space(const char *str)
 	return (true);
 }
 
+static int	finalize_list(t_data *data)
+{
+	t_lexer	*copy;
+	int		idx;
+
+	copy = data->lexer;
+	idx = 0;
+	while (copy)
+	{
+		if (copy->type > 3)
+		{
+			ft_free(&copy->string);
+			if (merge_nodes(copy))
+				malloc_error(data, false);
+		}
+		if (copy->type != HEREDOC && (copy->string[0] != '\''
+			&& copy->string[ft_strlen(copy->string) - 1] != '\''))
+		{
+			if (remove_quotes(copy))
+				malloc_error(data, false);
+		}
+		copy = copy->next;
+	}
+	return (0);
+}
+
 /*damn :( this needs fixing*/
 int	parse_input(t_data *data, char *str)
 {
@@ -50,6 +76,8 @@ int	parse_input(t_data *data, char *str)
 	if (expand_args(data) == false)
 		return (reset_data(data, 2));
 	if (concatonate_strings(data) == false)
+		reset_data(data, 1);
+	if (finalize_list(data))
 		reset_data(data, 1);
 	copy = data->lexer;
 	print_tokenlist(copy);

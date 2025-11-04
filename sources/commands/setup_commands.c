@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/31 15:17:33 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 08:33:55 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,27 @@ bool	simplified_redir(t_data *data, t_commands *list, t_lexer *node)
 {
 	if (node->type == INPUT || node->type == HEREDOC)
 	{
-		ft_free(&list->infile_s);
-		if (node->type == INPUT)
-			list->infile_s = ft_strjoin("<", node->string);
-		else
-			list->infile_s = ft_strjoin("<<", node->string);
+		if (add_file_node(&list->infiles, node))
+			malloc_error(data, false);
 	}
+	// {
+	// 	ft_free(&list->infile_s);
+	// 	if (node->type == INPUT)
+	// 		list->infile_s = ft_strjoin("<", node->string);
+	// 	else
+	// 		list->infile_s = ft_strjoin("<<", node->string);
+	// }
 	else if (node->type == OUTPUT || node->type == APPEND)
 	{
-		ft_free(&list->outfile_s);
-		if (node->type == OUTPUT)
-		if (node->type == APPEND)
-			list->outfile_s = ft_strjoin(">>", node->string);
+		if (add_file_node(&list->outfiles, node))
+			malloc_error(data, false);
 	}
+	// {
+	// 	ft_free(&list->outfile_s);
+	// 	if (node->type == OUTPUT)
+	// 	if (node->type == APPEND)
+	// 		list->outfile_s = ft_strjoin(">>", node->string);
+	// }
 	return (true);
 }
 
@@ -78,6 +86,7 @@ int	add_arg_cmd(t_data *data, t_commands *list, t_lexer *node)
 {
 	if (node->type > 3)
 	{
+
 		if (set_redirect(data, list, node) == false)
 			return (1);
 	}

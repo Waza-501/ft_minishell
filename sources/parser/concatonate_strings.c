@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/31 17:05:45 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/03 13:53:22 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int	merge_nodes(t_lexer *node)
 {
 	char	*new;
 
+	printf("merging nodes\n");
+	if (node->string != NULL)
+		printf("string 1 = %s\n", node->string);
+	if (node->next->string != NULL)
+		printf("string 2 = %s\n", node->next->string);
 	new = ft_strjoin(node->string, node->next->string);
 	if (!new)
 		return (malloc_error(NULL, true), 1);
@@ -41,6 +46,8 @@ int	merge_nodes(t_lexer *node)
 int	configure_redirect(t_data *data, t_lexer *node)
 {
 	ft_free(&node->string);
+	//if (trim_quotes(node))
+		//malloc_error(data, false);
 	if (merge_nodes(node))
 		malloc_error(data, false);
 	return (0);
@@ -63,22 +70,22 @@ bool	concatonate_strings(t_data *data)
 	copy = data->lexer;
 	while (copy)
 	{
-		if (copy && copy->type > 3)
-			configure_redirect(data, copy);
+		// if (copy && copy->type > 3)
+		// 	configure_redirect(data, copy);
 		if (copy && copy->concat == true)
 		{
 			while (copy->concat == true)
 			{
-				if (trim_qt(copy, EMPTY) || trim_qt(copy->next, copy->type))
-					malloc_error(data, false);
+				//if (trim_quotes(copy) || trim_quotes(copy->next))
+					//malloc_error(data, false);
 				copy->concat = false;
 				if (merge_nodes(copy))
 					malloc_error(data, false);
 			}
 		}
-		if (copy->type < 3)
-			if (trim_qt(copy, EMPTY))
-				malloc_error(data, false);
+		// if (copy->type != HEREDOC)
+		// 	if (trim_quotes(copy))
+		// 		malloc_error(data, false);
 		copy = copy->next;
 	}
 	return (true);

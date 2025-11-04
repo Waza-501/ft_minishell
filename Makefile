@@ -27,6 +27,7 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				redirection/handle_input.c\
 				redirection/handle_output.c\
 				redirection/redirect_utils.c\
+				redirection/files_list.c\
 				utils/copy_env.c\
 				utils/error_print.c\
 				utils/error.c\

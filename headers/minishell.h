@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/03 16:00:19 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 09:04:23 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,5 +246,6 @@ void	ft_pipe(int fd[2]);
 int	ft_dup(int fd);
 void	ft_waitpid(t_shell *shell);
 
+int	add_file_node(t_files **list, t_lexer *lexer);
 
 #endif

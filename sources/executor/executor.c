@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/30 11:01:30 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/04 09:51:32 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,18 +113,18 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 	if (!cmd->args[0])
 		exit(0);
 
-	printf("EXECUTING: %s\n", cmd->args[0]); //debug
+	// printf("EXECUTING: %s\n", cmd->args[0]); //debug
     // Try built-in first
     if (execute_builtin(cmd, shell))
     {
-        printf("✅ Built-in executed\n"); // Debug
+        // printf("✅ Built-in executed\n"); // Debug
         exit(g_exit_code);
     }
 
     // Try current directory execution
     if (execute_currdir(cmd, shell))
     {
-        printf("✅ Current dir executed\n"); // Debug
+        // printf("✅ Current dir executed\n"); // Debug
         exit(g_exit_code);
     }
 
@@ -139,12 +139,12 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
     // Execute with PATH if found
     if (shell->env[i])
     {
-        printf("🔍 Searching PATH...\n"); // Debug
+        // printf("🔍 Searching PATH...\n"); // Debug
         ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
     }
     
     // Try without PATH as fallback
-    printf("⚠️  No PATH, trying direct execution\n"); // Debug
+    // printf("⚠️  No PATH, trying direct execution\n"); // Debug
     ft_execve(cmd, shell, NULL);
 	
 	// Command out to debug
@@ -184,21 +184,27 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 {
 	//sig_handler(1); //Command out for now Max because of missing function
-    printf("🔧 HANDLE_PIPES called for: %s\n", cmd->args[0]);//debug
+    // printf("🔧 HANDLE_PIPES called for: %s\n", cmd->args[0]);//debug
 	if (cmd->next != NULL)
         ft_pipe(cmd->pipefd);
-	printf("🚀 About to fork for command: %s (n=%d)\n", cmd->args[0], cmd->n);//debug
+	// printf("🚀 About to fork for command: %s (n=%d)\n", cmd->args[0], cmd->n);//debug
     cmd->pid = ft_fork();
     if (cmd->pid == 0)
     {
-		printf("👶 CHILD PROCESS for: %s (pid=%d)\n", cmd->args[0], getpid());//debug
+		// printf("👶 CHILD PROCESS for: %s (pid=%d)\n", cmd->args[0], getpid());//debug
         //sig_handler(2); //Command out for now Max because of missing function
-        if (cmd->n > 1)
+        // new add 04/11 - Setup input redirection from previous command
+		// if (cmd->n > 1) //Command out for now
+		if (prev_fd != -1)
+		{
             ft_dup2(prev_fd, STDIN);
+			close(prev_fd); //new add 04/11 - Close after dup2
+		}
         if (cmd->next != NULL)
         {
+			close(cmd->pipefd[0]);  // new add 04/11 - Close read end (don't need it)
             ft_dup2(cmd->pipefd[1], STDOUT);
-            close(cmd->pipefd[0]);
+            close(cmd->pipefd[0]);//new add 04/11 - Close after dup2
         }
         // if (handle_redirections(cmd, shell)) //Command out for now Max because of missing function
         execute_cmd(cmd, shell);
@@ -238,7 +244,7 @@ void	execute(t_shell *shell)
 	// Process heredocs before any command execution //command out for now Max because of missing function
 	// handle_heredocs(shell);
 
-    printf("=== EXECUTOR DEBUG ===\n");//debug
+    // printf("=== EXECUTOR DEBUG ===\n");//debug
 	prev_fd = -1;
 	curr = shell->cmds; // Start with first command
 
@@ -246,21 +252,21 @@ void	execute(t_shell *shell)
 	if (curr->next == NULL && single_cmd(shell))
 		return ;
 	int i = 0; //debug reason
-	printf("🚀 About to start main execution loop...\n");//debug
+	// printf("🚀 About to start main execution loop...\n");//debug
 	// Execute pipeline: iterate through all commands
 	while (curr && !shell->stop)
 	{
-		printf("🔄 Processing command: %s\n", curr->args[0]);//debgu
+		// printf("🔄 Processing command: %s\n", curr->args[0]);//debgu
 		handle_pipes(curr, prev_fd, shell);
 
 		// Clean up file descriptors
 		close(prev_fd); // Close previous read end
 		prev_fd = curr->pipefd[0]; // Save current read end for next command
 		close(curr->pipefd[1]); // Close current write end
-        printf("Command %d: %s (n=%d, addr=%p)\n", i, curr->args[0], curr->n, curr);//debug
+        // printf("Command %d: %s (n=%d, addr=%p)\n", i, curr->args[0], curr->n, curr);//debug
 		i++;//debug
 		curr = curr->next; // Move to next command
 	}
-	printf("======================\n");//debgug
+	// printf("======================\n");//debug
 	ft_waitpid(shell); 	// Wait for all child processes to complete
 }

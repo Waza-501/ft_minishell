@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 15:04:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:07:35 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,6 @@ bool		assign_type(t_data *data);
 /*utils.c*/
 void		ft_free(void *ptr);
 bool		find_matching_quotes(char *str, bool s_q, bool d_q);
-
-/*main.c*/
-int			reset_data(t_data *data, int code);
 
 // Updated function prototypes Max
 bool		is_builtin(t_commands *cmd);

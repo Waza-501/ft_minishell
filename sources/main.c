@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/04 15:04:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:07:21 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 int	g_exit_code = 0;
 
-int	mini_loop(t_data *data)
+static int	mini_loop(t_data *data)
 {
 	while (1)
 	{

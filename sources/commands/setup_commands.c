@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:26:24 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 14:49:04 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:09:21 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	add_arg_cmd(t_data *data, t_commands *list, t_lexer *node)
 {
 	if (node->type > 3)
 	{
-
 		if (simplified_redir(data, list, node) == false)
 			return (1);
 	}

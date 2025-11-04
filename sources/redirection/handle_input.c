@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 10:47:50 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 15:09:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	close_heredoc(t_commands *list)
 {
-
 	if (close(list->infile))
 	{
 		ft_free(&list->infile_s);

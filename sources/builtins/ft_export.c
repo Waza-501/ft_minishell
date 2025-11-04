@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 14:02:47 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/24 09:53:13 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/04 14:57:58 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	send_arr(t_shell *shell, char *str)
 	while (shell->env && shell->env[i])
 			i++;
 	rtn = ft_malloc((i + 2) * sizeof(char *));
-	new_arr(shell->env, rtn, str);
+	new_array(shell->env, rtn, str);
 	free(shell->env);
 	shell->env = rtn;
 	return (1);
@@ -101,8 +101,7 @@ int	ft_export(t_commands *cmd, t_shell *shell, char *str)
 	g_exit_code = 0;
 	if (!str && !cmd->args[1])
 	{
-		sort_env(shell);
-		print_env(shell->sorted_env);
+		ft_env(shell->env);
 		return (0);
 	}
 	if (str)

@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:18 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/04 12:27:36 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/04 12:40:45 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int change_path(char *path, t_shell *shell, int type)
         //     return (0);
         // else
         //     add_path(shell, current_pwd);
-        free(path_extract)
+        free(path_extract);
     }
     else if (type == 2) //Direct path
     {

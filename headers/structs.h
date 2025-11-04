@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:28:02 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 16:21:45 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 18:12:28 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void		clear_commands(t_data *data);
 int			add_command_node(t_commands	**list);
 
 /*lexer_list_utils.c*/
-int			merge_nodes(t_lexer *node);
+int			merge_nodes(t_data *data, t_lexer *node);
 int			insert_new_node(t_lexer *node, char *new, char *str);
 void		lex_del_node(t_lexer *node);
 //void		lex_del_first(t_data *data);

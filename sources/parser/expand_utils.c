@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 16:59:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 17:20:57 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 17:49:46 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	find_var_size(char *str)
 			return (idx);
 		idx++;
 	}
-	return (idx + 1);
+	return (idx);
 }
 
 int	find_var_in_string(char *str, char *var)

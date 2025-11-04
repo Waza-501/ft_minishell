@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:18:22 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 16:27:46 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 18:07:34 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ bool	setup_lexer(t_data *data);
 /*parsing.c*/
 int		parse_input(t_data *data, char *str);
 
-/*strip_quotes.c*/
-int		remove_quotes(t_lexer *node);
+/*handle_quotes.c*/
+int		is_quoted(char *str);
+int		remove_quotes(t_data *data, t_lexer *node);
 
 /**/
 bool	assign_type(t_data *data);

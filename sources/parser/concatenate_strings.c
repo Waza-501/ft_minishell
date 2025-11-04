@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   concatonate_strings.c                              :+:    :+:            */
+/*   concatenate_strings.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 16:27:23 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 18:28:26 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,13 @@
  * @return int Returns 0 on success, 
  * 1 on failure (e.g., memory allocation error).
  */
-int	merge_nodes(t_lexer *node)
+int	merge_nodes(t_data *data, t_lexer *node)
 {
 	char	*new;
 
-	printf("merging nodes\n");
-	if (node->string != NULL)
-		printf("string 1 = %s\n", node->string);
-	if (node->next->string != NULL)
-		printf("string 2 = %s\n", node->next->string);
 	new = ft_strjoin(node->string, node->next->string);
 	if (!new)
-		return (malloc_error(NULL, true), 1);
+		malloc_error(data, true);
 	ft_free(&node->string);
 	node->string = new;
 	node->concat = node->next->concat;
@@ -63,8 +58,7 @@ bool	concatenate_strings(t_data *data)
 			while (copy->concat == true)
 			{
 				copy->concat = false;
-				if (merge_nodes(copy))
-					malloc_error(data, false);
+				merge_nodes(data, copy);
 			}
 		}
 		copy = copy->next;

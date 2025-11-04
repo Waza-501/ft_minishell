@@ -23,7 +23,7 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				parser/expand_utils.c\
 				parser/parsing_utils.c\
 				parser/parsing.c\
-				parser/strip_quotes.c\
+				parser/handle_quotes.c\
 				redirection/files_list_utils.c\
 				redirection/files_list.c\
 				redirection/handle_append.c\

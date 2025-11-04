@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:13:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 16:08:24 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 18:03:54 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	is_quotes(char c)
 {
-	if (c && (c == '\'' || c == '\"'))
+	if (c && (c == S_Q || c == D_Q))
 		return (true);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/04 16:28:36 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 18:23:59 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,28 @@
 static int	finalize_list(t_data *data)
 {
 	t_lexer	*copy;
-	int		idx;
+	t_lexer	*tmp;
 
 	copy = data->lexer;
-	idx = 0;
 	while (copy)
 	{
-		if (copy->type > 3)
+		if (is_space(copy->string) == true)
 		{
-			ft_free(&copy->string);
-			if (merge_nodes(copy))
-				malloc_error(data, false);
+			tmp = copy->next;
+			lex_del_node(copy);
+			copy = tmp;
 		}
-		if (copy->type != HEREDOC && (copy->string[0] != '\''
-				&& copy->string[ft_strlen(copy->string) - 1] != '\''))
+		else
 		{
-			if (remove_quotes(copy))
-				malloc_error(data, false);
+			if (copy->type > 3)
+			{
+				ft_free(&copy->string);
+				merge_nodes(data, copy);
+			}
+			if (copy->type != HEREDOC)
+				remove_quotes(data, copy);
+			copy = copy->next;
 		}
-		copy = copy->next;
 	}
 	return (0);
 }

@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   strip_quotes.c                                     :+:    :+:            */
+/*   handle_quotes.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/22 13:19:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 16:05:34 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 18:08:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
+
+int	is_quoted(char *str)
+{
+	if (is_quotes(str[0]) == true && is_quotes(str[ft_strlen(str)] == true))
+		return (1);
+	return (0);
+}
 
 static size_t	strlen_without_quotes(char *str)
 {
@@ -67,7 +75,7 @@ static int	reform_str(char *str, char *new)
 	return (0);
 }
 
-int	remove_quotes(t_lexer *node)
+int	remove_quotes(t_data *data, t_lexer *node)
 {
 	int		i;
 	int		idx;
@@ -77,7 +85,7 @@ int	remove_quotes(t_lexer *node)
 	idx = (int)strlen_without_quotes(node->string);
 	new = (char *)malloc(sizeof(char) * idx + 1);
 	if (!new)
-		return (malloc_error(NULL, true), 1);
+		malloc_error(data, true);
 	reform_str(node->string, new);
 	ft_free(&node->string);
 	node->string = new;

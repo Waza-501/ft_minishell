@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 17:40:07 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/04 17:52:26 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static char	*get_arg_var(t_lexer *node, int idx)
 	var_copy = (char *)malloc(sizeof(char) * (size + 1));
 	if (!var_copy)
 		return (malloc_error(NULL, true));
-	ft_strlcpy(var_copy, &node->string[idx + 1], size);
-	printf("%s\n", var_copy);
+	ft_strlcpy(var_copy, &node->string[idx + 1], size + 1);
+	printf("%s\n%i\n", var_copy, size);
 	return (var_copy);
 }
 
@@ -107,7 +107,7 @@ int	scan_expand(t_data *data, t_lexer *node)
 
 	idx = 0;
 	arg_var = NULL;
-	while (node->string[idx])
+	while (idx < ft_strlen(node->string) && node->string[idx])
 	{
 		idx += find_dollar_sign(&node->string[idx]);
 		if (idx == ft_strlen(node->string))
@@ -115,7 +115,6 @@ int	scan_expand(t_data *data, t_lexer *node)
 		arg_var = get_arg_var(node, idx);
 		if (!arg_var)
 			malloc_error(data, false);
-			printf("arg_var is %s\n", arg_var);
 		if (!cdll_get_node(data->envp_copy, false, arg_var))
 		{
 			if (find_replace_type(data, node, arg_var) == 1)

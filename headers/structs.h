@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:28:02 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 18:12:28 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/05 15:02:44 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_files
 {
 	char			*filename;
 	t_token_type	type;
+	bool			open;
 	struct s_files	*next;
 	struct s_files	*prev;
 }			t_files;
@@ -56,7 +57,6 @@ typedef struct s_commands
 	int					outfile;
 	t_files				*infiles;
 	t_files				*outfiles;
-	bool				hd;
 	struct s_commands	*next;
 	struct s_commands	*prev;
 	int					n; // command number in pipeline

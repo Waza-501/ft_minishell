@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/04 18:23:59 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/05 14:24:33 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static int	finalize_list(t_data *data)
 	return (0);
 }
 
-/*damn :( this needs fixing*/
+// copy = data->lexer;
+// print_tokenlist(copy);
 int	parse_input(t_data *data, char *str)
 {
 	t_lexer		*copy;
@@ -64,8 +65,6 @@ int	parse_input(t_data *data, char *str)
 		reset_data(data, 1);
 	if (finalize_list(data))
 		reset_data(data, 1);
-	copy = data->lexer;
-	print_tokenlist(copy);
 	if (build_command_list(data))
 		return (0);
 	clear_lexer(data);

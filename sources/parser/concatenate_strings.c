@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 18:28:26 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/05 10:09:30 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,6 @@ int	merge_nodes(t_data *data, t_lexer *node)
 	lex_del_node(node->next);
 	return (0);
 }
-
-// int	configure_redirect(t_data *data, t_lexer *node)
-// {
-// 	ft_free(&node->string);
-// 	if (merge_nodes(node))
-// 		malloc_error(data, false);
-// 	return (0);
-// }
 
 bool	concatenate_strings(t_data *data)
 {

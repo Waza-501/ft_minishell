@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/05 08:25:53 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/05 10:11:35 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	mini_loop(t_data *data)
 		if (data->commands)
 		{
 			printf("Commands ready for execution\n");
-			execute_commands(data);
+			//execute_commands(data);
 			reset_data(data, 0);
 		}
 	}

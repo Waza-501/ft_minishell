@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minishell.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 15:26:37 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/05 15:56:40 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ int			ft_env(char **env);
 int			modify_path(t_shell *shell, char *temp, int code, int code2);
 char		*get_pwd(void);
 void		check_and_send(t_shell *shell, char *str);
+int			if_exist(char **env, char *str);
+void		join_arr(t_shell *shell, char *str);
+int			send_arr(t_shell *shell, char *str);
+char		**sort_env(char **env);
+void		print_env(char **sorted_env);
+void		free_sorted_env(char **sorted_env);
 
 // Executor - Bridge functions Max
 int			execute_commands(t_data *data);

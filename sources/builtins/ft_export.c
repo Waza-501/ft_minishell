@@ -3,15 +3,14 @@
 /*                                                        ::::::::            */
 /*   ft_export.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 14:02:47 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/04 14:57:58 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/05 15:55:45 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
 
 int	if_exist(char **env, char *str)
 {
@@ -96,12 +95,20 @@ int	send_arr(t_shell *shell, char *str)
 int	ft_export(t_commands *cmd, t_shell *shell, char *str)
 {
 	int		i;
+	char	**sorted;
 
 	i = 1;
 	g_exit_code = 0;
 	if (!str && !cmd->args[1])
 	{
-		ft_env(shell->env);
+		sorted = sort_env(shell->env);
+		if (!sorted)
+		{
+			g_exit_code = 1;
+			return (1);
+		}
+		print_env(sorted);
+		free_sorted_env(sorted);
 		return (0);
 	}
 	if (str)

@@ -2,6 +2,17 @@ NAME		:=	minishell
 CC			:=	cc
 FLAGS		:=	-g -fsanitize=address
 
+# Detect operating system
+UNAME_S := $(shell uname -s)
+
+# OS-specific settings for readline
+ifeq ($(UNAME_S),Darwin)
+    # macOS: Use Homebrew's GNU readline
+    READLINE_PATH := $(shell brew --prefix readline 2>/dev/null || echo /opt/homebrew/opt/readline)
+    CFLAGS += -I$(READLINE_PATH)/include
+    LDFLAGS += -L$(READLINE_PATH)/lib
+endif
+
 LIBRARIES		:=	./libraries/libft/libft.a ./libraries/cd_ll/cd_ll.a\
 
 LIBFT			:= ./libraries/libft
@@ -40,8 +51,6 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				builtins/ft_pwd.c\
 				builtins/ft_env.c\
 				builtins/ft_unset.c\
-				builtins/ft_export.c\
-				builtins/ft_export_ultis.c\
 				executor/executor_bridge.c\
 				executor/executor.c\
 				executor/executor_ultil1.c\
@@ -55,14 +64,21 @@ HEADERS		:=	-I $(HEADER_DIR) -I ./libraries/libft
 
 all:		libraries $(NAME)
 
-$(NAME):	$(OBJECTS)
-				$(CC) $(FLAGS) -o $@ $^ -lreadline $(HEADERS) $(LIBRARIES)
+# $(NAME):	$(OBJECTS)
+# 				$(CC) $(FLAGS) -o $@ $^ -lreadline $(HEADERS) $(LIBRARIES)
 
-$(OBJECTS_DIR)%.o:	$(SOURCES_DIR)%.c
+# $(OBJECTS_DIR)%.o:	$(SOURCES_DIR)%.c
+# 					@mkdir -p $(dir $@)
+# 					$(CC) $(FLAGS) $(HEADERS) -c -o $@ $<
+
+$(NAME):    $(OBJECTS)
+				$(CC) $(FLAGS) $(LDFLAGS) -o $@ $^ -lreadline $(HEADERS) $(LIBRARIES)
+
+$(OBJECTS_DIR)%.o:  $(SOURCES_DIR)%.c
 					@mkdir -p $(dir $@)
-					$(CC) $(FLAGS) $(HEADERS) -c -o $@ $<
+					$(CC) $(FLAGS) $(CFLAGS) $(HEADERS) -c -o $@ $<
 
-libraries:	
+libraries:
 			@$(MAKE) -C $(LIBFT)
 			@$(MAKE) -C $(CDLL)
 

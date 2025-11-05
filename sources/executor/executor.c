@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   executor.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/04 14:34:39 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/05 08:25:19 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ int	execute_builtin(t_commands *cmd, t_shell *shell)
 		g_exit_code = ft_echo(cmd);
 	// else if (ft_strncmp(cmd->args[0], "cd", 3) == 0) //Command out for now Max because of missing function
 	// 	g_exit_code = ft_cd(cmd, shell);
-	else if (ft_strncmp(cmd->args[0], "export", 7) == 0) //Command out for now Max because of missing function
-		g_exit_code = ft_export(cmd, shell, 0);
+	// else if (ft_strncmp(cmd->args[0], "export", 7) == 0) //Command out for now Max because of missing function
+	// 	g_exit_code = ft_export(cmd, shell, 0);
 	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
 		g_exit_code = ft_unset(cmd, shell);
 	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
@@ -142,11 +142,11 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
         // printf("🔍 Searching PATH...\n"); // Debug
         ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
     }
-    
+
     // Try without PATH as fallback
     // printf("⚠️  No PATH, trying direct execution\n"); // Debug
     ft_execve(cmd, shell, NULL);
-	
+
 	// Command out to debug
 	// // Try built-in first, then current directory execution
 	// if (!execute_builtin(cmd, shell) && !execute_currdir(cmd, shell))

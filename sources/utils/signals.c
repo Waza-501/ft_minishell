@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   signals.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: owen <owen@student.codam.nl>                 +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:45 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/07 11:17:48 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/10/30 13:05:16 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
+/* Add this declaration Max*/
+// extern void rl_replace_line(const char *text, int clear_undo);
 
 /**
  * @brief Ignore the SIGQUIT signal (Ctrl+\) in the current process.

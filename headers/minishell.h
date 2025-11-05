@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 15:26:37 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/05 12:43:13 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 # include "../libraries/libft/libft.h"
 # include "structs.h"
+# include "error.h"
 # include <stdbool.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
-# include <errno.h>
 # include <limits.h> /* LONG_MAX */
 # include <signal.h> /* SIQQUIT, SIGINT*/
 # include <sys/types.h> /*waitpid*/
@@ -54,16 +54,6 @@ void		print_command_list(t_commands *list);
 
 /*copy_env*/
 t_cdllist	*copy_envp(char **envp);
-
-/*error_print.c*/
-void		print_syntax_error(char *msg, char *token);
-void		print_error(char *msg);
-void		*malloc_error_print(char *msg);
-
-/*error.c*/
-void		free_data(t_data *data);
-void		perror_exit(t_data *data);
-void		*malloc_error(t_data *data, bool print);
 
 /*signals.c*/
 void		set_signals_interactive(void);

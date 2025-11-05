@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 15:27:13 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/05 15:18:22 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	create_hd_file(t_data *data, t_commands *list)
 	list->infile = open(list->infile_s, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (list->infile == -1)
 		return (1);
-	list->hd = true;
 	return (0);
 }
 

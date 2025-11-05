@@ -41,6 +41,7 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				redirection/handle_heredoc.c\
 				redirection/handle_input.c\
 				redirection/handle_output.c\
+				redirection/redirect.c\
 				utils/copy_env.c\
 				utils/error.c\
 				utils/signals.c\

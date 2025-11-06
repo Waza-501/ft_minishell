@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:28:02 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/05 15:02:44 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/06 10:46:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_lexer
 typedef struct s_files
 {
 	char			*filename;
+	char			*hd_delim;
 	t_token_type	type;
 	bool			open;
 	struct s_files	*next;

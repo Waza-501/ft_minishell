@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/05 16:08:18 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 11:09:56 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define EOF_DQ		"unexpected EOF while looking for matching \"\n"
 # define SYNTAX		"syntax error near unexpected token "
 # define SYNTAX_EOF	"syntax error: unexpected end of file\n"
+# define MS_ERROR	"minishell: "
 
 # ifndef PATH_MAX
 #  define PATH_MAX 1024

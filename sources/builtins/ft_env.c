@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:52:30 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/06 10:05:33 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 12:54:11 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int ft_env(char **env)
 
     if (!env)
         return (1);
+    i = 0;
     while (env[i])
     {
         printf("%s\n", env[i]);

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 14:02:47 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/06 12:06:53 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 12:50:06 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int	ft_export(t_commands *cmd, t_shell *shell, char *str)
 	char	**sorted;
 
 	g_exit_code = 0;
+	i = 1;
 	if (!str && !cmd->args[1])
 	{
 		sorted = sort_env(shell->env);

@@ -1,24 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   handle_append.c                                    :+:    :+:            */
+/*   redirect_error.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/10/03 16:08:49 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/06 16:05:18 by owhearn       ########   odam.nl         */
+/*   Created: 2025/11/06 09:47:51 by owhearn       #+#    #+#                 */
+/*   Updated: 2025/11/06 09:48:01 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "redirect.h"
-
-int	handle_append(t_files *list, int *fd)
-{
-	if (close_existing_fd_out(list, fd))
-		return (false);
-	*fd = open(list->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (*fd == -1)
-		return (outfile_open_error(list));
-	return (0);
-}

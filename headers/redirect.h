@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 15:22:19 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/05 10:15:43 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/06 16:04:55 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,34 @@
 
 # include "structs.h"
 
+/*files_list_utils.c*/
+t_files		*find_open_fd(t_files *list);
+void		print_close_fd_error(void);
+void		print_remove_hd_error(char *str);
+int			outfile_open_error(t_files *file);
+int			infile_open_error(t_files *file);
+
 /*files_list.c*/
 t_files		*get_last_file(t_files *list);
 void		delete_files_list(t_commands *cmd);
 int			add_file_node(t_files **list, t_lexer *lexer);
 
 /*handle_append.c*/
-bool		handle_append(t_data *data, t_commands *list, t_lexer *node);
+int			handle_append(t_files *list, int *fd);
+
+/*heredoc_utils.c*/
+char		*get_hd_filename(void);
 
 /*handle_heredoc.c*/
-bool		handle_heredoc(t_data *data, t_commands *list, t_lexer *node);
+int			handle_heredoc(t_files *list, int *fd);
 
 /*handle_input.c*/
-int			close_existing_fd_in(t_commands *list);
-bool		handle_input(t_data *data, t_commands *list, t_lexer *node);
+int			close_existing_fd_in(t_files *list, int *fd);
+int			handle_input(t_files *list, int *fd);
 
 /*handle_output.c*/
-int			close_existing_fd_out(t_commands *list);
-bool		handle_output(t_data *data, t_commands *list, t_lexer *node);
+int			close_existing_fd_out(t_files *list, int *fd);
+int			handle_output(t_files *list, int *fd);
 
 /*set_redirect*/
 //bool		set_redirect(t_data *data, t_commands *list, t_lexer *lexer);

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/05 10:12:26 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/05 15:19:35 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/06 11:19:27 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ static int	open_fd_in_order(t_commands *cmd, t_files *list, int *fd)
 	copy = list;
 	while (copy)
 	{
-		// if (copy->type == INPUT || copy->type == HEREDOC)
-		// {
-		// 	if (handle_input_new())
-		// 		return (1);
-		// }
-		// else
-		// {
-		// 	if (handle_output_new())
-		// 		return (1);
-		// }
+		if (copy->type == INPUT || copy->type == HEREDOC)
+		{
+			if (handle_input(list, fd))
+				return (1);
+		}
+		else
+		{
+			if (handle_output(list, fd))
+				return (1);
+		}
 		copy = copy->next;
 	}
 	return (0);

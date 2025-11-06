@@ -6,14 +6,14 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/06 10:17:28 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 12:10:59 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 //#include "libft.h"
 
-/**
+/**git
  * @brief Execute command from current directory or with absolute/relative path
  * @param cmd Command structure containing command name and arguments
  * @param shell Shell state containing environment and configuration

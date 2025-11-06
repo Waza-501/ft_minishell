@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 14:02:47 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/06 09:55:36 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 12:06:53 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ int	ft_export(t_commands *cmd, t_shell *shell, char *str)
 	int		i;
 	char	**sorted;
 
-printf("DEBUG ft_export: shell address = %p, shell->env address = %p\n",
-       (void*)shell, (void*)shell->env);	i = 1;
 	g_exit_code = 0;
 	if (!str && !cmd->args[1])
 	{

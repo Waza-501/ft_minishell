@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_env.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:52:30 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/24 09:33:18 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 10:05:33 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int ft_env(char **env)
 {
     int i;
 
-    i = 0;
     if (!env)
         return (1);
     while (env[i])

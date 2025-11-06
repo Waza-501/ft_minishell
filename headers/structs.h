@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   structs.h                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:28:02 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/06 10:46:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/06 12:27:56 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_shell
 	char		**env; //enviroment variables array
 	t_commands	*cmds;
 	bool		stop; //stop flag for early termination
+	t_data		*data; //pointer to main data for env sync
 }			t_shell;
 
 /*commands_list_utils.c*/

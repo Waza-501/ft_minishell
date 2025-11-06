@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   executor_bridge.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/04 09:51:55 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 11:30:04 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int init_commands_for_execution(t_commands *cmd_list)
 {
     t_commands *current = cmd_list;
     int cmd_number = 0;
-    
+
     while (current)
     {
         // printf("🔧 INIT_COMMANDS_FOR_EXECUTION CALLED!\n");
@@ -44,7 +44,7 @@ int init_commands_for_execution(t_commands *cmd_list)
 void cleanup_execution_fields(t_commands *cmd_list)
 {
     t_commands *current = cmd_list;
-    
+
     while (current)
     {
         // Close any open pipe file descriptors
@@ -71,15 +71,15 @@ void cleanup_execution_fields(t_commands *cmd_list)
 int execute_commands(t_data *data)
 {
     t_shell shell;
-    
+
     if (init_shell_for_execution(&shell, data) != 0) // Initialize shell structure for executor
-        return (1); 
+        return (1);
     if (init_commands_for_execution(data->commands) != 0)    //Initialize execution fields in the command list
         return (cleanup_shell(&shell), 1);
     shell.cmds = data->commands;
     // Execute the command pipeline
     execute(&shell);
-    data->exit_code = g_exit_code; 
+    data->exit_code = g_exit_code;
     // Cleanup
     cleanup_shell(&shell);
     return (0);
@@ -87,6 +87,9 @@ int execute_commands(t_data *data)
 
 /**
  * @brief Initialize shell structure from data structure
+ * @param shell Shell structure to initialize
+ * @param data Main data structure containing environment and commands
+ * @return 0 on success, 1 on failure
  */
 int init_shell_for_execution(t_shell *shell, t_data *data)
 {
@@ -98,6 +101,7 @@ int init_shell_for_execution(t_shell *shell, t_data *data)
         return (1);
     shell->cmds = NULL;
     shell->stop = false;
+    shell->data = data;
     return (0);
 }
 
@@ -109,7 +113,7 @@ char **convert_cdll_to_env_array(t_cdllist *env_list)
     char **env_array;
     t_cd_ll_node *current;
     int i = 0;
-    
+
     if (!env_list || !env_list->head)
         return (NULL);
     // Allocate array
@@ -145,9 +149,14 @@ void cleanup_shell(t_shell *shell)
 {
     if (!shell)
         return;
+    // if (shell->env && shell->data && shell->data->envp_copy)
+    // {
+    //     sync_env_to_list(shell->env, shell->data->envp_copy);
+    // }
     if (shell->env)
         ft_free_arr(shell->env);
     shell->env = NULL;
     shell->cmds = NULL;  // Don't free - points to data->commands
     shell->stop = false;
+    shell->data = NULL;  // Clear data pointer
 }

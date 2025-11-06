@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 14:02:47 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/05 15:55:45 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 09:55:36 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char **new_array(char **env, char **rtn, char *str)
 	i = 0;
 	while (env[i])
 	{
-		rtn[i] = env[i];
+		rtn[i] = ft_strdup(env[i]);
 		i++;
 	}
 	rtn[i] = ft_strdup(str);
@@ -82,13 +82,23 @@ int	send_arr(t_shell *shell, char *str)
 	int		i;
 	char	**rtn;
 
+	printf("DEBUG: send_arr called with: '%s'\n", str);  // Debug
 	i = 0;
 	while (shell->env && shell->env[i])
 			i++;
+	printf("DEBUG: Current env size: %d\n", i);  // ADD
 	rtn = ft_malloc((i + 2) * sizeof(char *));
 	new_array(shell->env, rtn, str);
+	printf("DEBUG: After new_array, rtn[%d] = '%s'\n", i, rtn[i]);  // ADD
 	free(shell->env);
 	shell->env = rtn;
+    // ADD THIS DEBUG BLOCK:
+    printf("DEBUG: shell->env contents:\n");
+    for (int j = 0; shell->env[j]; j++) {
+        printf("  [%d]: %s\n", j, shell->env[j]);
+        if (j > 5) break; // Just show first few
+    }
+    printf("DEBUG: Total env vars: %d\n", i + 1);
 	return (1);
 }
 
@@ -97,7 +107,8 @@ int	ft_export(t_commands *cmd, t_shell *shell, char *str)
 	int		i;
 	char	**sorted;
 
-	i = 1;
+printf("DEBUG ft_export: shell address = %p, shell->env address = %p\n",
+       (void*)shell, (void*)shell->env);	i = 1;
 	g_exit_code = 0;
 	if (!str && !cmd->args[1])
 	{

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_export_ultis.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:58:34 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/04 15:00:23 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 11:01:53 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,28 +83,52 @@ static int	check_identifier(char *str)
 	return (1);
 }
 
-void	check_and_send(t_shell *shell, char *str)
+/*
+ * @brief Check and send environment variable, tracking if changes were made
+ * @param shell Shell structure
+ * @param str Variable string to process
+ * @return 1 if environment was modified, 0 if no changes made
+ */
+
+int	check_and_send(t_shell *shell, char *str)
 {
 	int	check;
 	int	identifier;
+	int	env_modified;
 
 	check = 0;
 	identifier = check_identifier(str);
+	env_modified = 0;
 	if (!identifier)
+	{
 		check = export_err(str);
+		printf("DEBUG: Invalid identifier\n");
+	}
 	else if (!check_validity(str))
-		check = 1;
+    {
+        check = 1;
+    }
 	else if (if_exist(shell->env, str))
-		check = 1;
+    {
+        check = 1;
+		env_modified = 1;
+    }
 	else
 	{
-		if (!check)
-		{
-			if (identifier == 2)
-				join_arr(shell, str);
-			else
-				send_arr(shell, str);
-		}
+        if (!check)
+        {
+            if (identifier == 2)
+            {
+                join_arr(shell, str);
+				env_modified = 1;
+            }
+            else
+            {
+                send_arr(shell, str);
+				env_modified = 1;
+            }
+        }
 	}
+	return (env_modified);
 }
 

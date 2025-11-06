@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/05 15:22:38 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 10:17:28 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static bool	execute_currdir(t_commands *cmd, t_shell *shell)
  */
 int	execute_builtin(t_commands *cmd, t_shell *shell)
 {
+	printf("DEBUG execute_builtin: cmd='%s', shell->env=%p\n", cmd->args[0], (void*)shell->env);
 	if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
 		g_exit_code = ft_pwd();
 	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
@@ -82,7 +83,11 @@ int	execute_builtin(t_commands *cmd, t_shell *shell)
 	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
 		g_exit_code = ft_unset(cmd, shell);
 	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
+	{
+		printf("DEBUG executor calling ft_env: shell=%p, shell->env=%p\n",
+        (void*)shell, (void*)shell->env);
 		g_exit_code = ft_env(shell->env);
+	}
 	// else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)//Command out for now Max because of missing function
 	// 	g_exit_code = ft_exit(cmd);
 	else

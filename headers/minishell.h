@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/05 16:08:18 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 11:05:13 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			ft_pwd(void);
 int			ft_env(char **env);
 int			modify_path(t_shell *shell, char *temp, int code, int code2);
 char		*get_pwd(void);
-void		check_and_send(t_shell *shell, char *str);
+int			check_and_send(t_shell *shell, char *str);
 int			if_exist(char **env, char *str);
 void		join_arr(t_shell *shell, char *str);
 int			send_arr(t_shell *shell, char *str);
@@ -100,5 +100,6 @@ void		ft_pipe(int fd[2]);
 int			ft_dup(int fd);
 void		ft_waitpid(t_shell *shell);
 int			add_file_node(t_files **list, t_lexer *lexer);
+int			sync_env_to_list(char **env_array, t_cdllist *env_list);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_unset.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 12:00:55 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/24 09:53:19 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 11:04:31 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,21 @@ static bool in_env(char *str, char **env)
     }
     return (false);
 }
+/*
+ * @brief Sync environment changes back to data structure
+ * @param shell Shell structure containing updated environment
+ */
+static void	sync_environment_changes(t_shell *shell)
+{
+	if (!shell || !shell->data || !shell->data->envp_copy || !shell->env)
+		return ;
+
+	if (sync_env_to_list(shell->env, shell->data->envp_copy) != 0)
+	{
+		// Handle sync error - could print warning or set error code
+		printf("Warning: Failed to sync environment changes\n");
+	}
+}
 /**
  * @brief Unset environment variables
  * @param cmd Command structure
@@ -73,8 +88,10 @@ int ft_unset(t_commands *cmd, t_shell *shell)
     int i;
     int j;
     char **rtn;
+    bool env_changed;
 
     j = 1;
+    env_changed = false;
     if (!cmd->args[1])
         return (0);
     while (cmd->args[j])
@@ -90,8 +107,11 @@ int ft_unset(t_commands *cmd, t_shell *shell)
             unset_array(shell->env, rtn, cmd->args[j]);
             ft_free_arr(shell->env);
             shell->env = rtn;
+            env_changed = true;
         }
         j++;
     }
+    if (env_changed)
+        sync_environment_changes(shell);
     return (0);
 }

@@ -6,193 +6,66 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/06 10:51:54 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/06 11:35:24 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 13:16:59 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
- * @brief Split environment variable into key and value
- * @param env_var Environment variable string (format: "KEY=VALUE")
- * @param key Output parameter for key (caller must free)
- * @param value Output parameter for value (caller must free)
- * @return 0 on success, 1 on error
+/**
+ * @brief OPTION 1: DISABLED SYNC (Safest for testing)
+ * Use this to test if export works without persistence
  */
-static int	split_env_var(char *env_var, char **key, char **value)
+int	sync_env_to_list_disabled(char **env_array, t_cdllist *env_list)
 {
-	char	*equals_pos;
-	int		key_len;
-
-	equals_pos = ft_strchr(env_var, '=');
-	if (!equals_pos)
-	{
-		*key = ft_strdup(env_var);
-		*value = ft_strdup("");
-	}
-	else
-	{
-		key_len = equals_pos - env_var;
-		*key = ft_substr(env_var, 0, key_len);
-		*value = ft_strdup(equals_pos + 1);
-	}
-	if (!*key || !*value)
-	{
-		free(*key);
-		free(*value);
-		*key = NULL;
-		*value = NULL;
-		return (1);
-	}
-	return (0);
+	(void)env_array;
+	(void)env_list;
+	return (0);  // Do nothing - variables won't persist between commands
 }
 
-/*
- * @brief MEMORY SAFE: Remove all nodes without double-free
- * @param env_list List to clear
- *
- * FIXED: Uses cdll_del_node with false to avoid double-free
- */
-static void	safe_clear_list(t_cdllist *env_list)
-{
-	t_cd_ll_node	*current;
-	char			*var_name_copy;
-	int				original_size;
-	int				attempts;
-
-	if (!env_list || !env_list->head || env_list->size == 0)
-		return;
-	attempts = 0;
-	while (env_list->head && env_list->size > 0 && attempts < 100)
-	{
-		current = env_list->head;
-		// Make a copy of the variable name for deletion
-		var_name_copy = ft_strdup(current->var_1);
-		if (!var_name_copy)
-			break;
-		// FIXED: Use false to let us manage memory ourselves
-		cdll_del_node(env_list, false, var_name_copy);
-		free(var_name_copy);
-		attempts++;
-	}
-}
-
-/*
- * @brief ALTERNATIVE: Clear list using your del_list function
- * Use this if the individual deletion approach still has issues
- */
-static int	rebuild_list_completely(char **env_array, t_cdllist *env_list)
-{
-	char		*key;
-	char		*value;
-	t_cd_ll_node	*new_node;
-	int		i;
-
-	if (!env_array || !env_list)
-		return (1);
-	// Step 1: Completely destroy the old list
-	cdll_del_list(env_list);
-	// Step 2: Re-initialize the list structure
-	// NOTE: You might need to call cdll_init_list() here or similar
-	// depending on how your cdll_del_list works
-	env_list->head = NULL;
-	env_list->size = 0;
-	// Step 3: Rebuild from env_array
-	i = 0;
-	while (env_array[i])
-	{
-		if (split_env_var(env_array[i], &key, &value) != 0)
-			return (1);
-		// Create new node - it takes ownership of key and value
-		new_node = cdll_new_node(key, value, 0);
-		if (!new_node)
-		{
-			free(key);
-			free(value);
-			return (1);
-		}
-		// Add to list
-		cdll_add_back(env_list, new_node);
-		// DON'T free key and value here - the node owns them now
-		i++;
-	}
-
-	return (0);
-}
-
-/*
- * @brief MEMORY SAFE: Synchronize shell->env array back to linked list
- * @param env_array Current environment array (shell->env)
- * @param env_list Linked list to update (data->envp_copy)
- * @return 0 on success, 1 on error
- *
- * FIXED: Proper memory management to avoid double-free
- */
-int	sync_env_to_list(char **env_array, t_cdllist *env_list)
-{
-	char		*key;
-	char		*value;
-	t_cd_ll_node	*new_node;
-	int		i;
-
-	if (!env_array || !env_list)
-		return (1);
-	// SAFER: Use complete rebuild approach
-	return (rebuild_list_completely(env_array, env_list));
-}
-
-/*
- * @brief CONSERVATIVE APPROACH: Update existing, add new, don't delete
- * Use this version if rebuild still has issues
+/**
+ * @brief OPTION 2: CONSERVATIVE SYNC (Add/update only, no deletion)
+ * Use this if you want basic persistence without complex memory management
  */
 int	sync_env_to_list_conservative(char **env_array, t_cdllist *env_list)
 {
 	char		*key;
 	char		*value;
+	char		*equals_pos;
 	t_cd_ll_node	*new_node;
-	t_cd_ll_node	*current;
-	bool		found;
-	int		i, j;
+	int		i;
+	int		key_len;
 
 	if (!env_array || !env_list)
 		return (1);
-	// Conservative: only update existing and add new, never delete
+	
 	i = 0;
 	while (env_array[i])
 	{
-		if (split_env_var(env_array[i], &key, &value) != 0)
-			return (1);
-
-		// Look for existing variable to update
-		found = false;
-		if (env_list->head && env_list->size > 0)
+		// Split KEY=VALUE
+		equals_pos = ft_strchr(env_array[i], '=');
+		if (!equals_pos)
 		{
-			current = env_list->head;
-			for (j = 0; j < env_list->size; j++)
-			{
-				if (current && current->var_1 &&
-					ft_strncmp(current->var_1, key, ft_strlen(key)) == 0 &&
-					ft_strlen(current->var_1) == ft_strlen(key))
-				{
-					// Update existing - free old value, set new one
-					free(current->var_2);
-					current->var_2 = ft_strdup(value);
-					found = true;
-					break;
-				}
-				current = current->next;
-				if (current == env_list->head)
-					break;
-			}
+			// Variable without value (export VAR)
+			key = ft_strdup(env_array[i]);
+			value = ft_strdup("");
 		}
-		// Add new variable if not found
-		if (!found)
+		else
 		{
+			key_len = equals_pos - env_array[i];
+			key = ft_substr(env_array[i], 0, key_len);
+			value = ft_strdup(equals_pos + 1);
+		}
+		
+		if (key && value)
+		{
+			// Simply add new node (don't check for duplicates for now)
 			new_node = cdll_new_node(key, value, 0);
 			if (new_node)
 				cdll_add_back(env_list, new_node);
 		}
-		// Clean up our copies
+		
+		// Clean up our temporary copies
 		free(key);
 		free(value);
 		i++;
@@ -200,15 +73,29 @@ int	sync_env_to_list_conservative(char **env_array, t_cdllist *env_list)
 	return (0);
 }
 
-// /*
-//  * @brief MINIMAL APPROACH: Just don't sync for now
-//  * Use this to test if the sync is the problem
-//  */
-// int	sync_env_to_list_disabled(char **env_array, t_cdllist *env_list)
-// {
-// 	(void)env_array;
-// 	(void)env_list;
-// 	// Do nothing - just return success
-// 	// This will let export work within a session but not persist
-// 	return (0);
-// }
+/**
+ * @brief Main sync function - choose implementation
+ */
+int	sync_env_to_list(char **env_array, t_cdllist *env_list)
+{
+	// STEP 1: Use disabled version for testing
+	return (sync_env_to_list_disabled(env_array, env_list));
+	
+	// STEP 2: Uncomment this to enable basic persistence
+	// return (sync_env_to_list_conservative(env_array, env_list));
+}
+
+/**
+ * @brief Wrapper function called from builtins
+ */
+void	sync_environment_changes(t_shell *shell)
+{
+	if (!shell || !shell->data || !shell->data->envp_copy || !shell->env)
+		return;
+
+	if (sync_env_to_list(shell->env, shell->data->envp_copy) != 0)
+	{
+		// Handle sync error silently for now
+		return;
+	}
+}

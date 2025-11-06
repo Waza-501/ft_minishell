@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/06 11:30:04 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/06 13:32:31 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ char **convert_cdll_to_env_array(t_cdllist *env_list)
     char **env_array;
     t_cd_ll_node *current;
     int i = 0;
+    char *temp_key_eq;
+    char *full_var;
 
     if (!env_list || !env_list->head)
         return (NULL);
@@ -124,14 +126,36 @@ char **convert_cdll_to_env_array(t_cdllist *env_list)
     current = env_list->head;
     while (current && i < env_list->size)
     {
-        env_array[i] = ft_strjoin(current->var_1, "=");
-        if (!env_array[i])
-            return (ft_free_arr(env_array), NULL);
-        char *temp = env_array[i];
-        env_array[i] = ft_strjoin(temp, current->var_2);
-        free(temp);
-        if (!env_array[i])
-            return (ft_free_arr(env_array), NULL);
+        // Step 1: Create "KEY=" string
+        temp_key_eq = ft_strjoin(current->var_1, "=");
+        if (!temp_key_eq)
+        {
+            // Cleanup on failure
+            while (--i >= 0)
+                free(env_array[i]);
+            free(env_array);
+            return (NULL);
+        }
+        // Step 2: Create "KEY=VALUE" string
+        full_var = ft_strjoin(temp_key_eq, current->var_2);
+        free(temp_key_eq);
+        if (!full_var)
+        {
+            // Cleanup on failure
+            while (--i >= 0)
+                free(env_array[i]);
+            free(env_array);
+            return (NULL);
+        }
+        env_array[i] = full_var;
+        // env_array[i] = ft_strjoin(current->var_1, "=");
+        // if (!env_array[i])
+        //     return (ft_free_arr(env_array), NULL);
+        // char *temp = env_array[i];
+        // env_array[i] = ft_strjoin(temp, current->var_2);
+        // free(temp);
+        // if (!env_array[i])
+        //     return (ft_free_arr(env_array), NULL);
         current = current->next;
         i++;
         // Break if we've completed the circular list
@@ -153,6 +177,8 @@ void cleanup_shell(t_shell *shell)
     // {
     //     sync_env_to_list(shell->env, shell->data->envp_copy);
     // }
+    if (shell->env)
+        ft_free_arr(shell->env);
     if (shell->env)
         ft_free_arr(shell->env);
     shell->env = NULL;

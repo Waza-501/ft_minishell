@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/06 12:27:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/07 11:21:15 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int	g_exit_code = 0;
 
 static int	mini_loop(t_data *data)
 {
+	t_shell	*shell;
+	shell = init_shell(data);
+	if (!shell)
+		return (1);
 	while (1)
 	{
 		set_signals_interactive();
@@ -39,10 +43,11 @@ static int	mini_loop(t_data *data)
 		if (data->commands)
 		{
 			printf("Commands ready for execution\n");
-			execute_commands(data);
+			execute_with_shell(shell, data);
 			reset_data(data, 0);
 		}
 	}
+	cleanup_shell(shell);
 	free_data(data);
 	return (0);
 }

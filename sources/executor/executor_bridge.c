@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/06 13:32:31 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/07 11:06:27 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,25 +164,4 @@ char **convert_cdll_to_env_array(t_cdllist *env_list)
     }
     env_array[i] = NULL;
     return (env_array);
-}
-
-/**
- * @brief Cleanup shell structure after execution
- */
-void cleanup_shell(t_shell *shell)
-{
-    if (!shell)
-        return;
-    // if (shell->env && shell->data && shell->data->envp_copy)
-    // {
-    //     sync_env_to_list(shell->env, shell->data->envp_copy);
-    // }
-    if (shell->env)
-        ft_free_arr(shell->env);
-    if (shell->env)
-        ft_free_arr(shell->env);
-    shell->env = NULL;
-    shell->cmds = NULL;  // Don't free - points to data->commands
-    shell->stop = false;
-    shell->data = NULL;  // Clear data pointer
 }

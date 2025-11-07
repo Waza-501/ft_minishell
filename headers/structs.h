@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:28:02 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/06 12:27:56 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/07 09:42:16 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_files
 	char			*hd_delim;
 	t_token_type	type;
 	bool			open;
+	bool			quoted;
 	struct s_files	*next;
 	struct s_files	*prev;
 }			t_files;

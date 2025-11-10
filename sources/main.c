@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/10 13:50:11 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 14:15:39 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ static int	mini_loop(t_data *data)
 
 
 void	print_envp(char **envp, t_cdllist *list)
-
-
 {
 	int	i;
 

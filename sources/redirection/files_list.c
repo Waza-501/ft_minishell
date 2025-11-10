@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/03 15:14:25 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 13:01:44 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 14:13:27 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	delete_files_list(t_commands *cmd)
 	{
 		next = copy->next;
 		ft_free(&copy->filename);
+		ft_free(&copy->hd_delim);
 		ft_free(&copy);
 		copy = next;
 	}

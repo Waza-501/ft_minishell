@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/05 10:12:26 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 13:10:12 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:13:22 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	simplified_redir(t_data *data, t_commands *list, t_lexer *node)
 	return (0);
 }
 
-static int	open_fd_in_order(t_data *data, t_files *list, int *fd)
+static int	open_fd_in_order(t_files *list, int *fd)
 {
 	t_files	*copy;
 
@@ -48,12 +48,12 @@ static int	open_fd_in_order(t_data *data, t_files *list, int *fd)
 	{
 		if (copy->type == INPUT)
 		{
-			if (handle_input(data, list, fd))
+			if (handle_input(list, fd))
 				return (1);
 		}
 		else if (copy->type == HEREDOC)
 		{
-			if (handle_heredoc(data, list, fd))
+			if (handle_heredoc(list, fd))
 				return (1);
 		}
 		else
@@ -66,18 +66,18 @@ static int	open_fd_in_order(t_data *data, t_files *list, int *fd)
 	return (0);
 }
 
-int	set_fd_execution(t_data *data, t_commands *cmd)
+int	set_fd_execution(t_commands *cmd)
 {
 	int	fd;
 	int	code;
 
 	fd = -1;
-	code = open_fd_in_order(data, cmd->infiles, &fd);
+	code = open_fd_in_order(cmd->infiles, &fd);
 	if (code)
 		return (1);
 	cmd->infile = fd;
 	fd = -1;
-	code = open_fd_in_order(data, cmd->outfiles, &fd);
+	code = open_fd_in_order (cmd->outfiles, &fd);
 	if (code)
 		return (1);
 	cmd->outfile = fd;

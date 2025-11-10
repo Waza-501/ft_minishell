@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 13:18:11 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 13:20:12 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	ft_waitpid(t_shell *shell)
 		if (curr->pid > 0)
 		{
 			// printf("Waiting for pid %d (command: %s)\n", curr->pid,
-				curr->args[0]);
+			// 	curr->args[0]);
 			waitpid(curr->pid, &status, 0);
 			if (WIFEXITED(status))
 				g_exit_code = WEXITSTATUS(status);

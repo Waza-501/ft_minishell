@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/10 12:01:26 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:50:11 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int	mini_loop(t_data *data)
 		return (1);
 	while (1)
 	{
-		//print_envp(NULL, data->envp_copy);
 		set_signals_interactive();
 		data->input = readline("minishell$ ");
 		set_signals_noninteractive();
@@ -37,9 +36,6 @@ static int	mini_loop(t_data *data)
 			ft_putendl_fd("exit", STDOUT_FILENO);
 			exit(0);
 		}
-		if (ft_strlen(data->input) >= 4
-			&& (ft_strncmp(data->input, "exit", 4) == 0))
-			break ;
 		parse_input(data, data->input);
 		if (data->commands)
 		{

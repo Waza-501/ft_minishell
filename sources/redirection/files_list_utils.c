@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:03:42 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/07 12:06:49 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:24:46 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	outfile_open_error(t_files *file)
 {
 	ft_putstr_fd(MS_ERROR, STDERR_FILENO);
 	ft_putstr_fd(file->filename, STDERR_FILENO);
-	ft_putstr_fd(": permission denied", STDERR_FILENO);
+	ft_putendl_fd(": permission denied", STDERR_FILENO);
 	exit(1);
 }
 
@@ -27,12 +27,12 @@ int	infile_open_error(t_files *file)
 	if (access(file->filename, F_OK))
 	{
 		ft_putstr_fd(file->filename, STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory", STDERR_FILENO);
+		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 	}
 	else if (access(file->filename, R_OK))
 	{
 		ft_putstr_fd(file->filename, STDERR_FILENO);
-		ft_putstr_fd(": Permission denied", STDERR_FILENO);
+		ft_putendl_fd(": Permission denied", STDERR_FILENO);
 	}
 	exit(1);
 }

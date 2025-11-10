@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 13:12:24 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:43:56 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	fill_heredoc(t_files *list, int *fd)
 		{
 			ft_putstr_fd(HD_EMPTY_LINE, STDERR_FILENO);
 			ft_putendl_fd(list->hd_delim, STDERR_FILENO);
-			return (1);
+			exit (1);
 		}
 		if (scan_line(line, list->hd_delim, list->quoted))
 			break ;

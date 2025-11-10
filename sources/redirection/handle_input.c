@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 13:11:32 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:27:28 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int	handle_input(t_files *list, int *fd)
 		return (0);
 	if (close_existing_fd_in(list, fd))
 		return (1);
+	printf("filename to find is %s\n", list->filename);
 	*fd = open(list->filename, O_RDONLY);
+	printf("opened the file\n");
 	if (*fd == -1)
 		return (infile_open_error(list));
 	list->open = true;

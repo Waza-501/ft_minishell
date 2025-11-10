@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 15:22:19 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/07 12:09:31 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 12:57:48 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int			handle_output(t_files *list, int *fd);
 /*set_redirect*/
 //bool		set_redirect(t_data *data, t_commands *list, t_lexer *lexer);
 int			simplified_redir(t_data *data, t_commands *list, t_lexer *node);
+int			set_fd_execution(t_data *data, t_commands *cmd);
 
 
 #endif

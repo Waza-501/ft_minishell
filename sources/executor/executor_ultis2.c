@@ -6,12 +6,13 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:39:39 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:59:49 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+#include "redirect.h"
 
 /**
  * @brief Execute external command by searching through PATH directories
@@ -177,7 +178,8 @@ bool	single_cmd(t_shell *shell)
 	{
 		save_stdin = ft_dup(STDIN_FILENO);
 		save_stdout = ft_dup(STDOUT_FILENO);
-		// if (handle_redirections(shell->cmds, shell))
+		if (set_fd_execution(NULL, shell->cmds))
+			print("should not reach here\n");
 			//Command out for now Max because of missing function
 		execute_builtin(shell->cmds, shell);
 		ft_dup2(save_stdin, STDIN_FILENO);

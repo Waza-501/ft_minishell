@@ -6,11 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2025/11/10 11:44:56 by owhearn       ########   odam.nl         */
-=======
-/*   Updated: 2025/11/10 12:47:19 by haile         ########   odam.nl         */
->>>>>>> 02bb3030df134629f90394f3e53495e5ade50f41
+/*   Updated: 2025/11/10 12:54:32 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +121,6 @@ void		invalidate_sorted_env(t_shell *shell);
 char		**get_sorted_env(t_shell *shell);
 
 // Main loop integration
-static int	mini_loop(t_data *data);
 void		execute_with_shell(t_shell *shell, t_data *data);
 void		execute_other_commands(t_commands *cmd, t_shell *shell,
 				t_data *data);

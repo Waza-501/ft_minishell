@@ -6,11 +6,12 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:38:51 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 13:00:07 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "redirect.h"
 
 //#include "libft.h"
 
@@ -207,7 +208,8 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 			close(cmd->pipefd[0]); // new add 04/11 - Close after dup2
 		}
 		printf("🎯 Child: About to execute: %s\n", cmd->args[0]);
-		// if (handle_redirections(cmd, shell))
+		if (set_fd_execution(NULL, cmd))
+			print("should not reach here\n");
 		// Command out for now Max because of missing function
 		execute_cmd(cmd, shell);
 		exit(g_exit_code);

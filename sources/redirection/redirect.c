@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/05 10:12:26 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 12:44:27 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 12:57:17 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,20 @@ static int	open_fd_in_order(t_data *data, t_files *list, int *fd)
 	return (0);
 }
 
-int	set_fd_execution(t_data *data)
+int	set_fd_execution(t_data *data, t_commands *cmd)
 {
 	int	fd;
 	int	code;
 
 	fd = -1;
-	code = open_fd_in_order(data, data->commands->infiles, &fd);
+	code = open_fd_in_order(data, cmd->infiles, &fd);
 	if (print_error_fd(code))
 		return (1);
-	data->commands->infile = fd;
+	cmd->infile = fd;
 	fd = -1;
-	code = open_fd_in_order(data, data->commands->outfiles, &fd);
+	code = open_fd_in_order(data, cmd->outfiles, &fd);
 	if (print_error_fd(code))
 		return (1);
-	data->commands->outfile = fd;
+	cmd->outfile = fd;
 	return (0);
 }

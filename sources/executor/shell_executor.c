@@ -15,22 +15,55 @@
  * @brief Execute commands using shell (replaces execute_commands)
  * Works with your existing parse_input system
  */
+// void execute_with_shell(t_shell *shell, t_data *data)
+// {
+//     t_commands *cmd;
+//     if (!data || !shell || !data->commands)
+//         return;
+
+//     cmd = data->commands;
+
+//     // Process each command in the pipeline
+//     while (cmd)
+//     {
+//         execute_single_command(cmd, shell, data);
+//         cmd = cmd->next;
+//     }
+// }
 void execute_with_shell(t_shell *shell, t_data *data)
-{   
+{
     t_commands *cmd;
     if (!data || !shell || !data->commands)
         return;
-    
+
+    // CRITICAL DEBUG: Check data->commands at entry
+    printf("🔍 DATA->COMMANDS DEBUG (execute_with_shell entry):\n");
+    t_commands *debug_curr = data->commands;
+    int debug_count = 0;
+    while (debug_curr)
+    {
+        printf("  Data Command %d: %s (next=%p)\n", debug_count,
+               debug_curr->args[0] ? debug_curr->args[0] : "NULL",
+               (void*)debug_curr->next);
+        debug_curr = debug_curr->next;
+        debug_count++;
+        if (debug_count > 10) // Safety check
+            break;
+    }
+    printf("  Total data commands: %d\n", debug_count);
+    printf("  data->commands pointer: %p\n", (void*)data->commands);
+
     cmd = data->commands;
-    
+
     // Process each command in the pipeline
     while (cmd)
     {
+        printf("🔄 execute_with_shell processing: %s (next=%p)\n",
+               cmd->args[0] ? cmd->args[0] : "NULL", (void*)cmd->next);
         execute_single_command(cmd, shell, data);
         cmd = cmd->next;
     }
 }
-
 /**
  * @brief Execute a single command with shell persistence
  */
@@ -57,13 +90,13 @@ void execute_single_command(t_commands *cmd, t_shell *shell, t_data *data)
         ft_env(shell->env);
         return;
     }
-    // if (ft_strncmp(cmd->args[0], "cd", 2) == 0)
-    // {
-    //     ft_cd(cmd, shell);
-    //     // CD might change PWD, invalidate sorted env cache
-    //     invalidate_sorted_env(shell);
-    //     return;
-    // }
+    if (ft_strncmp(cmd->args[0], "cd", 2) == 0)
+    {
+        ft_cd(cmd, shell);
+        // CD might change PWD, invalidate sorted env cache
+        invalidate_sorted_env(shell);
+        return;
+    }
     if (ft_strncmp(cmd->args[0], "pwd", 3) == 0)
     {
         ft_pwd();
@@ -74,11 +107,11 @@ void execute_single_command(t_commands *cmd, t_shell *shell, t_data *data)
         ft_echo(cmd);
         return;
     }
-    // if (ft_strncmp(cmd->args[0], "exit", 4) == 0)
-    // {
-    //     ft_exit(cmd);
-    //     return;
-    // }
+    if (ft_strncmp(cmd->args[0], "exit", 4) == 0)
+    {
+        ft_exit(cmd);
+        return;
+    }
     // For other commands, use your existing execution system
     execute_other_commands(cmd, shell, data);
 }
@@ -100,7 +133,7 @@ void execute_other_commands(t_commands *cmd, t_shell *shell, t_data *data)
     // Call your existing execute function
     // You can replace this with your actual executor function
     execute(&temp_shell);  // Your existing execute function
-    
+
     // Copy back any important state
     shell->stop = temp_shell.stop;
     shell->sorted_env_valid = temp_shell.sorted_env_valid; // Update validity
@@ -136,7 +169,7 @@ void free_quick_args(char **args)
 {
     if (!args)
         return;
-        
+
     for (int i = 0; args[i]; i++)
         free(args[i]);
     free(args);

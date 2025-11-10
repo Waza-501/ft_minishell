@@ -3,15 +3,14 @@
 /*                                                        ::::::::            */
 /*   builtins_ultils.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 13:57:55 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/04 10:34:34 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 01:56:21 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
 
 int    modify_path(t_shell *shell, char *temp, int code, int code2)
 {
@@ -19,7 +18,7 @@ int    modify_path(t_shell *shell, char *temp, int code, int code2)
         ft_export(0, shell, "OLDPWD=");
     else if (code2)
         ft_export(0, shell, "PWD=");
-    add_path(shell, temp);
+    // add_path(shell, temp);
     return (0);
 }
 /**
@@ -39,5 +38,5 @@ char    *get_pwd(void)
     {
         free(buf);
         return (NULL);
-    }   
+    }
 }

@@ -3,211 +3,105 @@
 /*                                                        ::::::::            */
 /*   ft_cd.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:18 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/04 12:40:45 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 01:55:32 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "libft.h"
+#include "minishell.h"
+#include <errno.h> // Add to includes
 
-/**
- * @brief Update PWD and OLDPWD environment variables
- * @param shell Shell structure
- * @param old_pwd The previous working directory
- * @return 0 on success, -1 on failure
- */
-int update_pwd_vars(t_shell *shell, char *old_pwd)
+static void	update_pwd(char *pwd, t_shell *shell)
 {
-    char *new_pwd;
-    int i = 0;
-    int pwd_updated = 0;
-    int oldpwd_updated = 0;
-
-    new_pwd = get_pwd();
-    if (!new_pwd)
-        return (-1);
-
-    // Update existing PWD and OLDPWD entries
-    while (shell->env[i])
-    {
-        if (ft_strncmp(shell->env[i], "PWD=", 4) == 0)
-        {
-            free(shell->env[i]);
-            shell->env[i] = ft_strjoin("PWD=", new_pwd);
-            if (!shell->env[i])
-            {
-                free(new_pwd);
-                return (-1);
-            }
-            pwd_updated = 1;
-        }
-        else if (ft_strncmp(shell->env[i], "OLDPWD=", 7) == 0)
-        {
-            free(shell->env[i]);
-            shell->env[i] = ft_strjoin("OLDPWD=", old_pwd);
-            if (!shell->env[i])
-            {
-                free(new_pwd);
-                return (-1);
-            }
-            oldpwd_updated = 1;
-        }
-        i++;
-    }
-
-    free(new_pwd);
-    
-    // TODO: If PWD or OLDPWD don't exist, we should add them to the environment
-    // This would require expanding the env array, which needs modify_path function
-    if (!pwd_updated || !oldpwd_updated)
-    {
-        // For now, we'll just warn about missing variables
-        // In a complete implementation, we'd call modify_path here
-        printf("Warning: PWD or OLDPWD variable missing in environment\n");
-    }
-    
-    return (0);
-}
-/**
- * @brief Extract environment variable value
- * @param path Environment variable name with = (e.g., "HOME=")
- * @param shell Shell structure with environment
- * @return Allocated string with variable value or NULL if not found
- */
-char    *extract_path(char *path, t_shell *shell)
-{
-    int i;
-    int path_len;
-
-    i = 0;
-    path_len = ft_strlen(path);
-    while (shell->env[i])
-    {
-        if (!ft_strncmp(shell->env[i], path, path_len))
-            return (ft_substr(shell->env[i], path_len, ft_strlen(shell->env[i]) - path_len));
-        i++;
-    }
-    return (NULL);
+	if (pwd)
+	{
+		pwd = ft_strjoin_free_2nd_ARG("OLDPWD=", pwd);
+		ft_export(0, shell, pwd);
+		free(pwd);
+	}
+	pwd = ft_strjoin_free_2nd_ARG("PWD=", ft_getcwd());
+	ft_export(0, shell, pwd);
+	free(pwd);
 }
 
-/**
- * @brief Change to a directory and update environment variables
- * @param path Path to change to (or environment variable name)
- * @param shell Shell structure
- * @param type 1 for env variable, 2 for direct path, 3 for cd-
- * @return 0 on success, 1 on failure
- */
-int change_path(char *path, t_shell *shell, int type)
+static int	ft_chdir(char *path, t_shell *shell)
 {
-    char    *path_extract = NULL;
-    int     ret;
-    char    *current_pwd;
+	char	*pwd;
 
-    ret = 0;
-    current_pwd = get_pwd();
-    if (!current_pwd)
-        return (1);
-    if (type == 1) // Environment variable (HOME= or OLDPWD=)
-    {
-        path_extract = extract_path(path, shell);
-        if (!path_extract)
-        {
-            free(current_pwd);
-            return (1);
-        }
-        ret = chdir(path_extract);
-        // if (ret < 0)
-        //     return (0);
-        // else
-        //     add_path(shell, current_pwd);
-        free(path_extract);
-    }
-    else if (type == 2) //Direct path
-    {
-        ret = chdir(path);
-        // if (ret < 0)
-        //     return (0);
-        // else
-        //     add_path(shell, current_pwd);
-    }
-    else if (type == 3)  // cd - (print destination)
-    {
-        path_extract = extract_path("OLDPWD=", shell);
-        if (!path_extract)
-        {
-            free(current_pwd);
-            return (1);
-        }
-        ret = chdir(path_extract);
-        if (ret == 0)
-        {
-            // Print the destination directory (bash behavior)
-            printf("%s\n", path_extract);
-        }
-        free(path_extract);
-    }
-    else
-    {
-        free(current_pwd);
-        return (1);
-    }
-    if (ret != 0)
-    {
-        free(current_pwd);
-        return (1);
-    }
-    // Update PWD and OLDPWD
-    if (update_pwd_vars(shell, current_pwd) != 0)
-    {
-        free(current_pwd);
-        return (1);
-    }
-    free(current_pwd);
-    return (0);
+	pwd = ft_getcwd();
+	if (!pwd && path[0] != '/')
+	{
+		perror("cd: error retrieving current directory: getcwd: cannot access\
+ parent directories");
+		return (0);
+	}
+	if (chdir(path) != 0)
+	{
+		perror(path);
+		free(pwd);
+		return (1);
+	}
+	update_pwd(pwd, shell);
+	return (0);
 }
-/**
- * @brief Main ft_cd function - bash cd builtin implementation
- * @param cmd Command structure with arguments
- * @param shell Shell structure
- * @return 0 on success, 1 on failure (bash-compatible)
- */
-int    ft_cd(t_commands *cmd, t_shell *shell)
+
+static int	cd_minus(t_shell *shell)
 {
-    if (!cmd->args[1]) // Case 1: cd (no arguments) - go to HOME
-    {
-        if (change_path("HOME=", shell, 1) != 0)
-        {
-            ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-            return (1);
-        }
-        return (0);
-    }
-    if (ft_strncmp(cmd->args[1], "-", 2) == 0)     // Case 2: cd - (go to previous directory)
-    {
-        if (change_path("OLDPWD=", shell, 3) != 0)
-        {
-            ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-            return (1);
-        }
-        return (0);
-    }
-    if (ft_strncmp(cmd->args[1], "~", 2) == 0)     // Case 3: cd ~ (go to HOME directory)
-    {
-        if (change_path("HOME=", shell, 1) != 0)
-        {
-            ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-            return (1);
-        }
-        return (0);
-    }
-    if (change_path(cmd->args[1], shell, 2) != 0)     // Case 4: cd <path> (go to specified directory)
-    {
-        ft_putstr_fd("minishell: cd: ", 2);
-        perror(cmd->args[1]);
-        return (1);
-    }
-    return (0);
+	int	i;
+	int	ret;
+
+	i = 0;
+	while (shell->env[i])
+	{
+		if (ft_strncmp("OLDPWD=", shell->env[i], 7) == 0)
+			break ;
+		i++;
+	}
+	if (!shell->env[i])
+	{
+		ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR);
+		return (1);
+	}
+	ret = ft_chdir(&shell->env[i][7], shell);
+	if (ret == 0)
+		ft_pwd();
+	return (ret);
+}
+
+static int	cd_home(t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (shell->env[i])
+	{
+		if (ft_strncmp("HOME=", shell->env[i], 5) == 0)
+			break ;
+		i++;
+	}
+	if (!shell->env[i])
+	{
+		ft_putstr_fd("minishell: cd: HOME not set\n", STDERR);
+		return (1);
+	}
+	return (ft_chdir(&shell->env[i][5], shell));
+}
+
+int	ft_cd(t_commands *cmd, t_shell *shell)
+{
+	if (!cmd->args[1])
+		return (cd_home(shell));
+	else if (cmd->args[2] != NULL)
+	{
+		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR);
+		return (1);
+	}
+	else if (cmd->args[1][0] == '\0')
+		return (0);
+	else if (ft_strncmp("-", cmd->args[1], 2) == 0)
+		return (cd_minus(shell));
+	return (ft_chdir(cmd->args[1], shell));
 }

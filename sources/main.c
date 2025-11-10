@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/07 11:21:15 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 03:23:25 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	mini_loop(t_data *data)
 		parse_input(data, data->input);
 		if (data->commands)
 		{
-			printf("Commands ready for execution\n");
 			execute_with_shell(shell, data);
 			reset_data(data, 0);
 		}

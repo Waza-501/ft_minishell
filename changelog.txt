@@ -18,3 +18,178 @@
 - PARSING:	- expand_args is now fully working.
 			- concatonation roughly planned out.
 			- input/output redirect logic rough plans
+
+#10/11/25: TEST
+## PHASE 1:
+### 1.1 Prompt and History
+
+# Test 1: Basic prompt display --> OK
+./minishell
+# Expected: Prompt should appear (e.g., "minishell> ")
+
+# Test 2: History functionality --> OK
+echo "hello"
+echo "world"
+# Use up arrow to navigate history
+# Expected: Previous commands should be accessible
+
+### 1.2 Command Execution
+
+# Test 1: Absolute path --> OK
+/bin/ls
+/bin/echo "test"
+
+# Test 2: Relative path --> OK
+ls
+echo "test"
+
+# Test 3: Command with arguments --> OK
+ls -l
+echo "hello world"
+
+# Test 4: Command not found --> NOT OK. Fix later
+nonexistentcommand
+# Expected: Error message similar to bash
+## Phase 2: Built-in Commands
+### 2.1 Echo Command --> NOT OK with the last command. Fix later.
+--> Fixed last command, but have problem with echo $NEW_VAR
+echo "hello world"
+echo hello world
+echo -n "no newline"
+echo -n hello world
+echo ""
+echo
+
+### 2.2 CD Command --> OK
+pwd
+cd /tmp
+pwd
+cd ..
+pwd
+cd ~
+pwd
+cd /nonexistent
+# Expected: Error message
+cd
+pwd
+# Expected: Should go to HOME directory
+
+### 2.3 PWD Command --> OK
+pwd
+cd /tmp
+pwd
+cd ..
+pwd
+
+### 2.4 Export Command --> export is good, echo is not.
+
+export TEST_VAR=hello
+echo $TEST_VAR
+export TEST_VAR="hello world"
+echo $TEST_VAR
+export
+# Expected: Should show exported variables
+
+### 2.5 Unset Command --> OK
+
+export TEST_VAR=hello
+echo $TEST_VAR
+unset TEST_VAR
+echo $TEST_VAR
+# Expected: Variable should be undefined
+
+### 2.6 Env Command --> OK
+### 2.7 Exit Command --> Wrong exit code.
+exit
+# Expected: Shell should exit
+./minishell
+exit 42
+echo $?
+# Expected: Exit code should be 42
+
+## Phase 3: Quotes and Special Characters
+### 3.1 Single Quotes
+
+echo 'hello world'
+echo 'hello $USER world'
+# Expected: $USER should not be expanded
+echo 'hello "world"' --> NOT OK
+# Expected: Double quotes should be literal
+
+### 3.2 Double Quotes
+echo "hello world"
+echo "hello $USER world" --> NOT OK
+# Expected: $USER should be expanded
+echo "hello 'world'" --> OK
+# Expected: Single quotes should be literal
+
+### 3.3 Unclosed Quotes (Should NOT be handled)
+echo "hello --> OK
+# Expected: Should show error or handle gracefully
+echo 'hello --> OK
+# Expected: Should show error or handle gracefully
+
+## Phase 4: Environment Variables
+### 4.1 Variable Expansion
+
+echo $USER
+echo $HOME
+echo $PATH
+echo $NONEXISTENT
+# Expected: Should expand to empty string --> F_OK
+
+### 4.2 Exit Status Variable
+ls
+echo $? --> $?
+# Expected: Should show 0 (success)
+invalidcommand
+echo $? --> $?
+# Expected: Should show non-zero (failure)
+
+## Phase 5: Redirections --> DOING
+### 5.1 Input Redirection (<)
+
+echo "hello" > test.txt
+cat < test.txt
+# Expected: Should display "hello"
+wc -l < test.txt
+# Clean up
+rm test.txt
+
+### 5.2 Output Redirection (>)
+echo "hello" > test.txt
+cat test.txt
+# Expected: Should display "hello"
+ls > files.txt
+cat files.txt
+# Clean up
+rm test.txt files.txt
+
+### 5.3 Append Redirection (>>)
+echo "line1" > test.txt
+echo "line2" >> test.txt
+cat test.txt
+# Expected: Should display both lines
+# Clean up
+rm test.txt
+
+### 5.4 Here Document (<<)
+cat << EOF
+hello
+world
+EOF
+# Expected: Should display "hello" and "world"
+
+wc -l << END
+line1
+line2
+END
+# Expected: Should count lines
+
+## Phase 6: Pipes
+### 6.1 Simple Pipes
+ls | wc -l
+echo "hello world" | wc -w
+cat /etc/passwd | grep root | wc -l
+
+

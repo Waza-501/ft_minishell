@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/07 11:25:29 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 01:54:37 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int			send_arr(t_shell *shell, char *str);
 char		**sort_env(char **env);
 void		print_env(char **sorted_env);
 void		free_sorted_env(char **sorted_env);
+char		*ft_getcwd(void);
+
 
 // Executor - Bridge functions Max
 int			execute_commands(t_data *data);
@@ -117,7 +119,7 @@ int         shell_setenv(t_shell *shell, char *name, char *value);
 void        invalidate_sorted_env(t_shell *shell);
 char        **get_sorted_env(t_shell *shell);
 
-// Main loop integration  
+// Main loop integration
 static int  mini_loop(t_data *data);
 void        execute_with_shell(t_shell *shell, t_data *data);
 void        execute_other_commands(t_commands *cmd, t_shell *shell, t_data *data);

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_echo.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:25 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/24 09:52:58 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 02:38:20 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 static int	last_check(int i, t_commands *cmd)
 {
 	int	j;
-	while ((ft_strncmp(cmd->args[i], "-n", 2) == 0))
+	while ((cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0))
 	{
 		j = 1;
 		while (cmd->args[i][j] == 'n')
@@ -53,7 +53,7 @@ static int	last_check(int i, t_commands *cmd)
  */
 static int	check_n(t_commands *cmd, int i, int *check, int *n)
 {
-	if ((ft_strncmp(cmd->args[i], "-n", 2) == 0) && i == 1)
+	if ((cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0) && i == 1)
 	{
 		while (cmd->args[i][*check] && cmd->args[i][*check] == 'n')
 			*check += 1;

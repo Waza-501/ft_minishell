@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   executor_ultis2.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/04 09:51:47 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 09:39:50 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
         {
             ft_free_arr(path);
             exit(1);
-        }		
+        }
 		tmp = ft_strjoin_free(tmp, cmd->args[0]);
         if (!tmp) //debug
         {
@@ -63,10 +63,10 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
         if (access(tmp, X_OK) == 0) //debug
         {
             // printf("   Found executable: %s\n", tmp); // Debug
-            
+
             // Try to execute - this never returns on success
             execve(tmp, cmd->args, shell->env);
-            
+
             // If we reach here, execve failed
             perror("execve");
             ft_free_arr(path);
@@ -120,24 +120,34 @@ void	ft_waitpid(t_shell *shell)
 	int		status;
 	int		sig;
 
+	printf("⏳ Starting to wait for processes...\n");
 	curr = shell->cmds;
 	while (curr)
-	{
-		waitpid(curr->pid, &status, 0);
-		if (WIFEXITED(status))
-			g_exit_code = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
 		{
-			sig = WTERMSIG(status);
-			if (sig == SIGINT)
-				g_exit_code = 130;
-			else if (sig == SIGQUIT)
-				g_exit_code = 131;
-		}
-		if (g_exit_code == 130 || g_exit_code == 131)
-			shell->stop = true;
+			if (curr->pid > 0)
+				{
+					printf("⌛ Waiting for pid %d (command: %s)\n", curr->pid, curr->args[0]);
+					waitpid(curr->pid, &status, 0);
+					if (WIFEXITED(status))
+						g_exit_code = WEXITSTATUS(status);
+					else if (WIFSIGNALED(status))
+					{
+						sig = WTERMSIG(status);
+						if (sig == SIGINT)
+							g_exit_code = 130;
+						else if (sig == SIGQUIT)
+							g_exit_code = 131;
+					}
+					if (g_exit_code == 130 || g_exit_code == 131)
+						shell->stop = true;
+				}
+			else
+			{
+			printf("⚠️ Invalid pid for command: %s (pid=%d)\n", curr->args[0], curr->pid);
+			}
 		curr = curr->next;
-	}
+		}
+	printf("🏁 All processes finished, exit_code: %d\n", g_exit_code);
 }
 /**
  * @brief Handle single built-in command execution without forking

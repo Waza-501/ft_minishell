@@ -59,7 +59,7 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				builtins/ft_export_ultis.c\
 				builtins/ft_export_sort.c\
 				builtins/ft_export_print.c\
-				builtins/ft_ext.c\
+				builtins/ft_exit.c\
 				builtins/builtins_ultils.c\
 				executor/executor_bridge.c\
 				executor/executor.c\

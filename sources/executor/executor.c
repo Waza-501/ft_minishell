@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 13:04:29 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 13:14:24 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 			close(cmd->pipefd[0]); // new add 04/11 - Close after dup2
 		}
 		printf("Child: About to execute: %s\n", cmd->args[0]);
-		if (set_fd_execution(NULL, cmd))
+		if (set_fd_execution(cmd))
 			printf("should not reach here\n");
 		// Command out for now Max because of missing function
 		execute_cmd(cmd, shell);

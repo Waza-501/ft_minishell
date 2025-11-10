@@ -6,20 +6,9 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 13:57:55 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 13:13:48 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 14:50:08 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minishell.h"
-
-int	modify_path(t_shell *shell, int code, int code2)
-{
-	if (code)
-		ft_export(0, shell, "OLDPWD=");
-	else if (code2)
-		ft_export(0, shell, "PWD=");
-	return (0);
-}
 
 /**
  * @brief Get current working directory

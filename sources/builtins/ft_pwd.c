@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_pwd.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:31 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/24 09:33:44 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 02:27:28 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ char	*ft_getcwd(void)
 {
 	char	*buf;
 
-	buf = ft_malloc(PATH_MAX * sizeof(char));
+	buf = ft_malloc(sizeof(char) * PATH_MAX);
 	if (getcwd(buf, PATH_MAX))
 		return (buf);
 	free(buf);
-	return (NULL);
+	return NULL;
 }
 
 /**
@@ -50,7 +50,7 @@ int	ft_pwd(void)
 	{
 		printf("%s\n", pwd);
 		free(pwd);
-		return (0);
+		return 0;
 	}
-	return (1);
+	return 1;
 }

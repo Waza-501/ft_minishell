@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 13:14:24 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:18:35 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 			cmd->args[0]);
 		if (prev_fd != -1)
 		{
-			printf("🧹 Parent: Closing prev_fd %d\n", prev_fd);
+			printf("Parent: Closing prev_fd %d\n", prev_fd);
 			close(prev_fd); // Close the read end we passed to child
 		}
 		// if (cmd->pipefd[1] != -1)
@@ -285,14 +285,14 @@ void	execute(t_shell *shell)
 		// Clean up file descriptors
 		if (prev_fd != -1)
 		{
-			printf("🔧 Closing prev_fd: %d\n", prev_fd);
+			printf("Closing prev_fd: %d\n", prev_fd);
 			close(prev_fd);
 			// Close previous read end
 		}
 		prev_fd = curr->pipefd[0]; // Save current read end for next command
 		if (curr->pipefd[1] != -1)
 		{
-			printf("🔧 Closing write end: %d\n", curr->pipefd[1]);
+			printf("Closing write end: %d\n", curr->pipefd[1]);
 			close(curr->pipefd[1]);
 			// Close current write end
 		}

@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/10 12:27:15 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 13:15:40 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 13:18:40 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	execute_with_shell(t_shell *shell, t_data *data)
 		if (debug_count > 10)
 			break ;
 	}
-	printf("Total data commands: %d\n", debug_count);
-	printf("data->commands pointer: %p\n", (void *)data->commands);
+	// printf("Total data commands: %d\n", debug_count);
+	// printf("data->commands pointer: %p\n", (void *)data->commands);
 	cmd = data->commands;
 	// Process each command in the pipeline
 	while (cmd)

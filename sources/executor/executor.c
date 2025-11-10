@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 13:18:35 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 14:42:29 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,26 +188,25 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	cmd->pid = ft_fork();
 	if (cmd->pid == 0)
 	{
-		printf("CHILD PROCESS for: %s (pid=%d)\n", cmd->args[0], getpid());
-		// debug
+		// printf("CHILD PROCESS for: %s (pid=%d)\n", cmd->args[0], getpid());
 		// sig_handler(2); //Command out for now Max because of missing function
 		// new add 04/11 - Setup input redirection from previous command
 		// if (cmd->n > 1) //Command out for now
 		if (prev_fd != -1)
 		{
-			printf("Child: Redirecting stdin from fd %d\n", prev_fd);
+			// printf("Child: Redirecting stdin from fd %d\n", prev_fd);
 			ft_dup2(prev_fd, STDIN);
 			close(prev_fd); // new add 04/11 - Close after dup2
 		}
 		if (cmd->next != NULL)
 		{
-			printf("Child: Redirecting stdout to fd %d\n", cmd->pipefd[1]);
+			// printf("Child: Redirecting stdout to fd %d\n", cmd->pipefd[1]);
 			close(cmd->pipefd[0]); // new add 04/11
 									//- Close read end (don't need it)
 			ft_dup2(cmd->pipefd[1], STDOUT);
 			close(cmd->pipefd[0]); // new add 04/11 - Close after dup2
 		}
-		printf("Child: About to execute: %s\n", cmd->args[0]);
+		// printf("Child: About to execute: %s\n", cmd->args[0]);
 		if (set_fd_execution(cmd))
 			printf("should not reach here\n");
 		// Command out for now Max because of missing function
@@ -251,10 +250,10 @@ void	execute(t_shell *shell)
 	int			prev_fd;
 	int			cmd_count;
 
-	printf("=== EXECUTE START ===\n");
+	// printf("=== EXECUTE START ===\n");
 	// Process heredocs before any command execution
 	// handle_heredocs(shell);
-	printf("COMMAND LIST DEBUG:\n");
+	// printf("COMMAND LIST DEBUG:\n");
 	curr = shell->cmds;
 	cmd_count = 0;
 	while (curr)
@@ -277,8 +276,8 @@ void	execute(t_shell *shell)
 	// Execute pipeline: iterate through all commands
 	while (curr && !shell->stop)
 	{
-		printf("Processing command: %s (pid will be %d)\n", curr->args[0],
-			curr->pid);
+		// printf("Processing command: %s (pid will be %d)\n", curr->args[0],
+		// 	curr->pid);
 		handle_pipes(curr, prev_fd, shell);
 		printf("handle_pipes completed for %s (pid=%d)\n", curr->args[0],
 			curr->pid);
@@ -301,5 +300,5 @@ void	execute(t_shell *shell)
 	printf("======================\n");
 	ft_waitpid(shell);
 	// Wait for all child processes to complete
-	printf("=== EXECUTE END ===\n");
+	// printf("=== EXECUTE END ===\n");
 }

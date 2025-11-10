@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/10 12:27:15 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 14:40:22 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 13:18:40 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,56 @@
 
 /**
  * @brief Execute commands using shell (replaces execute_commands)
- * This function now correctly routes commands:
- * - Pipeline commands (cmd->next exists) → original executor with pipe handling
- * - Single commands → persistent shell execution for builtins like export/cd
- *
- *
- * */
+ * Works with your existing parse_input system
+ */
+// void execute_with_shell(t_shell *shell, t_data *data)
+// {
+//     t_commands *cmd;
+//     if (!data || !shell || !data->commands)
+//         return ;
+
+//     cmd = data->commands;
+
+//     // Process each command in the pipeline
+//     while (cmd)
+//     {
+//         execute_single_command(cmd, shell, data);
+//         cmd = cmd->next;
+//     }
+// }
 void	execute_with_shell(t_shell *shell, t_data *data)
 {
+	t_commands	*cmd;
+	t_commands	*debug_curr;
+	int			debug_count;
+
 	if (!data || !shell || !data->commands)
 		return ;
-	// CRITICAL FIX: Detect pipelines and route appropriately
-	if (data->commands && data->commands->next)
+	//Check data->commands at entry
+	// printf("DATA->COMMANDS DEBUG (execute_with_shell entry):\n");
+	debug_curr = data->commands;
+	debug_count = 0;
+	while (debug_curr)
 	{
-		// printf("Pipeline detected: routing to original executor\n");
-		// Pipeline detected: use original executor with proper pipe handling
-		shell->cmds = data->commands; // Set full pipeline
-		execute(shell);               // Use original pipeline executor
-		return ;
+		// printf("Data Command %d: %s (next=%p)\n", debug_count,
+		// 	debug_curr->args[0] ? debug_curr->args[0] : "NULL",
+		// 	(void *)debug_curr->next);
+		debug_curr = debug_curr->next;
+		debug_count++;
+		if (debug_count > 10)
+			break ;
 	}
-	// printf("Single command: using persistent shell execution\n");
-	// Single command: use persistent shell execution for builtins
-	execute_single_command(data->commands, shell, data);
+	// printf("Total data commands: %d\n", debug_count);
+	// printf("data->commands pointer: %p\n", (void *)data->commands);
+	cmd = data->commands;
+	// Process each command in the pipeline
+	while (cmd)
+	{
+		// printf("execute_with_shell processing: %s (next=%p)\n",
+		// 	cmd->args[0] ? cmd->args[0] : "NULL", (void *)cmd->next);
+		execute_single_command(cmd, shell, data);
+		cmd = cmd->next;
+	}
 }
 
 /**
@@ -45,70 +73,63 @@ void	execute_with_shell(t_shell *shell, t_data *data)
  */
 void	execute_single_command(t_commands *cmd, t_shell *shell, t_data *data)
 {
-	int	i;
-
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return ;
 	if (ft_strncmp(cmd->args[0], "export", 6) == 0)
 	{
-		// printf("Executing builtin: export\n");
 		shell_export(shell, cmd->args);
 		return ;
 	}
 	if (ft_strncmp(cmd->args[0], "unset", 5) == 0)
 	{
-		// printf("Executing builtin: unset\n");
-		i = -1;
-		while (cmd->args[++i])
+		for (int i = 1; cmd->args[i]; i++)
+		{
 			shell_unset(shell, cmd->args[i]);
+		}
 		return ;
 	}
 	if (ft_strncmp(cmd->args[0], "env", 3) == 0)
 	{
-		// printf("Executing builtin: env\n");
 		ft_env(shell->env);
 		return ;
 	}
 	if (ft_strncmp(cmd->args[0], "cd", 2) == 0)
 	{
-		// printf("Executing builtin: cd\n");
 		ft_cd(cmd, shell);
 		invalidate_sorted_env(shell);
 		return ;
 	}
 	if (ft_strncmp(cmd->args[0], "pwd", 3) == 0)
 	{
-		// printf("Executing builtin: pwd\n");
 		ft_pwd();
 		return ;
 	}
 	if (ft_strncmp(cmd->args[0], "echo", 4) == 0)
 	{
-		// printf("Executing builtin: echo\n");
 		ft_echo(cmd);
 		return ;
 	}
 	if (ft_strncmp(cmd->args[0], "exit", 4) == 0)
 	{
-		// printf("Executing builtin: exit\n");
 		ft_exit(cmd);
 		return ;
 	}
-	// printf("Executing external command: %s\n", cmd->args[0]);
 	execute_other_commands(cmd, shell, data);
 }
 
 /**
  * @brief Execute non-builtin commands using existing system
- * Create temporary shell structure for compatibility with existing executor.
- * This allows external commands to work with the existing pipeline infrastructure
- * while preserving important shell state after execution.
+ * You can hook into your existing executor here
+ *
+	* Create temporary shell structure for compatibility with existing executor.
+	Copy cache
+ * After execution copy back important state and update validity
  */
 void	execute_other_commands(t_commands *cmd, t_shell *shell, t_data *data)
 {
+    (void)data;
 	t_shell	temp_shell = {0};
 
-	(void)data;
 	temp_shell.env = shell->env;
 	temp_shell.cmds = cmd;
 	temp_shell.stop = shell->stop;
@@ -122,7 +143,6 @@ void	execute_other_commands(t_commands *cmd, t_shell *shell, t_data *data)
 
 /**
  * @brief Quick argument parser for simple commands
- * Used for parsing simple command strings when needed
  */
 char	**quick_parse_args(char *input)
 {
@@ -150,7 +170,7 @@ char	**quick_parse_args(char *input)
 }
 
 /**
- * @brief Free quick args memory
+ * @brief Free quick args
  */
 void	free_quick_args(char **args)
 {

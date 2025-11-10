@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 12:54:32 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:13:53 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			ft_unset(t_commands *cmd, t_shell *shell);
 int			ft_exit(t_commands *cmd);
 int			ft_pwd(void);
 int			ft_env(char **env);
-int			modify_path(t_shell *shell, char *temp, int code, int code2);
+int			modify_path(t_shell *shell, int code, int code2);
 char		*get_pwd(void);
 int			check_and_send(t_shell *shell, char *str);
 int			if_exist(char **env, char *str);

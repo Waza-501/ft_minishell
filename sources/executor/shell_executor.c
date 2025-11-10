@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/10 12:27:15 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:59:36 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 13:15:40 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	execute_single_command(t_commands *cmd, t_shell *shell, t_data *data)
  */
 void	execute_other_commands(t_commands *cmd, t_shell *shell, t_data *data)
 {
+    (void)data;
 	t_shell	temp_shell = {0};
 
 	temp_shell.env = shell->env;

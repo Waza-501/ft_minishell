@@ -6,11 +6,12 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 15:02:32 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 15:04:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:58:56 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "redirect.h"
 
 void	free_data(t_data *data)
 {

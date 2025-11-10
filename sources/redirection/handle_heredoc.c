@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 13:43:56 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:57:09 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	fill_heredoc(t_files *list, int *fd)
 	char	*line;
 
 	line = NULL;
+	printf ("file %s is looking for delimiter %s\n", list->filename, list->hd_delim);
 	while (true)
 	{
 		set_signals_interactive();

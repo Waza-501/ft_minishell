@@ -56,14 +56,14 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				builtins/ft_unset.c\
 				builtins/ft_export.c\
 				builtins/ft_cd.c\
-				builtins/ft_export_ultis.c\
+				builtins/ft_export_utils.c\
 				builtins/ft_export_sort.c\
 				builtins/ft_export_print.c\
 				builtins/ft_exit.c\
 				executor/executor_bridge.c\
 				executor/executor.c\
-				executor/executor_ultil1.c\
-				executor/executor_ultis2.c\
+				executor/executor_utils1.c\
+				executor/executor_utils2.c\
 				executor/env_sync.c\
 				executor/shell.c\
 				executor/shell_executor.c\

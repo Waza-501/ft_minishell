@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/06 12:10:59 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 03:42:07 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ static bool	execute_currdir(t_commands *cmd, t_shell *shell)
 		ft_putstr_fd("minishell: : command not found\n", STDERR_FILENO);
 		exit(127);
 	}
-
 	// Only handle commands with path separators
 	if (ft_strchr(cmd->args[0], '/') == NULL)
 		return (false);
-
 	// Check if file exists and is accessible
 	if (access(cmd->args[0], F_OK) == 0)
 	{
@@ -71,25 +69,20 @@ static bool	execute_currdir(t_commands *cmd, t_shell *shell)
  */
 int	execute_builtin(t_commands *cmd, t_shell *shell)
 {
-	printf("DEBUG execute_builtin: cmd='%s', shell->env=%p\n", cmd->args[0], (void*)shell->env);
 	if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
 		g_exit_code = ft_pwd();
 	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
 		g_exit_code = ft_echo(cmd);
-	// else if (ft_strncmp(cmd->args[0], "cd", 3) == 0) //Command out for now Max because of missing function
-	// 	g_exit_code = ft_cd(cmd, shell);
+	else if (ft_strncmp(cmd->args[0], "cd", 3) == 0) //Command out for now Max because of missing function
+		g_exit_code = ft_cd(cmd, shell);
 	else if (ft_strncmp(cmd->args[0], "export", 7) == 0) //Command out for now Max because of missing function
 		g_exit_code = ft_export(cmd, shell, 0);
 	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
 		g_exit_code = ft_unset(cmd, shell);
 	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
-	{
-		printf("DEBUG executor calling ft_env: shell=%p, shell->env=%p\n",
-        (void*)shell, (void*)shell->env);
 		g_exit_code = ft_env(shell->env);
-	}
-	// else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)//Command out for now Max because of missing function
-	// 	g_exit_code = ft_exit(cmd);
+	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)//Command out for now Max because of missing function
+		g_exit_code = ft_exit(cmd);
 	else
 		return (0); // Not a built-in command
 	return (1); // Successfully executed built-in
@@ -117,22 +110,18 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 	// Handle empty command
 	if (!cmd->args[0])
 		exit(0);
-
-	// printf("EXECUTING: %s\n", cmd->args[0]); //debug
     // Try built-in first
     if (execute_builtin(cmd, shell))
     {
         // printf("✅ Built-in executed\n"); // Debug
         exit(g_exit_code);
     }
-
     // Try current directory execution
     if (execute_currdir(cmd, shell))
     {
         // printf("✅ Current dir executed\n"); // Debug
         exit(g_exit_code);
     }
-
     // Search for PATH environment variable
     while (shell->env && shell->env[i])
     {
@@ -140,35 +129,30 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
             break;
         i++;
     }
-
     // Execute with PATH if found
     if (shell->env[i])
     {
         // printf("🔍 Searching PATH...\n"); // Debug
         ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
     }
-
     // Try without PATH as fallback
     // printf("⚠️  No PATH, trying direct execution\n"); // Debug
     ft_execve(cmd, shell, NULL);
-
-	// Command out to debug
-	// // Try built-in first, then current directory execution
-	// if (!execute_builtin(cmd, shell) && !execute_currdir(cmd, shell))
-	// {
-	// 	// Search for PATH environment variable
-	// 	while (shell->env && shell->env[i])
-	// 	{
-	// 		if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)
-	// 			break ;
-	// 		i++;
-	// 	}
-
-	// 	// Execute with PATH if found, otherwise try without PATH
-	// 	if (shell->env[i])
-	// 		ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
-	// 	ft_execve(cmd, shell, NULL);
-	// }
+	// Try built-in first, then current directory execution
+	if (!execute_builtin(cmd, shell) && !execute_currdir(cmd, shell))
+	{
+		// Search for PATH environment variable
+		while (shell->env && shell->env[i])
+		{
+			if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)
+				break ;
+			i++;
+		}
+		// Execute with PATH if found, otherwise try without PATH
+		if (shell->env[i])
+			ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
+		ft_execve(cmd, shell, NULL);
+	}
 	exit(g_exit_code);
 }
 
@@ -248,11 +232,8 @@ void	execute(t_shell *shell)
 
 	// Process heredocs before any command execution //command out for now Max because of missing function
 	// handle_heredocs(shell);
-
-    // printf("=== EXECUTOR DEBUG ===\n");//debug
 	prev_fd = -1;
 	curr = shell->cmds; // Start with first command
-
 	// Optimization: handle single command without unnecessary forking
 	if (curr->next == NULL && single_cmd(shell))
 		return ;
@@ -263,7 +244,6 @@ void	execute(t_shell *shell)
 	{
 		// printf("🔄 Processing command: %s\n", curr->args[0]);//debgu
 		handle_pipes(curr, prev_fd, shell);
-
 		// Clean up file descriptors
 		close(prev_fd); // Close previous read end
 		prev_fd = curr->pipefd[0]; // Save current read end for next command

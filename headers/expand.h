@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:36:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 13:47:11 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 14:47:26 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	expand_args(t_data *data);
 int		scan_expand(t_data *data, t_lexer *node);
 
 /*expand_utils.c*/
-bool	check_env_char(char c);/*possible candidate for the universal is_ header/file*/
+bool	check_env_char(char c);
 int		find_dollar_sign(char *str);
 int		find_var_size(char *str);
 int		find_var_in_string(char *str, char *var);

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:18 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 01:55:32 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 14:50:59 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static void	update_pwd(char *pwd, t_shell *shell)
 {
 	if (pwd)
 	{
-		pwd = ft_strjoin_free_2nd_ARG("OLDPWD=", pwd);
+		pwd = ft_strjoin_and_free("OLDPWD=", pwd);
 		ft_export(0, shell, pwd);
 		free(pwd);
 	}
-	pwd = ft_strjoin_free_2nd_ARG("PWD=", ft_getcwd());
+	pwd = ft_strjoin_and_free("PWD=", ft_getcwd());
 	ft_export(0, shell, pwd);
 	free(pwd);
 }

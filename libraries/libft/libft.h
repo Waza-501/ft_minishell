@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/07 11:00:05 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 01:51:50 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 14:50:59 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ void	*ft_malloc(size_t size);
 char	**ft_arrdup(char **arr);
 void	ft_free_arr(char **arr);
 char	*ft_strjoin_free(char *s1, char *s2);
-char	*ft_strjoin_free_2nd_ARG(char *s1, char *s2);
+char	*ft_strjoin_and_free(char *s1, char *s2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 10:37:58 by haianhle      #+#    #+#                 */
-/*   Updated: 2025/11/10 01:51:26 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 14:50:59 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	free(s1);
 	return (join);
 }
-char	*ft_strjoin_free_2nd_ARG(char *s1, char *s2)
+
+char	*ft_strjoin_and_free(char *s1, char *s2)
 {
 	size_t	len;
 	char	*join;

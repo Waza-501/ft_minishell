@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:28:02 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/07 11:46:08 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 14:48:38 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ typedef struct s_shell
 	t_commands	*cmds;
 	bool		stop; //stop flag for early termination
 	t_data		*data; //pointer to main data for env sync
-	char        **sorted_env;       // Cached sorted environment for export
-    bool        sorted_env_valid;   // Is sorted_env current?
+	char		**sorted_env;// Cached sorted environment for export
+	bool		sorted_env_valid;// Is sorted_env current?
 }			t_shell;
 
 /*commands_list_utils.c*/

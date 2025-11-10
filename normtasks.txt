@@ -1,0 +1,240 @@
+expand.h: Error!
+Error: LINE_TOO_LONG        (line:  25, col:   1):	[94mline too long[0m
+Error: LINE_TOO_LONG        (line:  25, col:  88):	[94mline too long[0m
+redirect.h: Error!
+Error: CONSECUTIVE_NEWLINES (line:  54, col:   1):	Consecutive newlines
+structs.h: Error!
+Error: CONSECUTIVE_SPC      (line:  86, col:   9):	[94mTwo or more consecutives spaces[0m
+Error: SPACE_REPLACE_TAB    (line:  86, col:   9):	Found space when expecting tab
+Error: TOO_FEW_TAB          (line:  87, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line:  87, col:   5):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line:  87, col:   9):	[94mTwo or more consecutives spaces[0m
+Error: SPACE_REPLACE_TAB    (line:  87, col:   9):	Found space when expecting tab
+ft_strjoin_free.c: Error!
+Error: NEWLINE_PRECEDES_FUNC (line:  36, col:   1):	Functions must be separated by a newline
+Error: FORBIDDEN_CHAR_NAME  (line:  36, col:  10):	user defined identifiers should contain only lowercase characters, digits or '_'
+Error: FORBIDDEN_CHAR_NAME  (line:  36, col:  10):	user defined identifiers should contain only lowercase characters, digits or '_'
+Error: FORBIDDEN_CHAR_NAME  (line:  36, col:  10):	user defined identifiers should contain only lowercase characters, digits or '_'
+printing.c: Error!
+Error: TOO_MANY_LINES       (line:  44, col:   1):	Function has more than 25 lines
+Error: LINE_TOO_LONG        (line:  53, col:  82):	[94mline too long[0m
+Error: LINE_TOO_LONG        (line:  55, col:  82):	[94mline too long[0m
+Error: LINE_TOO_LONG        (line:  57, col:  85):	[94mline too long[0m
+Error: LINE_TOO_LONG        (line:  59, col:  83):	[94mline too long[0m
+Error: LINE_TOO_LONG        (line:  61, col:  82):	[94mline too long[0m
+Error: LINE_TOO_LONG        (line:  63, col:  83):	[94mline too long[0m
+Error: LINE_TOO_LONG        (line:  65, col:  84):	[94mline too long[0m
+Error: LINE_TOO_LONG        (line:  67, col:  83):	[94mline too long[0m
+main.c: Error!
+Error: NL_AFTER_VAR_DECL    (line:  25, col:   1):	Variable declarations must be followed by a newline
+Error: CONSECUTIVE_NEWLINES (line:  51, col:   1):	Consecutive newlines
+ft_export.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  92, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  93, col:   5):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_LINES       (line: 131, col:   1):	Function has more than 25 lines
+ft_export_print.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  43, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  46, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  49, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  51, col:  10):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  51, col:  10):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  54, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  55, col:   9):	[95mComment is invalid in this scope[0m
+ft_export_sort.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  51, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  99, col:  13):	[95mComment is invalid in this scope[0m
+ft_export_ultis.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  23, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  51, col:   5):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_LINES       (line: 133, col:   1):	Function has more than 25 lines
+ft_unset.c: Error!
+Error: TOO_MANY_LINES       (line: 120, col:   1):	Function has more than 25 lines
+env_sync.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  23, col:  17):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  23, col:  17):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_VARS_FUNC   (line:  37, col:   1):	[91mToo many variables declarations in a function[0m
+Error: WRONG_SCOPE_COMMENT  (line:  44, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  48, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  60, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  65, col:   9):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_LINES       (line:  71, col:   1):	Function has more than 25 lines
+Error: WRONG_SCOPE_COMMENT  (line:  78, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  80, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  81, col:   5):	[95mComment is invalid in this scope[0m
+Error: EMPTY_LINE_FUNCTION  (line:  91, col:   1):	Empty line in function
+Error: WRONG_SCOPE_COMMENT  (line:  94, col:   9):	[95mComment is invalid in this scope[0m
+Error: BRACE_SHOULD_EOL     (line:  97, col:   1):	Expected newline after brace
+executor_ultil1.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  36, col:  25):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  36, col:  25):	[95mComment is invalid in this scope[0m
+shell.c: Error!
+Error: TOO_MANY_LINES       (line: 129, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_FUNCS       (line: 134, col:   1):	[92mToo many functions in file[0m
+Error: TOO_MANY_VARS_FUNC   (line: 141, col:   1):	[91mToo many variables declarations in a function[0m
+Error: TOO_MANY_LINES       (line: 177, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_FUNCS       (line: 182, col:   1):	[92mToo many functions in file[0m
+Error: TOO_MANY_LINES       (line: 221, col:   1):	Function has more than 25 lines
+executor_bridge.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  29, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  30, col:   9):	[95mComment is invalid in this scope[0m
+Error: CONSECUTIVE_SPC      (line:  31, col:  27):	[94mTwo or more consecutives spaces[0m
+Error: WRONG_SCOPE_COMMENT  (line:  31, col:  34):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  31, col:  34):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  32, col:  34):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  32, col:  34):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  34, col:  34):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  34, col:  34):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  35, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  36, col:   9):	[95mComment is invalid in this scope[0m
+Error: NEWLINE_PRECEDES_FUNC (line:  46, col:   1):	Functions must be separated by a newline
+Error: WRONG_SCOPE_COMMENT  (line:  53, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  64, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  98, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  99, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 104, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 105, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 106, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 109, col:  31):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 109, col:  31):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 112, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 113, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 119, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 120, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 125, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 126, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 127, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 130, col:  31):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 130, col:  31):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 133, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 134, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 135, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 138, col:   5):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_LINES       (line: 141, col:   1):	Function has more than 25 lines
+Error: WRONG_SCOPE_COMMENT  (line: 153, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 177, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 181, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 185, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 189, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 195, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 200, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 207, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 208, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 209, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 210, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 211, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 212, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 213, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 214, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 217, col:   9):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_LINES       (line: 223, col:   1):	Function has more than 25 lines
+executor.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line: 112, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 115, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 121, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 137, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 138, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 139, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 140, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 141, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 142, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 143, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 144, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 145, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 146, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 147, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 148, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 149, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 150, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 151, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 152, col:   5):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_LINES       (line: 153, col:   1):	Function has more than 25 lines
+Error: WRONG_SCOPE_COMMENT  (line: 172, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 173, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 187, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 192, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 193, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 194, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 195, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 200, col:  29):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 200, col:  29):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 205, col:  36):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 205, col:  36):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 206, col:  37):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 208, col:  36):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 208, col:  36):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 213, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 217, col:  10):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 217, col:  10):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 219, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 225, col:  29):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 225, col:  29):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 227, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 228, col:   9):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_LINES       (line: 230, col:   1):	Function has more than 25 lines
+Error: WRONG_SCOPE_COMMENT  (line: 255, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 256, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 270, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 277, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 285, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 290, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 292, col:  36):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 292, col:  36):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 297, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 299, col:  28):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 299, col:  28):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 303, col:   5):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_LINES       (line: 305, col:   1):	Function has more than 25 lines
+shell_executor.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  42, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  43, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  48, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  49, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  50, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  56, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  57, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  59, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  62, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  63, col:   9):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_LINES       (line:  67, col:   1):	Function has more than 25 lines
+Error: FORBIDDEN_CS         (line:  85, col:   9):	Forbidden control structure
+Error: TOO_MANY_LINES       (line: 118, col:   1):	Function has more than 25 lines
+Error: TOO_FEW_TAB          (line: 130, col:   1):	Missing tabs for indent level
+Error: SPACE_REPLACE_TAB    (line: 130, col:   5):	Found space when expecting tab
+Error: VAR_DECL_START_FUNC  (line: 131, col:   1):	Variable declaration not at start of function
+Error: DECL_ASSIGN_LINE     (line: 131, col:  24):	Declaration and assignation on a single line
+executor_ultis2.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  47, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  50, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  52, col:  19):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  52, col:  19):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  58, col:  19):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  58, col:  19):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  63, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  64, col:  37):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  64, col:  37):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  66, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  67, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  69, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  73, col:  24):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  73, col:  24):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  75, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  76, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  77, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  78, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  79, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  80, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  81, col:   9):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line:  82, col:   9):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_LINES       (line:  91, col:   1):	Function has more than 25 lines
+Error: WRONG_SCOPE_COMMENT  (line: 122, col:   5):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 128, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 129, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 146, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 147, col:  13):	[95mComment is invalid in this scope[0m
+Error: WRONG_SCOPE_COMMENT  (line: 151, col:   5):	[95mComment is invalid in this scope[0m
+Error: TOO_MANY_LINES       (line: 152, col:   1):	Function has more than 25 lines
+parsing.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  51, col:   5):	[95mComment is invalid in this scope[0m
+Error: EMPTY_LINE_FUNCTION  (line:  52, col:   1):	Empty line in function
+handle_heredoc.c: Error!
+Error: LINE_TOO_LONG        (line:  49, col:  84):	[94mline too long[0m

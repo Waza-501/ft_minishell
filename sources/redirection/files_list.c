@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/03 15:14:25 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/07 09:42:30 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:01:44 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_files	*find_open_fd(t_files *list)
 {
 	t_files	*copy;
 
+	copy = list;
 	while (copy && copy->open == false)
 		copy = copy->next;
 	return (copy);

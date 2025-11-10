@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 12:53:15 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:04:11 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	close_existing_fd_in(t_files *list, int *fd)
 
 int	handle_input(t_data *data, t_files *list, int *fd)
 {
+	(void)data;
 	if (!list)
 		return (0);
 	if (close_existing_fd_in(list, fd))

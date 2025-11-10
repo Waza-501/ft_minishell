@@ -6,18 +6,19 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:25 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 02:38:20 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:40:29 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "libft.h"
+#include "minishell.h"
 
 /**
  * @brief Validates and advances past consecutive -n flags
  * @param i Current argument index to check from
  * @param cmd Command structure containing argument array
- * @return Updated index after all valid -n flags, or original index if invalid flag found
+ * @return Updated index after all valid -n flags,
+	or original index if invalid flag found
  *
  * Continues parsing consecutive -n flags (like -n, -nn, -nnn) until it finds
  * an invalid flag or reaches the end of -n flags. This handles bash behavior
@@ -26,6 +27,7 @@
 static int	last_check(int i, t_commands *cmd)
 {
 	int	j;
+
 	while ((cmd->args[i] && ft_strncmp(cmd->args[i], "-n", 2) == 0))
 	{
 		j = 1;
@@ -93,6 +95,7 @@ int	ft_echo(t_commands *cmd)
 	int	i;
 	int	n;
 	int	check;
+
 	i = 1;
 	n = 1;
 	check = 1;

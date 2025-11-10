@@ -6,12 +6,12 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 12:00:55 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/06 11:04:31 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:44:37 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "libft.h"
+#include "minishell.h"
 
 /**
  * @brief Copy environment array excluding specified variable
@@ -19,99 +19,102 @@
  * @param rtn Destination array (pre-allocated)
  * @param str Variable name to exclude
  */
-static void unset_array(char **env, char **rtn, char *str)
+static void	unset_array(char **env, char **rtn, char *str)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 0;
-    j = 0;
-    while (env[i])
-    {
-        if (ft_strncmp(env[i], str, ft_strlen(str)) != 0)
-        {
-            rtn[j] = ft_strdup(env[i]);
-            if (!rtn[j])
-            {
-                ft_free_arr(rtn);
-                return ;
-            }
-            j++;
-        }
-        i++;
-    }
+	i = 0;
+	j = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], str, ft_strlen(str)) != 0)
+		{
+			rtn[j] = ft_strdup(env[i]);
+			if (!rtn[j])
+			{
+				ft_free_arr(rtn);
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
 }
+
 /**
  * @brief Check if variable exists in environment
  * @param str Variable name to search for
  * @param env Environment array
  * @return true if found, false otherwise
  */
-static bool in_env(char *str, char **env)
+static bool	in_env(char *str, char **env)
 {
-    int i;
-    int len;
+	int	i;
+	int	len;
 
-    i = 0;
-    len = ft_strlen(str);
-    while (env && env[i])
-    {
-        if (ft_strncmp(env[i], str, len) == 0 && (env[i][len] == '=' || env[i][len] == '\0'))
-            return (true);
-        i++;
-    }
-    return (false);
+	i = 0;
+	len = ft_strlen(str);
+	while (env && env[i])
+	{
+		if (ft_strncmp(env[i], str, len) == 0 && (env[i][len] == '='
+			|| env[i][len] == '\0'))
+			return (true);
+		i++;
+	}
+	return (false);
 }
+
 /*
  * @brief Sync environment changes back to data structure
  * @param shell Shell structure containing updated environment
+ * Handle sync error - could print warning or set error code
  */
 static void	sync_environment_changes(t_shell *shell)
 {
 	if (!shell || !shell->data || !shell->data->envp_copy || !shell->env)
 		return ;
-
 	if (sync_env_to_list(shell->env, shell->data->envp_copy) != 0)
 	{
-		// Handle sync error - could print warning or set error code
 		printf("Warning: Failed to sync environment changes\n");
 	}
 }
+
 /**
  * @brief Unset environment variables
  * @param cmd Command structure
  * @param shell Shell state
  * @return 0 on success, -1 on error
  */
-int ft_unset(t_commands *cmd, t_shell *shell)
+int	ft_unset(t_commands *cmd, t_shell *shell)
 {
-    int i;
-    int j;
-    char **rtn;
-    bool env_changed;
+	int		i;
+	int		j;
+	char	**rtn;
+	bool	env_changed;
 
-    j = 1;
-    env_changed = false;
-    if (!cmd->args[1])
-        return (0);
-    while (cmd->args[j])
-    {
-        if (in_env(cmd->args[j], shell->env))
-        {
-            i = 0;
-            while (shell->env[i])
-                i++;
-            rtn = ft_calloc(i, sizeof(char *));
-            if (!rtn)
-                return (-1);
-            unset_array(shell->env, rtn, cmd->args[j]);
-            ft_free_arr(shell->env);
-            shell->env = rtn;
-            env_changed = true;
-        }
-        j++;
-    }
-    if (env_changed)
-        sync_environment_changes(shell);
-    return (0);
+	j = 1;
+	env_changed = false;
+	if (!cmd->args[1])
+		return (0);
+	while (cmd->args[j])
+	{
+		if (in_env(cmd->args[j], shell->env))
+		{
+			i = 0;
+			while (shell->env[i])
+				i++;
+			rtn = ft_calloc(i, sizeof(char *));
+			if (!rtn)
+				return (-1);
+			unset_array(shell->env, rtn, cmd->args[j]);
+			ft_free_arr(shell->env);
+			shell->env = rtn;
+			env_changed = true;
+		}
+		j++;
+	}
+	if (env_changed)
+		sync_environment_changes(shell);
+	return (0);
 }

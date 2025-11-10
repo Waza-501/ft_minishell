@@ -6,13 +6,12 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:39 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/14 12:19:21 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:39:42 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "libft.h"
-
+#include "minishell.h"
 
 /**
  * @brief Check if a command is a shell built-in
@@ -34,7 +33,7 @@
 bool	is_builtin(t_commands *cmd)
 {
 	if (!cmd || !cmd->args || !cmd->args[0])
-		return (false); //Copilot suggested this line
+		return (false); // Copilot suggested this line
 	if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
 		return (true);
 	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
@@ -93,7 +92,6 @@ int	ft_dup(int fd)
  *
  * Exits the program on failure with perror message.
  */
-
 
 void	ft_dup2(int fd1, int fd2)
 {

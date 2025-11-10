@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 14:02:47 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/06 13:41:03 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:40:14 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	join_arr(t_shell *shell, char *str)
 		j++;
 	while (shell->env[i])
 	{
-		if (!ft_strncmp(shell->env[i], str, j - 1)
-			&& shell->env[i][j - 1] == '=')
+		if (!ft_strncmp(shell->env[i], str, j - 1) && shell->env[i][j
+			- 1] == '=')
 		{
 			shell->env[i] = ft_strjoin_free(shell->env[i], &str[j + 1]);
 			return ;
@@ -62,7 +62,7 @@ void	join_arr(t_shell *shell, char *str)
 	free(new_var);
 }
 
-char **new_array(char **env, char **rtn, char *str)
+char	**new_array(char **env, char **rtn, char *str)
 {
 	int	i;
 
@@ -85,13 +85,10 @@ int	send_arr(t_shell *shell, char *str)
 	i = 0;
 	while (shell->env && shell->env[i])
 		i++;
-	
 	rtn = ft_malloc((i + 2) * sizeof(char *));
 	if (!rtn)
 		return (0);
-	
 	new_array(shell->env, rtn, str);
-	
 	// Don't free old env - causes corruption
 	// Let cleanup_shell handle the original env
 	shell->env = rtn;

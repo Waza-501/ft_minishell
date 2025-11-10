@@ -10,6 +10,7 @@ SOURCES		:=	cd_ll_addback.c\
 				cd_ll_get_node.c\
 				cd_ll_init_list.c\
 				cd_ll_new_node.c\
+				cd_ll_update_list.c\
 				cd_ll_utils.c\
 
 OBJECTS_DIR	:=	objects/

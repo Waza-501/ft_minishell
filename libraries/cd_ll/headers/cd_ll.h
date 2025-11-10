@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/08/27 14:56:43 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 15:36:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ t_cdllist		*cdll_init_list(void);
 
 /*cd_ll_new_node.c*/
 t_cd_ll_node	*cdll_new_node(char *str1, char *str2, int id);
+
+/*cd_ll_update_list.c*/
+int				cdll_update_list(t_cdllist *list, char **input);
 
 /*cd_ll_utils.c*/
 size_t			cdll_strlen(const char *s);

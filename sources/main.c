@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/10 03:23:25 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:01:26 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	mini_loop(t_data *data)
 		return (1);
 	while (1)
 	{
+		//print_envp(NULL, data->envp_copy);
 		set_signals_interactive();
 		data->input = readline("minishell$ ");
 		set_signals_noninteractive();
@@ -49,6 +50,29 @@ static int	mini_loop(t_data *data)
 	cleanup_shell(shell);
 	free_data(data);
 	return (0);
+}
+
+
+void	print_envp(char **envp, t_cdllist *list)
+
+
+{
+	int	i;
+
+	i = 0;
+	while (envp && envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+	i = 0;
+	while (i < list->size)
+	{
+		printf("%s = %s\n", list->current->var_1, list->current->var_2);
+		list->current = list->current->next;
+		i++;
+	}
+	list->current = list->head;
 }
 
 int	main(int argc, char **argv, char **envp)

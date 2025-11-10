@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/05 10:12:26 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/07 11:50:51 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 12:44:27 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,14 @@ static int	open_fd_in_order(t_data *data, t_files *list, int *fd)
 	copy = list;
 	while (copy)
 	{
-		if (copy->type == INPUT || copy->type == HEREDOC)
+		if (copy->type == INPUT)
 		{
 			if (handle_input(data, list, fd))
+				return (1);
+		}
+		else if (copy->type == HEREDOC)
+		{
+			if (handle_heredoc(data, list, fd))
 				return (1);
 		}
 		else
@@ -68,13 +73,13 @@ int	set_fd_execution(t_data *data)
 
 	fd = -1;
 	code = open_fd_in_order(data, data->commands->infiles, &fd);
-	//if (print_error_fd(code))
-		//return (1);
+	if (print_error_fd(code))
+		return (1);
 	data->commands->infile = fd;
 	fd = -1;
 	code = open_fd_in_order(data, data->commands->outfiles, &fd);
-	//if (print_error_fd(code))
-		//return (1);
+	if (print_error_fd(code))
+		return (1);
 	data->commands->outfile = fd;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 13:05:04 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 13:14:40 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ bool	single_cmd(t_shell *shell)
 	{
 		save_stdin = ft_dup(STDIN_FILENO);
 		save_stdout = ft_dup(STDOUT_FILENO);
-		if (set_fd_execution(NULL, shell->cmds))
+		if (set_fd_execution(shell->cmds))
 			printf("should not reach here\n");
 		execute_builtin(shell->cmds, shell);
 		ft_dup2(save_stdin, STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 13:03:43 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:12:24 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,42 +28,6 @@ int	create_hd_file(t_files *list, int *fd)
 	return (0);
 }
 
-// int	putstr_hd(char *line, int *fd)
-// {
-// 	int	idx;
-
-// 	idx = 0;
-// 	while (line[idx] && line[idx] != '$')
-// 		idx++;
-// 	write(*fd, line, idx);
-// 	return (idx);
-// }
-
-// int	set_heredoc_var(char *line, int *fd)
-// {
-// 	int	idx;
-
-// 	idx = 0;
-// 	return (idx);
-// }
-
-// /*turns out this is not required, so it will no longer be worked on.*/
-// int	simplified_expansion(t_data *data, char *line, int *fd)
-// {
-// 	int	idx;
-
-// 	idx = 0;
-// 	(void)data;
-// 	// while (line[idx])
-// 	// {
-// 	// 	idx += putstr_hd(&line[idx], fd);
-// 	// 	if (line[idx] && line[idx] == '$')
-// 	// 		idx += set_heredoc_var(&line[idx], fd);
-// 	// }
-// 	ft_putendl_fd(line, *fd);
-// 	return (0);
-// }
-
 int	scan_line(char *line, char *delim, bool	quotes)
 {
 	size_t	size;
@@ -77,11 +41,10 @@ int	scan_line(char *line, char *delim, bool	quotes)
 	return (0);
 }
 
-int	fill_heredoc(t_data *data, t_files *list, int *fd)
+int	fill_heredoc(t_files *list, int *fd)
 {
 	char	*line;
 
-	(void)data;
 	line = NULL;
 	while (true)
 	{
@@ -96,23 +59,20 @@ int	fill_heredoc(t_data *data, t_files *list, int *fd)
 		}
 		if (scan_line(line, list->hd_delim, list->quoted))
 			break ;
-		//if (list->quoted == false)
 		ft_putendl_fd(line, *fd);
-		//else
-			//simplified_expansion(data, line, fd);
 		ft_free(&line);
 	}
 	ft_free(&line);
 	return (0);
 }
 
-int	handle_heredoc(t_data *data, t_files *list, int *fd)
+int	handle_heredoc(t_files *list, int *fd)
 {
 	if (close_existing_fd_in(list, fd))
 		return (1);
 	if (create_hd_file(list, fd))
 		return (1);
-	if (fill_heredoc(data, list, fd))
+	if (fill_heredoc(list, fd))
 		return (1);
 	if (close(*fd))
 		print_close_fd_error();

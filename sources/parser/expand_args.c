@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 17:52:26 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/07 10:39:07 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static char	*get_arg_var(t_lexer *node, int idx)
 	if (!var_copy)
 		return (malloc_error(NULL, true));
 	ft_strlcpy(var_copy, &node->string[idx + 1], size + 1);
-	printf("%s\n%i\n", var_copy, size);
 	return (var_copy);
 }
 

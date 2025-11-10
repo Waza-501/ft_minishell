@@ -63,6 +63,8 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				executor/executor_ultil1.c\
 				executor/executor_ultis2.c\
 				executor/env_sync.c\
+				executor/shell.c\
+				executor/shell_executor.c\
 				printing.c\
 
 OBJECTS_DIR	:=	objects/

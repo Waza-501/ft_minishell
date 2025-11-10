@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 15:22:19 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/06 16:04:55 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/07 12:09:31 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define REDIRECT_H
 
 # include "structs.h"
+
+# define HD_EMPTY_LINE "warning, heredoc delimited by EOF: wanted "
 
 /*files_list_utils.c*/
 t_files		*find_open_fd(t_files *list);
@@ -34,11 +36,11 @@ int			handle_append(t_files *list, int *fd);
 char		*get_hd_filename(void);
 
 /*handle_heredoc.c*/
-int			handle_heredoc(t_files *list, int *fd);
+int			handle_heredoc(t_data *data, t_files *list, int *fd);
 
 /*handle_input.c*/
 int			close_existing_fd_in(t_files *list, int *fd);
-int			handle_input(t_files *list, int *fd);
+int			handle_input(t_data *data, t_files *list, int *fd);
 
 /*handle_output.c*/
 int			close_existing_fd_out(t_files *list, int *fd);

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/03 15:14:25 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/06 12:46:57 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/07 09:42:30 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static t_files	*new_files_node(t_lexer *lexer)
 	else
 		new->filename = str;
 	new->open = false;
+	new->quoted = false;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);

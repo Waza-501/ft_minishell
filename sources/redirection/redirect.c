@@ -6,19 +6,30 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/05 10:12:26 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/06 11:19:27 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/07 11:50:51 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 #include "redirect.h"
 
 int	simplified_redir(t_data *data, t_commands *list, t_lexer *node)
 {
+	bool	quotes;
+
+	quotes = false;
 	if (node->type == INPUT || node->type == HEREDOC)
 	{
+		if (node->type == HEREDOC)
+		{
+			if (is_quoted(node->string))
+				remove_quotes(data, node);
+			quotes = true;
+		}
 		if (add_file_node(&list->infiles, node))
 			malloc_error(data, false);
+		get_last_file(list->infiles)->quoted = quotes;
 	}
 	else if (node->type == OUTPUT || node->type == APPEND)
 	{
@@ -28,7 +39,7 @@ int	simplified_redir(t_data *data, t_commands *list, t_lexer *node)
 	return (0);
 }
 
-static int	open_fd_in_order(t_commands *cmd, t_files *list, int *fd)
+static int	open_fd_in_order(t_data *data, t_files *list, int *fd)
 {
 	t_files	*copy;
 
@@ -37,7 +48,7 @@ static int	open_fd_in_order(t_commands *cmd, t_files *list, int *fd)
 	{
 		if (copy->type == INPUT || copy->type == HEREDOC)
 		{
-			if (handle_input(list, fd))
+			if (handle_input(data, list, fd))
 				return (1);
 		}
 		else
@@ -50,20 +61,20 @@ static int	open_fd_in_order(t_commands *cmd, t_files *list, int *fd)
 	return (0);
 }
 
-int	set_fd_execution(t_commands	*cmd)
+int	set_fd_execution(t_data *data)
 {
 	int	fd;
 	int	code;
 
 	fd = -1;
-	code = open_fd_in_order(cmd, cmd->infiles, &fd);
+	code = open_fd_in_order(data, data->commands->infiles, &fd);
 	//if (print_error_fd(code))
 		//return (1);
-	cmd->infile = fd;
+	data->commands->infile = fd;
 	fd = -1;
-	code = open_fd_in_order(cmd, cmd->outfiles, &fd);
+	code = open_fd_in_order(data, data->commands->outfiles, &fd);
 	//if (print_error_fd(code))
 		//return (1);
-	cmd->outfile = fd;
+	data->commands->outfile = fd;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/06 12:28:03 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/07 11:25:29 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,27 @@ int			ft_dup(int fd);
 void		ft_waitpid(t_shell *shell);
 int			add_file_node(t_files **list, t_lexer *lexer);
 int			sync_env_to_list(char **env_array, t_cdllist *env_list);
+void        execute_single_command(t_commands *cmd, t_shell *shell, t_data *data);
+
+// Core shell functions (replace existing init/cleanup_shell if you have them)
+t_shell     *init_shell(t_data *data);
+void        cleanup_shell(t_shell *shell);
+
+// Environment management
+int         shell_export(t_shell *shell, char **args);
+int         shell_unset(t_shell *shell, char *name);
+int         shell_setenv(t_shell *shell, char *name, char *value);
+
+// Sorted environment cache management
+void        invalidate_sorted_env(t_shell *shell);
+char        **get_sorted_env(t_shell *shell);
+
+// Main loop integration  
+static int  mini_loop(t_data *data);
+void        execute_with_shell(t_shell *shell, t_data *data);
+void        execute_other_commands(t_commands *cmd, t_shell *shell, t_data *data);
+// Utility functions
+char        **quick_parse_args(char *input);
+void        free_quick_args(char **args);
 
 #endif

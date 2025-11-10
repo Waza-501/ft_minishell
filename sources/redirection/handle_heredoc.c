@@ -6,13 +6,14 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/06 18:22:30 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/07 16:12:25 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "readline.h"
 #include "parser.h"
+#include "expand.h"
 #include "redirect.h"
 
 int	create_hd_file(t_files *list, int *fd)
@@ -21,23 +22,56 @@ int	create_hd_file(t_files *list, int *fd)
 	if (*fd == -1)
 	{
 		ft_putstr_fd(MS_ERROR, STDERR_FILENO);
-		ft_putstr_fd("heredoc creation failed.", STDERR_FILENO);
+		ft_putendl_fd("heredoc creation failed.", STDERR_FILENO);
 		return (1);
 	}
 	return (0);
 }
 
-int	scan_line(char *line, char *delim)
+int	putstr_hd(char *line, int *fd)
+{
+	int	idx;
+
+	idx = 0;
+	while (line[idx] && line[idx] != '$')
+		idx++;
+	write(*fd, line, idx);
+	return (idx);
+}
+
+int	set_heredoc_var(char *line, int *fd)
+{
+	
+	return (idx);
+}
+
+int	simplified_expansion(t_data *data, char *line, int *fd)
+{
+	int	idx;
+
+	idx = 0;
+	while (line[idx])
+	{
+		idx += putstr_hd(&line[idx], fd);
+		if (line[idx] && line[idx] == '$')
+			idx += set_heredoc_var(&line[idx], fd);
+	}
+	return (0);
+}
+
+int	scan_line(char *line, char *delim, bool	quotes)
 {
 	int	size;
 
 	size = ft_strlen(delim);
-	if (is_quoted(delim))
-		size -= 2;
-	
+	if (ft_strlen(line) != size)
+		return (0);
+	if (!ft_strncmp(line, delim, size))
+		return (1);
+	return (0);
 }
 
-int	fill_heredoc(t_files *list, int *fd)
+int	fill_heredoc(t_data *data, t_files *list, int *fd)
 {
 	char	*line;
 
@@ -48,25 +82,30 @@ int	fill_heredoc(t_files *list, int *fd)
 		line = readline(">");
 		set_signals_noninteractive();
 		if (!line)
-			return (printf("warning", "heredoc delimited by EOF: wanted\n"), 1);
-			//exit(1);
-		if (scan_line(line, list->hd_delim))
+		{
+			ft_putstr_fd(HD_EMPTY_LINE, STDERR_FILENO);
+			ft_putnbr_fd(list->hd_delim, STDERR_FILENO);
+			return (1);
+		}
+		if (scan_line(line, list->hd_delim, list->quoted))
 			break ;
-		ft_putendl_fd(line, *fd);
+		if (list->quoted == false)
+			ft_putendl_fd(line, *fd);
+		else
+			simplified_expansion(data, line, fd);
 		ft_free(&line);
 	}
 	ft_free(&line);
 	return (0);
 }
 
-int	handle_heredoc(t_files *list, int *fd)
+int	handle_heredoc(t_data *data, t_files *list, int *fd)
 {
 	if (close_existing_fd_in(list, fd))
 		return (1);
 	if (create_hd_file(list, fd))
 		return (1);
-	if (fill_heredoc(list, fd))
+	if (fill_heredoc(data, list, fd))
 		return (1);
-	exit (1);
 	return (0);
 }

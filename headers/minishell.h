@@ -6,7 +6,11 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2025/11/10 11:44:56 by owhearn       ########   odam.nl         */
+=======
+/*   Updated: 2025/11/10 12:47:19 by haile         ########   odam.nl         */
+>>>>>>> 02bb3030df134629f90394f3e53495e5ade50f41
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +18,28 @@
 # define MINISHELL_H
 
 # include "../libraries/libft/libft.h"
-# include "structs.h"
 # include "error.h"
-# include <stdbool.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <string.h>
+# include "structs.h"
 # include <fcntl.h>
 # include <limits.h> /* LONG_MAX */
 # include <signal.h> /* SIQQUIT, SIGINT*/
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 # include <sys/types.h> /*waitpid*/
-# include <sys/wait.h> /*waitpid*/
+# include <sys/wait.h>  /*waitpid*/
+# include <unistd.h>
 
-# define DELIMS 	" \t\r\n\v\f"
-# define SPACE		' '
-# define S_Q		39
-# define D_Q		34
-# define EOF_SQ		"unexpected EOF while looking for matching \'\n"
-# define EOF_DQ		"unexpected EOF while looking for matching \"\n"
-# define SYNTAX		"syntax error near unexpected token "
-# define SYNTAX_EOF	"syntax error: unexpected end of file\n"
-# define MS_ERROR	"minishell: "
+# define DELIMS " \t\r\n\v\f"
+# define SPACE ' '
+# define S_Q 39
+# define D_Q 34
+# define EOF_SQ "unexpected EOF while looking for matching \'\n"
+# define EOF_DQ "unexpected EOF while looking for matching \"\n"
+# define SYNTAX "syntax error near unexpected token "
+# define SYNTAX_EOF "syntax error: unexpected end of file\n"
+# define MS_ERROR "minishell: "
 
 # ifndef PATH_MAX
 #  define PATH_MAX 1024
@@ -46,7 +50,7 @@
 # define STDERR 2
 
 /*global variable*/
-extern int		g_exit_code;
+extern int	g_exit_code;
 
 /*TEMPORARY*/
 void		print_file_list(t_files *files, char *str);
@@ -92,7 +96,6 @@ void		print_env(char **sorted_env);
 void		free_sorted_env(char **sorted_env);
 char		*ft_getcwd(void);
 
-
 // Executor - Bridge functions Max
 int			execute_commands(t_data *data);
 int			init_shell_for_execution(t_shell *shell, t_data *data);
@@ -105,27 +108,29 @@ int			ft_dup(int fd);
 void		ft_waitpid(t_shell *shell);
 int			add_file_node(t_files **list, t_lexer *lexer);
 int			sync_env_to_list(char **env_array, t_cdllist *env_list);
-void        execute_single_command(t_commands *cmd, t_shell *shell, t_data *data);
+void		execute_single_command(t_commands *cmd, t_shell *shell,
+				t_data *data);
 
 // Core shell functions (replace existing init/cleanup_shell if you have them)
-t_shell     *init_shell(t_data *data);
-void        cleanup_shell(t_shell *shell);
+t_shell		*init_shell(t_data *data);
+void		cleanup_shell(t_shell *shell);
 
 // Environment management
-int         shell_export(t_shell *shell, char **args);
-int         shell_unset(t_shell *shell, char *name);
-int         shell_setenv(t_shell *shell, char *name, char *value);
+int			shell_export(t_shell *shell, char **args);
+int			shell_unset(t_shell *shell, char *name);
+int			shell_setenv(t_shell *shell, char *name, char *value);
 
 // Sorted environment cache management
-void        invalidate_sorted_env(t_shell *shell);
-char        **get_sorted_env(t_shell *shell);
+void		invalidate_sorted_env(t_shell *shell);
+char		**get_sorted_env(t_shell *shell);
 
 // Main loop integration
-static int  mini_loop(t_data *data);
-void        execute_with_shell(t_shell *shell, t_data *data);
-void        execute_other_commands(t_commands *cmd, t_shell *shell, t_data *data);
+static int	mini_loop(t_data *data);
+void		execute_with_shell(t_shell *shell, t_data *data);
+void		execute_other_commands(t_commands *cmd, t_shell *shell,
+				t_data *data);
 // Utility functions
-char        **quick_parse_args(char *input);
-void        free_quick_args(char **args);
+char		**quick_parse_args(char *input);
+void		free_quick_args(char **args);
 
 #endif

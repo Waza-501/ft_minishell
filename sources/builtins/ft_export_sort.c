@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/05 15:51:38 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/05 15:52:32 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:40:19 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ static void	swap_strings(char **a, char **b)
  */
 static void	sort_array(char **env)
 {
-	int		i;
-	int		j;
-	int		min_idx;
+	int	i;
+	int	j;
+	int	min_idx;
 
 	if (!env)
 		return ;
@@ -97,8 +97,8 @@ static void	sort_array(char **env)
 		while (env[j])
 		{
 			// Compare only the variable name (before '=')
-			if (ft_strncmp(env[j], env[min_idx],
-				ft_strchr(env[j], '=') - env[j]) < 0)
+			if (ft_strncmp(env[j], env[min_idx], ft_strchr(env[j], '=')
+					- env[j]) < 0)
 				min_idx = j;
 			j++;
 		}

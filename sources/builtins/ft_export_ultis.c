@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:58:34 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/06 11:01:53 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:40:16 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /*
  * TEMPORARY STUB: is_identifier
  * TODO: Implement proper identifier validation
- * Should check if character is valid for env var name (alphanumeric + underscore)
+ * Should check if character is valid for env var name (alphanumeric
+	+ underscore)
  */
 int	is_identifier(char c)
 {
@@ -58,7 +59,6 @@ int	check_validity(char *str)
 	}
 	return (1);
 }
-
 
 static int	check_identifier(char *str)
 {
@@ -105,30 +105,29 @@ int	check_and_send(t_shell *shell, char *str)
 		printf("DEBUG: Invalid identifier\n");
 	}
 	else if (!check_validity(str))
-    {
-        check = 1;
-    }
+	{
+		check = 1;
+	}
 	else if (if_exist(shell->env, str))
-    {
-        check = 1;
+	{
+		check = 1;
 		env_modified = 1;
-    }
+	}
 	else
 	{
-        if (!check)
-        {
-            if (identifier == 2)
-            {
-                join_arr(shell, str);
+		if (!check)
+		{
+			if (identifier == 2)
+			{
+				join_arr(shell, str);
 				env_modified = 1;
-            }
-            else
-            {
-                send_arr(shell, str);
+			}
+			else
+			{
+				send_arr(shell, str);
 				env_modified = 1;
-            }
-        }
+			}
+		}
 	}
 	return (env_modified);
 }
-

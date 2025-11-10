@@ -6,12 +6,12 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:54:17 by haile         #+#    #+#                 */
-/*   Updated: 2025/10/24 09:53:08 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:41:29 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "libft.h"
+#include "minishell.h"
 
 static int	ft_atoi_check(const char *str, bool *check)
 {
@@ -30,8 +30,8 @@ static int	ft_atoi_check(const char *str, bool *check)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = res * 10 + str[i++] - 48;
-		if ((sign == 1 && res > LONG_MAX)
-			|| (sign == -1 && res > (size_t) LONG_MAX + 1))
+		if ((sign == 1 && res > LONG_MAX) || (sign == -1
+				&& res > (size_t)LONG_MAX + 1))
 			*check = true;
 	}
 	if (i == 0 || str[i])

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/05 15:53:56 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/05 15:54:17 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:40:21 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,9 @@ static void	print_var_value(char *str)
 	// Find the '=' sign
 	while (str[i] && str[i] != '=')
 		i++;
-
 	// If no '=', variable is declared but has no value
 	if (!str[i])
 		return ;
-
 	// Print ="value"
 	ft_putstr_fd("=\"", 1);
 	i++; // Move past '='

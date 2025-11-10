@@ -6,12 +6,12 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 09:39:50 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:39:39 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "libft.h"
+#include "minishell.h"
 
 /**
  * @brief Execute external command by searching through PATH directories
@@ -48,31 +48,29 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 	{
 		// printf("   Trying path[%d]: %s\n", i, path[i]); // Debug
 		tmp = ft_strjoin(path[i], "/");
-        if (!tmp) //debug
-        {
-            ft_free_arr(path);
-            exit(1);
-        }
+		if (!tmp) // debug
+		{
+			ft_free_arr(path);
+			exit(1);
+		}
 		tmp = ft_strjoin_free(tmp, cmd->args[0]);
-        if (!tmp) //debug
-        {
-            ft_free_arr(path);
-            exit(1);
-        }
+		if (!tmp) // debug
+		{
+			ft_free_arr(path);
+			exit(1);
+		}
 		// printf("   Full path: %s\n", tmp); // Debug
-        if (access(tmp, X_OK) == 0) //debug
-        {
-            // printf("   Found executable: %s\n", tmp); // Debug
-
-            // Try to execute - this never returns on success
-            execve(tmp, cmd->args, shell->env);
-
-            // If we reach here, execve failed
-            perror("execve");
-            ft_free_arr(path);
-            free(tmp);
-            exit(126); // Permission denied or exec format error
-        }
+		if (access(tmp, X_OK) == 0) // debug
+		{
+			// printf("   Found executable: %s\n", tmp); // Debug
+			// Try to execute - this never returns on success
+			execve(tmp, cmd->args, shell->env);
+			// If we reach here, execve failed
+			perror("execve");
+			ft_free_arr(path);
+			free(tmp);
+			exit(126); // Permission denied or exec format error
+		}
 		// Uncommand to debug
 		// if (access(tmp, F_OK) == 0
 		// 	&& execve(tmp, cmd->args, shell->env) == -1)
@@ -117,36 +115,38 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 void	ft_waitpid(t_shell *shell)
 {
 	t_commands	*curr;
-	int		status;
-	int		sig;
+	int			status;
+	int			sig;
 
 	printf("⏳ Starting to wait for processes...\n");
 	curr = shell->cmds;
 	while (curr)
+	{
+		if (curr->pid > 0)
 		{
-			if (curr->pid > 0)
-				{
-					printf("⌛ Waiting for pid %d (command: %s)\n", curr->pid, curr->args[0]);
-					waitpid(curr->pid, &status, 0);
-					if (WIFEXITED(status))
-						g_exit_code = WEXITSTATUS(status);
-					else if (WIFSIGNALED(status))
-					{
-						sig = WTERMSIG(status);
-						if (sig == SIGINT)
-							g_exit_code = 130;
-						else if (sig == SIGQUIT)
-							g_exit_code = 131;
-					}
-					if (g_exit_code == 130 || g_exit_code == 131)
-						shell->stop = true;
-				}
-			else
+			printf("⌛ Waiting for pid %d (command: %s)\n", curr->pid,
+				curr->args[0]);
+			waitpid(curr->pid, &status, 0);
+			if (WIFEXITED(status))
+				g_exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
 			{
-			printf("⚠️ Invalid pid for command: %s (pid=%d)\n", curr->args[0], curr->pid);
+				sig = WTERMSIG(status);
+				if (sig == SIGINT)
+					g_exit_code = 130;
+				else if (sig == SIGQUIT)
+					g_exit_code = 131;
 			}
-		curr = curr->next;
+			if (g_exit_code == 130 || g_exit_code == 131)
+				shell->stop = true;
 		}
+		else
+		{
+			printf("⚠️ Invalid pid for command: %s (pid=%d)\n", curr->args[0],
+				curr->pid);
+		}
+		curr = curr->next;
+	}
 	printf("🏁 All processes finished, exit_code: %d\n", g_exit_code);
 }
 /**
@@ -166,18 +166,19 @@ void	ft_waitpid(t_shell *shell)
  * 4. Execute the built-in command
  * 5. Restore original stdin/stdout
  *
-*/
+ */
 
 bool	single_cmd(t_shell *shell)
 {
-	int		save_stdin;
-	int		save_stdout;
+	int	save_stdin;
+	int	save_stdout;
 
 	if (is_builtin(shell->cmds))
 	{
 		save_stdin = ft_dup(STDIN_FILENO);
 		save_stdout = ft_dup(STDOUT_FILENO);
-		// if (handle_redirections(shell->cmds, shell)) //Command out for now Max because of missing function
+		// if (handle_redirections(shell->cmds, shell))
+			//Command out for now Max because of missing function
 		execute_builtin(shell->cmds, shell);
 		ft_dup2(save_stdin, STDIN_FILENO);
 		ft_dup2(save_stdout, STDOUT_FILENO);

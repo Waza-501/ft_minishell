@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   libft.h                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: owhearn <owhearn@student.42.fr>              +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/07 11:00:05 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/29 16:04:07 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 01:51:50 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ void	*ft_malloc(size_t size);
 char	**ft_arrdup(char **arr);
 void	ft_free_arr(char **arr);
 char	*ft_strjoin_free(char *s1, char *s2);
+char	*ft_strjoin_free_2nd_ARG(char *s1, char *s2);
 
 #endif

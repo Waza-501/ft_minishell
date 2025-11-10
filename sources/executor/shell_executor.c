@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/10 12:27:15 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:36:32 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 12:59:36 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ void	execute_with_shell(t_shell *shell, t_data *data)
 	if (!data || !shell || !data->commands)
 		return ;
 	//Check data->commands at entry
-	printf("DATA->COMMANDS DEBUG (execute_with_shell entry):\n");
+	// printf("DATA->COMMANDS DEBUG (execute_with_shell entry):\n");
 	debug_curr = data->commands;
 	debug_count = 0;
 	while (debug_curr)
 	{
-		printf("Data Command %d: %s (next=%p)\n", debug_count,
-			debug_curr->args[0] ? debug_curr->args[0] : "NULL",
-			(void *)debug_curr->next);
+		// printf("Data Command %d: %s (next=%p)\n", debug_count,
+		// 	debug_curr->args[0] ? debug_curr->args[0] : "NULL",
+		// 	(void *)debug_curr->next);
 		debug_curr = debug_curr->next;
 		debug_count++;
 		if (debug_count > 10)
@@ -59,8 +59,8 @@ void	execute_with_shell(t_shell *shell, t_data *data)
 	// Process each command in the pipeline
 	while (cmd)
 	{
-		printf("execute_with_shell processing: %s (next=%p)\n",
-			cmd->args[0] ? cmd->args[0] : "NULL", (void *)cmd->next);
+		// printf("execute_with_shell processing: %s (next=%p)\n",
+		// 	cmd->args[0] ? cmd->args[0] : "NULL", (void *)cmd->next);
 		execute_single_command(cmd, shell, data);
 		cmd = cmd->next;
 	}

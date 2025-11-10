@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:59:49 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:05:04 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,7 @@ bool	single_cmd(t_shell *shell)
 		save_stdin = ft_dup(STDIN_FILENO);
 		save_stdout = ft_dup(STDOUT_FILENO);
 		if (set_fd_execution(NULL, shell->cmds))
-			print("should not reach here\n");
-			//Command out for now Max because of missing function
+			printf("should not reach here\n");
 		execute_builtin(shell->cmds, shell);
 		ft_dup2(save_stdin, STDIN_FILENO);
 		ft_dup2(save_stdout, STDOUT_FILENO);

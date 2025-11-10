@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 13:00:07 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 13:04:29 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,42 +174,42 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	if (cmd->next != NULL)
 	{
 		ft_pipe(cmd->pipefd);
-		printf("📊 Created pipe: read=%d, write=%d\n", cmd->pipefd[0],
+		printf("Created pipe: read=%d, write=%d\n", cmd->pipefd[0],
 			cmd->pipefd[1]);
 	}
 	else
 	{
 		cmd->pipefd[0] = -1;
 		cmd->pipefd[1] = -1;
-		printf("📊 No pipe needed (last command)\n");
+		printf("No pipe needed (last command)\n");
 	}
-	printf("🚀 About to fork for command: %s (n=%d)\n", cmd->args[0], cmd->n);
+	printf("About to fork for command: %s (n=%d)\n", cmd->args[0], cmd->n);
 	// debug
 	cmd->pid = ft_fork();
 	if (cmd->pid == 0)
 	{
-		printf("👶 CHILD PROCESS for: %s (pid=%d)\n", cmd->args[0], getpid());
+		printf("CHILD PROCESS for: %s (pid=%d)\n", cmd->args[0], getpid());
 		// debug
 		// sig_handler(2); //Command out for now Max because of missing function
 		// new add 04/11 - Setup input redirection from previous command
 		// if (cmd->n > 1) //Command out for now
 		if (prev_fd != -1)
 		{
-			printf("🔀 Child: Redirecting stdin from fd %d\n", prev_fd);
+			printf("Child: Redirecting stdin from fd %d\n", prev_fd);
 			ft_dup2(prev_fd, STDIN);
 			close(prev_fd); // new add 04/11 - Close after dup2
 		}
 		if (cmd->next != NULL)
 		{
-			printf("🔀 Child: Redirecting stdout to fd %d\n", cmd->pipefd[1]);
+			printf("Child: Redirecting stdout to fd %d\n", cmd->pipefd[1]);
 			close(cmd->pipefd[0]); // new add 04/11
 									//- Close read end (don't need it)
 			ft_dup2(cmd->pipefd[1], STDOUT);
 			close(cmd->pipefd[0]); // new add 04/11 - Close after dup2
 		}
-		printf("🎯 Child: About to execute: %s\n", cmd->args[0]);
+		printf("Child: About to execute: %s\n", cmd->args[0]);
 		if (set_fd_execution(NULL, cmd))
-			print("should not reach here\n");
+			printf("should not reach here\n");
 		// Command out for now Max because of missing function
 		execute_cmd(cmd, shell);
 		exit(g_exit_code);
@@ -217,7 +217,7 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	else // debug part. Need to check
 	{
 		// Parent process - clean up file descriptors
-		printf("👨 PARENT: Child pid=%d for command: %s\n", cmd->pid,
+		printf("PARENT: Child pid=%d for command: %s\n", cmd->pid,
 			cmd->args[0]);
 		if (prev_fd != -1)
 		{

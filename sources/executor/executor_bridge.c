@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:39:44 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/10 13:03:29 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,42 +96,42 @@ int	execute_commands(t_data *data)
 	int			debug_count;
 
 	// CRITICAL DEBUG: Check data->commands BEFORE assignment
-	printf("🔍 DATA->COMMANDS DEBUG (before assignment):\n");
+	// printf("🔍 DATA->COMMANDS DEBUG (before assignment):\n");
 	debug_curr = data->commands;
 	debug_count = 0;
 	while (debug_curr)
 	{
-		printf("  Data Command %d: %s (next=%p)\n", debug_count,
-			debug_curr->args[0] ? debug_curr->args[0] : "NULL",
-			(void *)debug_curr->next);
+		// printf("  Data Command %d: %s (next=%p)\n", debug_count,
+		// 	debug_curr->args[0] ? debug_curr->args[0] : "NULL",
+		// 	(void *)debug_curr->next);
 		debug_curr = debug_curr->next;
 		debug_count++;
 		if (debug_count > 10) // Safety check
 			break ;
 	}
-	printf("  Total data commands: %d\n", debug_count);
-	printf("  data->commands pointer: %p\n", (void *)data->commands);
+	// printf("  Total data commands: %d\n", debug_count);
+	// printf("  data->commands pointer: %p\n", (void *)data->commands);
 	if (init_shell_for_execution(&shell, data) != 0)
 		return (1);
 	if (init_commands_for_execution(data->commands) != 0)
 		return (cleanup_shell(&shell), 1);
 	shell.cmds = data->commands;
 	// CRITICAL DEBUG: Check shell.cmds AFTER assignment
-	printf("🔍 SHELL->CMDS DEBUG (after assignment):\n");
+	// printf(" SHELL->CMDS DEBUG (after assignment):\n");
 	debug_curr = shell.cmds;
 	debug_count = 0;
 	while (debug_curr)
 	{
-		printf("  Shell Command %d: %s (next=%p)\n", debug_count,
-			debug_curr->args[0] ? debug_curr->args[0] : "NULL",
-			(void *)debug_curr->next);
+		// printf("  Shell Command %d: %s (next=%p)\n", debug_count,
+		// 	debug_curr->args[0] ? debug_curr->args[0] : "NULL",
+		// 	(void *)debug_curr->next);
 		debug_curr = debug_curr->next;
 		debug_count++;
 		if (debug_count > 10) // Safety check
 			break ;
 	}
-	printf("  Total shell commands: %d\n", debug_count);
-	printf("  shell.cmds pointer: %p\n", (void *)shell.cmds);
+	// printf("  Total shell commands: %d\n", debug_count);
+	// printf("  shell.cmds pointer: %p\n", (void *)shell.cmds);
 	// Execute the command pipeline
 	execute(&shell);
 	data->exit_code = g_exit_code;

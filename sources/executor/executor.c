@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 14:42:29 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/11 13:05:06 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,27 +188,43 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	cmd->pid = ft_fork();
 	if (cmd->pid == 0)
 	{
+		if (set_fd_execution(cmd))
+			printf("should not reach here\n");
 		// printf("CHILD PROCESS for: %s (pid=%d)\n", cmd->args[0], getpid());
 		// sig_handler(2); //Command out for now Max because of missing function
 		// new add 04/11 - Setup input redirection from previous command
 		// if (cmd->n > 1) //Command out for now
-		if (prev_fd != -1)
+		if (cmd->infile != -1)
 		{
-			// printf("Child: Redirecting stdin from fd %d\n", prev_fd);
+			printf("Child: Redirecting stdin to fd %d\n", cmd->infile);
+			ft_dup2(cmd->infile, STDIN);
+			close_existing_fd_out(find_open_fd(cmd->infiles), &cmd->infile);
+		}
+		else if (prev_fd != -1)
+		{
+			printf("Child: Redirecting stdin from fd %d\n", prev_fd);
 			ft_dup2(prev_fd, STDIN);
 			close(prev_fd); // new add 04/11 - Close after dup2
 		}
-		if (cmd->next != NULL)
+		else
+			printf("Child: No input redirection needed\n");
+		if (cmd->outfile != -1)
 		{
-			// printf("Child: Redirecting stdout to fd %d\n", cmd->pipefd[1]);
+			printf("Child: Redirecting stdout to fd %d\n", cmd->outfile);
+			ft_dup2(cmd->outfile, STDOUT);
+			close_existing_fd_in(find_open_fd(cmd->outfiles), &cmd->outfile);
+		}
+		else if (cmd->next != NULL)
+		{
+			printf("Child: Redirecting stdout to fd %d\n", cmd->pipefd[1]);
 			close(cmd->pipefd[0]); // new add 04/11
 									//- Close read end (don't need it)
 			ft_dup2(cmd->pipefd[1], STDOUT);
 			close(cmd->pipefd[0]); // new add 04/11 - Close after dup2
 		}
+		else
+			printf("Child: No output redirection needed\n");
 		// printf("Child: About to execute: %s\n", cmd->args[0]);
-		if (set_fd_execution(cmd))
-			printf("should not reach here\n");
 		// Command out for now Max because of missing function
 		execute_cmd(cmd, shell);
 		exit(g_exit_code);

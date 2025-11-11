@@ -6,11 +6,13 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/10 15:09:01 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 15:35:33 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/11 12:50:55 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cd_ll.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int	cdll_update_list(t_cdllist *list, char **input)
 {

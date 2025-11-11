@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/10 14:15:39 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 14:59:26 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	mini_loop(t_data *data)
 		set_signals_interactive();
 		data->input = readline("minishell$ ");
 		set_signals_noninteractive();
-		printf("last exit code: %i REMOVE AFTER TESTING\n", data->exit_code);
+		// printf("last exit code: %i REMOVE AFTER TESTING\n", data->exit_code);
 		if (!data->input)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);

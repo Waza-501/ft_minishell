@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_export_ultis.c                                  :+:    :+:            */
+/*   ft_export_utils.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:58:34 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:40:16 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/11 13:39:32 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	check_and_send(t_shell *shell, char *str)
 	if (!identifier)
 	{
 		check = export_err(str);
-		printf("DEBUG: Invalid identifier\n");
+		// printf("DEBUG: Invalid identifier\n");
 	}
 	else if (!check_validity(str))
 	{

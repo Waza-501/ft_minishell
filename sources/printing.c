@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:12:51 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 16:27:12 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/10 15:01:02 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_command_list(t_commands *list)
 	while (copy)
 	{
 		idx = 0;
-		printf("node %i: [", i);
+		// printf("node %i: [", i);
 		if (copy->args)
 		{
 			while (copy->args[idx])
@@ -34,10 +34,10 @@ void	print_command_list(t_commands *list)
 					printf(", ");
 			}
 		}
-		printf("]");
-		print_file_list(copy->infiles, "infiles");
-		print_file_list(copy->outfiles, "outfiles");
-		printf("\n");
+		// printf("]");
+		// print_file_list(copy->infiles, "infiles");
+		// print_file_list(copy->outfiles, "outfiles");
+		// printf("\n");
 		copy = copy->next;
 		i++;
 	}

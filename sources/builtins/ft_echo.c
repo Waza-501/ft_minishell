@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:25 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/11 13:12:43 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/11 13:40:32 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,13 @@ int	ft_echo(t_commands *cmd)
 	i = 1;
 	n = 1;
 	check = 1;
-	printf("cmd outfile is %d\n", cmd->outfile);
+	// printf("cmd outfile is %d\n", cmd->outfile);
 	if (cmd->outfile != -1)
 		fd = cmd->outfile;
 	else
 		fd = STDOUT_FILENO;
 	i = check_n(cmd, i, &check, &n);
-	printf("fd is set to %d\n", fd);
+	// printf("fd is set to %d\n", fd);
 	while (cmd->args[i])
 	{
 		ft_putstr_fd(cmd->args[i], fd);

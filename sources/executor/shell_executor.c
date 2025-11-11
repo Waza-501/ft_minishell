@@ -6,11 +6,12 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/10 12:27:15 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 14:40:22 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/11 13:22:09 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "redirect.h"
 
 /**
  * @brief Execute commands using shell (replaces execute_commands)
@@ -48,6 +49,8 @@ void	execute_single_command(t_commands *cmd, t_shell *shell, t_data *data)
 	int	i;
 
 	if (!cmd || !cmd->args || !cmd->args[0])
+		return ;
+	if (set_fd_execution(cmd))
 		return ;
 	if (ft_strncmp(cmd->args[0], "export", 6) == 0)
 	{

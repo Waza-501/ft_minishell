@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/08 17:18:26 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/24 16:10:56 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/11 14:31:57 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	count_words(const char *s, char c)
 	return (count);
 }
 
-static void	free_mem(char **data)
+static void	free_memory(char **data)
 {
 	int	idx;
 
@@ -62,7 +62,7 @@ int	fill_words(char **ret, const char *str, char c, int count)
 		ret[idx] = ft_substr(str, 0, i);
 		if (!ret[idx])
 		{
-			free_mem(ret);
+			free_memory(ret);
 			ret = NULL;
 			return (-1);
 		}

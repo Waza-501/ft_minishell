@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/10 14:15:39 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/11 14:49:32 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,20 @@
 
 int	g_exit_code = 0;
 
+static int	empty_line_exit(t_data *data)
+{
+	int	exit_code;
+
+	exit_code = data->exit_code;
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	free_data(data);
+	exit(exit_code);
+}
+
 static int	mini_loop(t_data *data)
 {
 	t_shell	*shell;
+
 	shell = init_shell(data);
 	if (!shell)
 		return (1);
@@ -30,12 +41,8 @@ static int	mini_loop(t_data *data)
 		set_signals_interactive();
 		data->input = readline("minishell$ ");
 		set_signals_noninteractive();
-		printf("last exit code: %i REMOVE AFTER TESTING\n", data->exit_code);
 		if (!data->input)
-		{
-			ft_putendl_fd("exit", STDOUT_FILENO);
-			exit(0);
-		}
+			empty_line_exit(data);
 		parse_input(data, data->input);
 		if (data->commands)
 		{
@@ -46,27 +53,6 @@ static int	mini_loop(t_data *data)
 	cleanup_shell(shell);
 	free_data(data);
 	return (0);
-}
-
-
-void	print_envp(char **envp, t_cdllist *list)
-{
-	int	i;
-
-	i = 0;
-	while (envp && envp[i])
-	{
-		printf("%s\n", envp[i]);
-		i++;
-	}
-	i = 0;
-	while (i < list->size)
-	{
-		printf("%s = %s\n", list->current->var_1, list->current->var_2);
-		list->current = list->current->next;
-		i++;
-	}
-	list->current = list->head;
 }
 
 int	main(int argc, char **argv, char **envp)

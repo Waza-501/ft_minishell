@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:41:20 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 14:44:46 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/11 15:48:27 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,11 @@ void	clear_commands(t_data *data)
 	{
 		start = data->commands->next;
 		ft_free_arr(data->commands->args);
-		ft_free(&data->commands->infile_s);
 		if (data->commands->infile > 2)
 		{
 			if (close(data->commands->infile))
 				printf("write fail free error report thing using perror\n");
 		}
-		ft_free(&data->commands->outfile_s);
 		if (data->commands->outfile > 2)
 		{
 			if (close(data->commands->outfile))

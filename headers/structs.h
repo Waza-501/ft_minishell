@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:28:02 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 14:48:38 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/11 15:45:03 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ typedef struct s_files
 typedef struct s_commands
 {
 	char				**args;
-	char				*infile_s;
-	char				*outfile_s;
 	int					infile;
 	int					outfile;
 	t_files				*infiles;
@@ -73,8 +71,6 @@ typedef struct s_data
 	t_lexer			*lexer;
 	t_commands		*commands;
 	int				exit_code;
-	struct s_data	*next;
-	struct s_data	*prev;
 }			t_data;
 
 typedef struct s_shell

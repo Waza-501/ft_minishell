@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:12:51 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 16:27:12 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/11 14:44:32 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,26 @@ void	print_command_list(t_commands *list)
 		copy = copy->next;
 		i++;
 	}
+}
+
+void	print_envp(char **envp, t_cdllist *list)
+{
+	int	i;
+
+	i = 0;
+	while (envp && envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+	i = 0;
+	while (i < list->size)
+	{
+		printf("%s = %s\n", list->current->var_1, list->current->var_2);
+		list->current = list->current->next;
+		i++;
+	}
+	list->current = list->head;
 }
 
 void	print_tokenlist(t_lexer *list)

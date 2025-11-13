@@ -1,6 +1,6 @@
 NAME		:=	minishell
 CC			:=	cc
-FLAGS		:=	-Wall -Werror -Wextra -g -fsanitize=address
+FLAGS		:=	-Wall -Werror -Wextra -g
 
 # Detect operating system
 UNAME_S := $(shell uname -s)

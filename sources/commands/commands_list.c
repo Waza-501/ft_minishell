@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:40:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 14:45:15 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/11 15:48:03 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ t_commands	*init_commands(void)
 	if (!new)
 		return (NULL);
 	new->args = NULL;
-	new->infile_s = NULL;
-	new->outfile_s = NULL;
 	new->infile = -1;
 	new->outfile = -1;
 	new->infiles = NULL;

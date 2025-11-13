@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/29 12:24:27 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 15:04:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/11 15:55:30 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	*malloc_error(t_data *data, bool print)
 		malloc_error_print("malloc");
 	if (!data)
 		return (NULL);
+	printf("exit time\n");
 	free_data(data);
 	exit(1);
 }

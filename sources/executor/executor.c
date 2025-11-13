@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/11 13:41:41 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/13 12:07:17 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	{
 		ft_pipe(cmd->pipefd);
 		// printf("Created pipe: read=%d, write=%d\n", cmd->pipefd[0],
-			cmd->pipefd[1]);
+		// 	cmd->pipefd[1]);
 	}
 	else
 	{
@@ -233,7 +233,7 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	{
 		// Parent process - clean up file descriptors
 		// printf("PARENT: Child pid=%d for command: %s\n", cmd->pid,
-			cmd->args[0]);
+		// 	cmd->args[0]);
 		if (prev_fd != -1)
 		{
 			// printf("Parent: Closing prev_fd %d\n", prev_fd);
@@ -264,20 +264,20 @@ void	execute(t_shell *shell)
 {
 	t_commands	*curr;
 	int			prev_fd;
-	int			cmd_count;
+	// int			cmd_count;
 
 	// printf("=== EXECUTE START ===\n");
 	// Process heredocs before any command execution
 	// handle_heredocs(shell);
 	// printf("COMMAND LIST DEBUG:\n");
 	curr = shell->cmds;
-	cmd_count = 0;
+	// cmd_count = 0;
 	while (curr)
 	{
 		// printf("Command %d: %s (next=%p)\n", cmd_count, curr->args[0],
-			(void *)curr->next);
+		// 	(void *)curr->next);
 		curr = curr->next;
-		cmd_count++;
+		// cmd_count++;
 	}
 	// printf("Total commands: %d\n", cmd_count);
 	prev_fd = -1;
@@ -296,7 +296,7 @@ void	execute(t_shell *shell)
 		// 	curr->pid);
 		handle_pipes(curr, prev_fd, shell);
 		// printf("handle_pipes completed for %s (pid=%d)\n", curr->args[0],
-			curr->pid);
+		// 	curr->pid);
 		// Clean up file descriptors
 		if (prev_fd != -1)
 		{

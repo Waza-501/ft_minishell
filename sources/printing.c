@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   printing.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:12:51 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 15:01:02 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/13 12:08:04 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	print_command_list(t_commands *list)
 {
 	int			idx;
-	int			i;
+	// int			i;
 	t_commands	*copy;
 
 	copy = list;
-	i = 1;
+	// i = 1;
 	while (copy)
 	{
 		idx = 0;
@@ -39,7 +39,7 @@ void	print_command_list(t_commands *list)
 		// print_file_list(copy->outfiles, "outfiles");
 		// printf("\n");
 		copy = copy->next;
-		i++;
+		// i++;
 	}
 }
 

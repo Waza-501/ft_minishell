@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:54:17 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:41:29 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/13 15:12:34 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,37 +39,51 @@ static int	ft_atoi_check(const char *str, bool *check)
 	return (sign * res);
 }
 
-static void	exit_checker(char *str)
+static void	exit_checker(t_data *data, char *str)
 {
 	bool	check;
 
 	check = false;
-	g_exit_code = ft_atoi_check(str, &check);
+	data->exit_code = ft_atoi_check(str, &check);
 	if (check)
 	{
 		ft_putstr_fd("minishell: exit: ", STDERR);
 		ft_putstr_fd(str, STDERR);
 		ft_putstr_fd(": numeric argument required\n", STDERR);
-		g_exit_code = 2;
+		data->exit_code = 2;
 	}
 }
 
-int	ft_exit(t_commands *cmd)
+static void	exit_minishell(t_data *data, t_shell *shell)
+{
+	int	exit_code;
+
+	exit_code = data->exit_code;
+	free_data(data);
+	cleanup_shell(shell);
+	ft_putstr_fd("exit\n", STDOUT);
+	exit (exit_code);
+}
+
+int	ft_exit(t_data *data, t_shell *shell, t_commands *cmd)
 {
 	if (!cmd)
 	{
 		ft_putstr_fd("exit\n", STDOUT);
-		exit(g_exit_code);
+		exit_minishell(data, shell);
 	}
 	if (cmd->pid != 0)
 		ft_putstr_fd("exit\n", STDOUT);
 	if (!cmd->args[1])
-		exit(g_exit_code);
+		//exit(g_exit_code);
+		exit_minishell(data, shell);
 	if (cmd->args[2] != NULL)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR);
 		return (1);
 	}
-	exit_checker(cmd->args[1]);
-	exit(g_exit_code);
+	exit_checker(data, cmd->args[1]);
+	//exit(g_exit_code);
+	exit_minishell(data, shell);
+	return (0);
 }

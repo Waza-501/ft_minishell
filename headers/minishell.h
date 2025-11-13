@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 14:51:08 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/13 15:11:13 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int			ft_echo(t_commands *cmd);
 int			ft_cd(t_commands *cmd, t_shell *shell);
 int			ft_export(t_commands *cmd, t_shell *shell, char *str);
 int			ft_unset(t_commands *cmd, t_shell *shell);
-int			ft_exit(t_commands *cmd);
+int			ft_exit(t_data *data, t_shell *shell, t_commands *cmd);
 int			ft_pwd(void);
 int			ft_env(char **env);
 int			check_and_send(t_shell *shell, char *str);

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/13 13:23:58 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/13 15:13:07 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	execute_builtin(t_commands *cmd, t_shell *shell)
 	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
 		g_exit_code = ft_env(shell->env);
 	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
-		g_exit_code = ft_exit(cmd);
+		g_exit_code = ft_exit(shell->data, shell, cmd);
 	else
 		return (0);
 	return (1);

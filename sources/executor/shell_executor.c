@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/10 12:27:15 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/11 13:22:09 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/13 15:13:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	execute_single_command(t_commands *cmd, t_shell *shell, t_data *data)
 	if (ft_strncmp(cmd->args[0], "exit", 4) == 0)
 	{
 		// printf("Executing builtin: exit\n");
-		ft_exit(cmd);
+		ft_exit(data, shell, cmd);
 		return ;
 	}
 	// printf("Executing external command: %s\n", cmd->args[0]);

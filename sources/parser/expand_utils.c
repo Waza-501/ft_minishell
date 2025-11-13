@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 16:59:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/11 16:34:26 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/13 13:30:51 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	find_var_in_string(char *str, char *var)
 bool	reform_string(t_lexer *node, char *start, char *end, char *middle)
 {
 	char	*temp;
-
 
 	temp = ft_strjoin(start, middle);
 	if (!temp)

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   tokeniser.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/01 11:48:40 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 14:44:13 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/13 11:50:58 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	check_syntax(t_data *data)
 	return (0);
 }
 
-bool	assign_type(t_data *data)
+bool	 assign_type(t_data *data)
 {
 	t_lexer	*copy;
 

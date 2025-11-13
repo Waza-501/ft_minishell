@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/13 12:07:13 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/13 13:23:58 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,20 +264,20 @@ void	execute(t_shell *shell)
 {
 	t_commands	*curr;
 	int			prev_fd;
-	int			cmd_count;
+	// int			cmd_count;
 
 	// printf("=== EXECUTE START ===\n");
 	// Process heredocs before any command execution
 	// handle_heredocs(shell);
 	// printf("COMMAND LIST DEBUG:\n");
 	curr = shell->cmds;
-	cmd_count = 0;
+	// cmd_count = 0;
 	while (curr)
 	{
 		// printf("Command %d: %s (next=%p)\n", cmd_count, curr->args[0],
 		//	(void *)curr->next);
 		curr = curr->next;
-		cmd_count++;
+		// cmd_count++;
 	}
 	// printf("Total commands: %d\n", cmd_count);
 	prev_fd = -1;

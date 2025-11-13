@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   handle_quotes.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/22 13:19:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 18:08:41 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/13 12:05:31 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ static int	reform_str(char *str, char *new)
 
 int	remove_quotes(t_data *data, t_lexer *node)
 {
-	int		i;
+	// int		i;
 	int		idx;
 	char	*new;
 
-	i = 0;
+	// i = 0;
 	idx = (int)strlen_without_quotes(node->string);
 	new = (char *)malloc(sizeof(char) * idx + 1);
 	if (!new)

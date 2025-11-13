@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/13 12:25:04 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/13 13:41:48 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	set_last_exit_code(t_data *data, char *str, t_lexer *node)
 {
 	char	*code;
 	char	*end;
+	bool	result;
 
 	printf("found code\n");
 	code = ft_itoa(data->exit_code);
@@ -87,8 +88,12 @@ int	set_last_exit_code(t_data *data, char *str, t_lexer *node)
 		ft_free(&end);
 		malloc_error(data, true);
 	}
-	printf("start = %s\ncode = %s\nEnd = %s\n\nTogether = %s%s%s\n", str, code, end, str, code, end);
-	exit(0);
+	result = reform_string(node, str, end, code);
+	ft_free(&str);
+	ft_free(&code);
+	ft_free(&end);
+	if (result == false)
+		malloc_error(data, false);
 	return (0);
 }
 
@@ -106,7 +111,6 @@ static int	find_replace_type(t_data *data, t_lexer *node, char *arg_var)
 	start = ft_substr(node->string, 0, idx);
 	if (!start)
 		malloc_error(data, true);
-	printf("%s\n%s\n", start, &node->string[idx]);
 	if (!ft_strncmp(&node->string[idx], "$?", 2))
 		return (set_last_exit_code(data, start, node));
 	if (ft_isdigit(node->string[idx + 1]) || node->string[idx + 1] == '$')
@@ -129,7 +133,6 @@ int	scan_expand(t_data *data, t_lexer *node)
 
 	idx = 0;
 	arg_var = NULL;
-	printf("scanning for expansion\n");
 	while (idx < ft_strlen(node->string) && node->string[idx])
 	{
 		idx += find_dollar_sign(&node->string[idx]);
@@ -138,7 +141,6 @@ int	scan_expand(t_data *data, t_lexer *node)
 		arg_var = get_arg_var(node, idx);
 		if (!arg_var)
 			malloc_error(data, false);
-		printf("arg_var holds %s\n", arg_var);
 		if (!cdll_get_node(data->envp_copy, false, arg_var))
 		{
 			if (find_replace_type(data, node, arg_var) == 1)

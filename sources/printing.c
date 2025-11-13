@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   printing.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:12:51 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/13 11:48:48 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/13 13:23:21 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

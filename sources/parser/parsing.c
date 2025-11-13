@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/13 11:47:40 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/13 13:34:24 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	parse_input(t_data *data, char *str)
 		return (0);
 	add_history(data->input);
 	if (find_matching_quotes(str, false, false) == false)
-		return (0);
+		return (2);
 	if (setup_lexer(data) == false)
 		return (reset_data(data, 2));
 	if (assign_type(data) == false)

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/11 13:15:45 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/11 13:39:07 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ bool	single_cmd(t_shell *shell)
 
 	if (is_builtin(shell->cmds))
 	{
-		printf("setting up redirection\n");
+		// printf("setting up redirection\n");
 		if (set_fd_execution(shell->cmds))
 			printf("should not reach here\n");
 		save_stdin = ft_dup(STDIN_FILENO);
@@ -186,6 +186,6 @@ bool	single_cmd(t_shell *shell)
 		ft_dup2(save_stdout, STDOUT_FILENO);
 		return (true);
 	}
-	printf("no redirection for you\n");
+	// printf("no redirection for you\n");
 	return (false);
 }

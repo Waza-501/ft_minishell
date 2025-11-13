@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/11 13:14:45 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/11 13:41:41 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 		// printf("Built-in executed\n");
 		exit(g_exit_code);
 	}
-	printf("Not a builtin, trying external command: %s\n", cmd->args[0]);
+	// printf("Not a builtin, trying external command: %s\n", cmd->args[0]);
 	if (execute_currdir(cmd, shell))
 	{
 		// printf("Current dir executed\n");
@@ -129,10 +129,10 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 	}
 	if (shell->env[i])
 	{
-		printf("Searching PATH...\n");
+		// printf("Searching PATH...\n");
 		ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
 	}
-	printf("No PATH, trying direct execution\n");
+	// printf("No PATH, trying direct execution\n");
 	ft_execve(cmd, shell, NULL);
 	// Try built-in first, then current directory execution
 	// 	if (!execute_builtin(cmd, shell) && !execute_currdir(cmd, shell))
@@ -174,16 +174,16 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	if (cmd->next != NULL)
 	{
 		ft_pipe(cmd->pipefd);
-		printf("Created pipe: read=%d, write=%d\n", cmd->pipefd[0],
+		// printf("Created pipe: read=%d, write=%d\n", cmd->pipefd[0],
 			cmd->pipefd[1]);
 	}
 	else
 	{
 		cmd->pipefd[0] = -1;
 		cmd->pipefd[1] = -1;
-		printf("No pipe needed (last command)\n");
+		// printf("No pipe needed (last command)\n");
 	}
-	printf("About to fork for command: %s (n=%d)\n", cmd->args[0], cmd->n);
+	// printf("About to fork for command: %s (n=%d)\n", cmd->args[0], cmd->n);
 	// debug
 	cmd->pid = ft_fork();
 	if (cmd->pid == 0)
@@ -196,13 +196,13 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 		// if (cmd->n > 1) //Command out for now
 		if (cmd->infile != -1)
 		{
-			printf("Child: Redirecting stdin to fd %d\n", cmd->infile);
+			// printf("Child: Redirecting stdin to fd %d\n", cmd->infile);
 			ft_dup2(cmd->infile, STDIN);
 			close_existing_fd_out(find_open_fd(cmd->infiles), &cmd->infile);
 		}
 		else if (prev_fd != -1)
 		{
-			printf("Child: Redirecting stdin from fd %d\n", prev_fd);
+			// printf("Child: Redirecting stdin from fd %d\n", prev_fd);
 			ft_dup2(prev_fd, STDIN);
 			close(prev_fd); // new add 04/11 - Close after dup2
 		}
@@ -210,13 +210,13 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 			printf("Child: No input redirection needed\n");
 		if (cmd->outfile != -1)
 		{
-			printf("Child: Redirecting stdout to fd %d\n", cmd->outfile);
+			// printf("Child: Redirecting stdout to fd %d\n", cmd->outfile);
 			ft_dup2(cmd->outfile, STDOUT);
 			close_existing_fd_in(find_open_fd(cmd->outfiles), &cmd->outfile);
 		}
 		else if (cmd->next != NULL)
 		{
-			printf("Child: Redirecting stdout to fd %d\n", cmd->pipefd[1]);
+			// printf("Child: Redirecting stdout to fd %d\n", cmd->pipefd[1]);
 			close(cmd->pipefd[0]); // new add 04/11
 									//- Close read end (don't need it)
 			ft_dup2(cmd->pipefd[1], STDOUT);
@@ -232,11 +232,11 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	else // debug part. Need to check
 	{
 		// Parent process - clean up file descriptors
-		printf("PARENT: Child pid=%d for command: %s\n", cmd->pid,
+		// printf("PARENT: Child pid=%d for command: %s\n", cmd->pid,
 			cmd->args[0]);
 		if (prev_fd != -1)
 		{
-			printf("Parent: Closing prev_fd %d\n", prev_fd);
+			// printf("Parent: Closing prev_fd %d\n", prev_fd);
 			close(prev_fd); // Close the read end we passed to child
 		}
 		// if (cmd->pipefd[1] != -1)
@@ -274,46 +274,46 @@ void	execute(t_shell *shell)
 	cmd_count = 0;
 	while (curr)
 	{
-		printf("Command %d: %s (next=%p)\n", cmd_count, curr->args[0],
+		// printf("Command %d: %s (next=%p)\n", cmd_count, curr->args[0],
 			(void *)curr->next);
 		curr = curr->next;
 		cmd_count++;
 	}
-	printf("Total commands: %d\n", cmd_count);
+	// printf("Total commands: %d\n", cmd_count);
 	prev_fd = -1;
 	curr = shell->cmds;
 	// Optimization: handle single command without unnecessary forking
 	if (curr->next == NULL && single_cmd(shell))
 	{
-		printf("Single command executed\n");
+		// printf("Single command executed\n");
 		return ;
 	}
-	printf("start main execution loop\n");
+	// printf("start main execution loop\n");
 	// Execute pipeline: iterate through all commands
 	while (curr && !shell->stop)
 	{
 		// printf("Processing command: %s (pid will be %d)\n", curr->args[0],
 		// 	curr->pid);
 		handle_pipes(curr, prev_fd, shell);
-		printf("handle_pipes completed for %s (pid=%d)\n", curr->args[0],
+		// printf("handle_pipes completed for %s (pid=%d)\n", curr->args[0],
 			curr->pid);
 		// Clean up file descriptors
 		if (prev_fd != -1)
 		{
-			printf("Closing prev_fd: %d\n", prev_fd);
+			// printf("Closing prev_fd: %d\n", prev_fd);
 			close(prev_fd);
 			// Close previous read end
 		}
 		prev_fd = curr->pipefd[0]; // Save current read end for next command
 		if (curr->pipefd[1] != -1)
 		{
-			printf("Closing write end: %d\n", curr->pipefd[1]);
+			// printf("Closing write end: %d\n", curr->pipefd[1]);
 			close(curr->pipefd[1]);
 			// Close current write end
 		}
 		curr = curr->next; // Move to next command
 	}
-	printf("======================\n");
+	// printf("======================\n");
 	ft_waitpid(shell);
 	// Wait for all child processes to complete
 	// printf("=== EXECUTE END ===\n");

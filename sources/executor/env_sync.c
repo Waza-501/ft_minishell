@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/06 10:51:54 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 09:48:26 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/14 10:29:49 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ static int	split_env_string(const char *env_string, char **key, char **value)
  * @param env_list The environment linked list
  * @param env_string String in format "KEY=VALUE"
  * @return 0 on success, 1 on failure
+ * Check if the node already exists BEFORE updating
+ * If it was an update, cdll_update_list leaked the key. Free it
+ * If it was a new node, the list took ownership of both key and value
  */
 static int	update_single_var(t_cdllist *env_list, const char *env_string)
 {
@@ -58,14 +61,16 @@ static int	update_single_var(t_cdllist *env_list, const char *env_string)
 	char	*value;
 	char	*input[2];
 	int		result;
+	t_cd_ll_node	*existing_node;
 
 	if (split_env_string(env_string, &key, &value) != 0)
 		return (1);
+	existing_node = cdll_get_node(env_list, false, key);
 	input[0] = key;
 	input[1] = value;
 	result = cdll_update_list(env_list, input);
-	// free(key);
-	// free(value);
+	if (existing_node)
+		free(key);
 	return (result);
 }
 /**

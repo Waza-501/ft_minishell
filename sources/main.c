@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/14 11:12:15 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 11:52:03 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	mini_loop(t_data *data)
 		if (data->commands)
 		{
 			execute_commands(data);
-			reset_data(data, 0);
+			reset_data(data, data->exit_code);
 		}
 	}
 	free_data(data);

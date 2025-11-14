@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/13 15:13:07 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 11:52:37 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,13 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 	if (execute_builtin(cmd, shell))
 	{
 		// printf("Built-in executed\n");
-		exit(g_exit_code);
+		exit(shell->data->exit_code);
 	}
-	// printf("Not a builtin, trying external command: %s\n", cmd->args[0]);
+	printf("Not a builtin, trying external command: %s\n", cmd->args[0]);
 	if (execute_currdir(cmd, shell))
 	{
 		// printf("Current dir executed\n");
-		exit(g_exit_code);
+		exit(shell->data->exit_code);
 	}
 	while (shell->env && shell->env[i])
 	{
@@ -132,7 +132,7 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 		// printf("Searching PATH...\n");
 		ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
 	}
-	// printf("No PATH, trying direct execution\n");
+	//printf("No PATH, trying direct execution\n");
 	ft_execve(cmd, shell, NULL);
 	// Try built-in first, then current directory execution
 	// 	if (!execute_builtin(cmd, shell) && !execute_currdir(cmd, shell))

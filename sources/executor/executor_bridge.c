@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 11:09:41 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/14 11:53:00 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ int	execute_commands(t_data *data)
 	// printf("  shell.cmds pointer: %p\n", (void *)shell.cmds);
 	// Execute the command pipeline
 	execute(&shell);
-	data->exit_code = g_exit_code;
 	// Cleanup
 	cleanup_shell(&shell);
 	return (0);

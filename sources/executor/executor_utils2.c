@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/11 13:39:07 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/14 12:11:04 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 	char	*tmp;
 
 	i = 0;
-	// printf("🔍 ft_execve called for: %s\n", cmd->args[0]); // Debug
+	//printf("🔍 ft_execve called for: %s\n", cmd->args[0]); // Debug
 	while (path && path[i])
 	{
-		// printf("   Trying path[%d]: %s\n", i, path[i]); // Debug
+		//printf("   Trying path[%d]: %s\n", i, path[i]); // Debug
 		tmp = ft_strjoin(path[i], "/");
 		if (!tmp) // debug
 		{
@@ -60,10 +60,10 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 			ft_free_arr(path);
 			exit(1);
 		}
-		// printf("   Full path: %s\n", tmp); // Debug
+		//printf("   Full path: %s\n", tmp); // Debug
 		if (access(tmp, X_OK) == 0) // debug
 		{
-			// printf("   Found executable: %s\n", tmp); // Debug
+			//printf("   Found executable: %s\n", tmp); // Debug
 			// Try to execute - this never returns on success
 			execve(tmp, cmd->args, shell->env);
 			// If we reach here, execve failed
@@ -129,16 +129,16 @@ void	ft_waitpid(t_shell *shell)
 			// 	curr->args[0]);
 			waitpid(curr->pid, &status, 0);
 			if (WIFEXITED(status))
-				g_exit_code = WEXITSTATUS(status);
+				shell->data->exit_code = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
 			{
 				sig = WTERMSIG(status);
 				if (sig == SIGINT)
-					g_exit_code = 130;
+					shell->data->exit_code = 130;
 				else if (sig == SIGQUIT)
-					g_exit_code = 131;
+					shell->data->exit_code = 131;
 			}
-			if (g_exit_code == 130 || g_exit_code == 131)
+			if (shell->data->exit_code == 130 || shell->data->exit_code == 131)
 				shell->stop = true;
 		}
 		else
@@ -148,7 +148,6 @@ void	ft_waitpid(t_shell *shell)
 		}
 		curr = curr->next;
 	}
-	// printf("All processes finished, exit_code: %d\n", g_exit_code);
 }
 /**
  * @brief Handle single built-in command execution without forking
@@ -176,9 +175,7 @@ bool	single_cmd(t_shell *shell)
 
 	if (is_builtin(shell->cmds))
 	{
-		// printf("setting up redirection\n");
 		if (set_fd_execution(shell->cmds))
-			printf("should not reach here\n");
 		save_stdin = ft_dup(STDIN_FILENO);
 		save_stdout = ft_dup(STDOUT_FILENO);
 		execute_builtin(shell->cmds, shell);
@@ -186,6 +183,5 @@ bool	single_cmd(t_shell *shell)
 		ft_dup2(save_stdout, STDOUT_FILENO);
 		return (true);
 	}
-	// printf("no redirection for you\n");
 	return (false);
 }

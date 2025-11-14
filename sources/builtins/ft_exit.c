@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:54:17 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/13 15:12:34 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 10:45:16 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static void	exit_minishell(t_data *data, t_shell *shell)
 	int	exit_code;
 
 	exit_code = data->exit_code;
-	free_data(data);
 	cleanup_shell(shell);
+	free_data(data);
 	ft_putstr_fd("exit\n", STDOUT);
 	exit (exit_code);
 }

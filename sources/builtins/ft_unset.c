@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 12:00:55 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 08:58:19 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/14 10:40:15 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ static int	remove_var_from_env(t_shell *shell, char *var_name)
  * @param cmd Command structure
  * @param shell Shell state
  * @return 0 on success, -1 on error
+ * Remove the variable from the persistent data->envp_copy linked list.
  */
 int	ft_unset(t_commands *cmd, t_shell *shell)
 {
@@ -104,6 +105,8 @@ int	ft_unset(t_commands *cmd, t_shell *shell)
 	{
 		if (in_env(cmd->args[j], shell->env))
 		{
+			if (shell->data && shell->data->envp_copy)
+				cdll_del_node(shell->data->envp_copy, false, cmd->args[j]);
 			if (remove_var_from_env(shell, cmd->args[j]) != 0)
 				return (-1);
 		}

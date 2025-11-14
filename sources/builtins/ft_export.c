@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 14:02:47 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:40:14 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/14 10:41:14 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ int	send_arr(t_shell *shell, char *str)
 	if (!rtn)
 		return (0);
 	new_array(shell->env, rtn, str);
-	// Don't free old env - causes corruption
-	// Let cleanup_shell handle the original env
+	ft_free_arr(shell->env);
 	shell->env = rtn;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:18 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 09:00:20 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/14 11:10:19 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	update_pwd(char *pwd, t_shell *shell)
 	ft_export(0, shell, pwd);
 	free(pwd);
 }
+
 /**
  * @brief Print long error message for getcwd failure
  */
@@ -39,6 +40,7 @@ static void	print_getcwd_error(void)
 	ft_putstr_fd("cd: error retrieving current directory: ", STDERR_FILENO);
 	ft_putendl_fd("getcwd: cannot access parent directories", STDERR_FILENO);
 }
+
 /**
  * @brief Change directory with error handling
  * @param path Target directory path

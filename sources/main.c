@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/14 08:01:27 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/14 11:09:35 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	empty_line_exit(t_data *data)
 static int	mini_loop(t_data *data)
 {
 	while (1)
-	{	printf("last exit code %i\n", data->exit_code);
+	{
 		set_signals_interactive();
 		data->input = readline("minishell$ ");
 		set_signals_noninteractive();

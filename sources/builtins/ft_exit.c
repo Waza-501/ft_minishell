@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:54:17 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 10:45:16 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/14 11:07:54 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	ft_exit(t_data *data, t_shell *shell, t_commands *cmd)
 	if (cmd->pid != 0)
 		ft_putstr_fd("exit\n", STDOUT);
 	if (!cmd->args[1])
-		//exit(g_exit_code);
 		exit_minishell(data, shell);
 	if (cmd->args[2] != NULL)
 	{
@@ -83,7 +82,6 @@ int	ft_exit(t_data *data, t_shell *shell, t_commands *cmd)
 		return (1);
 	}
 	exit_checker(data, cmd->args[1]);
-	//exit(g_exit_code);
 	exit_minishell(data, shell);
 	return (0);
 }

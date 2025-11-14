@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/13 15:11:13 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 09:32:31 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ char		*ft_getcwd(void);
 
 // Executor - Bridge functions Max
 int			execute_commands(t_data *data);
-int			init_shell_for_execution(t_shell *shell, t_data *data);
 char		**convert_cdll_to_env_array(t_cdllist *env_list);
-void		cleanup_shell(t_shell *shell);
 void		ft_dup2(int fd1, int fd2);
 pid_t		ft_fork(void);
 void		ft_pipe(int fd[2]);
@@ -102,28 +100,28 @@ int			ft_dup(int fd);
 void		ft_waitpid(t_shell *shell);
 int			add_file_node(t_files **list, t_lexer *lexer);
 int			sync_env_to_list(char **env_array, t_cdllist *env_list);
-void		execute_single_command(t_commands *cmd, t_shell *shell,
-				t_data *data);
+void		sync_environment_changes(t_shell *shell);
 
 // Core shell functions (replace existing init/cleanup_shell if you have them)
 t_shell		*init_shell(t_data *data);
 void		cleanup_shell(t_shell *shell);
 
-// Environment management
-int			shell_export(t_shell *shell, char **args);
-int			shell_unset(t_shell *shell, char *name);
-int			shell_setenv(t_shell *shell, char *name, char *value);
-
-// Sorted environment cache management
-void		invalidate_sorted_env(t_shell *shell);
-char		**get_sorted_env(t_shell *shell);
-
-// Main loop integration
-void		execute_with_shell(t_shell *shell, t_data *data);
-void		execute_other_commands(t_commands *cmd, t_shell *shell,
-				t_data *data);
-// Utility functions
-char		**quick_parse_args(char *input);
-void		free_quick_args(char **args);
-
+// Temporary removed
+int			init_shell_for_execution(t_shell *shell, t_data *data);
+// // Environment management
+// int			shell_export(t_shell *shell, char **args);
+// int			shell_unset(t_shell *shell, char *name);
+// int			shell_setenv(t_shell *shell, char *name, char *value);
+// // Sorted environment cache management
+// void		invalidate_sorted_env(t_shell *shell);
+// char		**get_sorted_env(t_shell *shell);
+// // Main loop integration
+// void		execute_with_shell(t_shell *shell, t_data *data);
+// void		execute_other_commands(t_commands *cmd, t_shell *shell,
+// 				t_data *data);
+// void		execute_single_command(t_commands *cmd, t_shell *shell,
+// 				t_data *data);
+// // Utility functions
+// char		**quick_parse_args(char *input);
+// void		free_quick_args(char **args);
 #endif

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 12:00:55 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:44:37 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/14 08:58:19 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,33 @@ static bool	in_env(char *str, char **env)
 	while (env && env[i])
 	{
 		if (ft_strncmp(env[i], str, len) == 0 && (env[i][len] == '='
-			|| env[i][len] == '\0'))
+				|| env[i][len] == '\0'))
 			return (true);
 		i++;
 	}
 	return (false);
 }
-
-/*
- * @brief Sync environment changes back to data structure
- * @param shell Shell structure containing updated environment
- * Handle sync error - could print warning or set error code
+/**
+ * @brief Create new environment array with one variable removed
+ * @param shell Shell structure
+ * @param var_name Variable to remove
+ * @return 0 on success, -1 on failure
  */
-static void	sync_environment_changes(t_shell *shell)
+static int	remove_var_from_env(t_shell *shell, char *var_name)
 {
-	if (!shell || !shell->data || !shell->data->envp_copy || !shell->env)
-		return ;
-	if (sync_env_to_list(shell->env, shell->data->envp_copy) != 0)
-	{
-		printf("Warning: Failed to sync environment changes\n");
-	}
+	int		i;
+	char	**rtn;
+
+	i = 0;
+	while (shell->env[i])
+		i++;
+	rtn = ft_calloc(i, sizeof(char *));
+	if (!rtn)
+		return (-1);
+	unset_array(shell->env, rtn, var_name);
+	ft_free_arr(shell->env);
+	shell->env = rtn;
+	return (0);
 }
 
 /**
@@ -88,33 +95,19 @@ static void	sync_environment_changes(t_shell *shell)
  */
 int	ft_unset(t_commands *cmd, t_shell *shell)
 {
-	int		i;
-	int		j;
-	char	**rtn;
-	bool	env_changed;
+	int	j;
 
 	j = 1;
-	env_changed = false;
 	if (!cmd->args[1])
 		return (0);
 	while (cmd->args[j])
 	{
 		if (in_env(cmd->args[j], shell->env))
 		{
-			i = 0;
-			while (shell->env[i])
-				i++;
-			rtn = ft_calloc(i, sizeof(char *));
-			if (!rtn)
+			if (remove_var_from_env(shell, cmd->args[j]) != 0)
 				return (-1);
-			unset_array(shell->env, rtn, cmd->args[j]);
-			ft_free_arr(shell->env);
-			shell->env = rtn;
-			env_changed = true;
 		}
 		j++;
 	}
-	if (env_changed)
-		sync_environment_changes(shell);
 	return (0);
 }

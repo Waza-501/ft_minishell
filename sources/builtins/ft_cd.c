@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:18 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 14:50:59 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 09:00:20 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include "minishell.h"
 #include <errno.h> // Add to includes
 
+/**
+ * @brief Update PWD and OLDPWD environment variables
+ * @param pwd Previous working directory path
+ * @param shell Shell structure
+ */
 static void	update_pwd(char *pwd, t_shell *shell)
 {
 	if (pwd)
@@ -26,7 +31,20 @@ static void	update_pwd(char *pwd, t_shell *shell)
 	ft_export(0, shell, pwd);
 	free(pwd);
 }
-
+/**
+ * @brief Print long error message for getcwd failure
+ */
+static void	print_getcwd_error(void)
+{
+	ft_putstr_fd("cd: error retrieving current directory: ", STDERR_FILENO);
+	ft_putendl_fd("getcwd: cannot access parent directories", STDERR_FILENO);
+}
+/**
+ * @brief Change directory with error handling
+ * @param path Target directory path
+ * @param shell Shell structure
+ * @return 0 on success, 1 on failure
+ */
 static int	ft_chdir(char *path, t_shell *shell)
 {
 	char	*pwd;
@@ -34,8 +52,7 @@ static int	ft_chdir(char *path, t_shell *shell)
 	pwd = ft_getcwd();
 	if (!pwd && path[0] != '/')
 	{
-		perror("cd: error retrieving current directory: getcwd: cannot access\
- parent directories");
+		print_getcwd_error();
 		return (0);
 	}
 	if (chdir(path) != 0)
@@ -48,6 +65,11 @@ static int	ft_chdir(char *path, t_shell *shell)
 	return (0);
 }
 
+/**
+ * @brief Change to OLDPWD directory (cd -)
+ * @param shell Shell structure
+ * @return 0 on success, 1 on failure
+ */
 static int	cd_minus(t_shell *shell)
 {
 	int	i;
@@ -62,7 +84,7 @@ static int	cd_minus(t_shell *shell)
 	}
 	if (!shell->env[i])
 	{
-		ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR);
+		ft_putendl_fd("minishell: cd: OLDPWD not set", STDERR_FILENO);
 		return (1);
 	}
 	ret = ft_chdir(&shell->env[i][7], shell);

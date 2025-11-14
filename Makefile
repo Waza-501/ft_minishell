@@ -1,6 +1,6 @@
 NAME		:=	minishell
 CC			:=	cc
-FLAGS		:=	-Wall -Werror -Wextra -g
+FLAGS		:=	-Wall -Werror -Wextra -g -fsanitize=address
 
 # Detect operating system
 UNAME_S := $(shell uname -s)
@@ -65,8 +65,6 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				executor/executor_utils1.c\
 				executor/executor_utils2.c\
 				executor/env_sync.c\
-				executor/shell.c\
-				executor/shell_executor.c\
 				printing.c\
 
 OBJECTS_DIR	:=	objects/

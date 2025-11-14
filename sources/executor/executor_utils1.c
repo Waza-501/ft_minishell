@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   executor_ultil1.c                                  :+:    :+:            */
+/*   executor_utils1.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:39 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:39:42 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/14 11:08:42 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 bool	is_builtin(t_commands *cmd)
 {
 	if (!cmd || !cmd->args || !cmd->args[0])
-		return (false); // Copilot suggested this line
+		return (false);
 	if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
 		return (true);
 	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)

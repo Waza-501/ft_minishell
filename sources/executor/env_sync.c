@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/06 10:51:54 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 10:29:49 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/14 11:08:21 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ static int	split_env_string(const char *env_string, char **key, char **value)
  */
 static int	update_single_var(t_cdllist *env_list, const char *env_string)
 {
-	char	*key;
-	char	*value;
-	char	*input[2];
-	int		result;
+	char			*key;
+	char			*value;
+	char			*input[2];
+	int				result;
 	t_cd_ll_node	*existing_node;
 
 	if (split_env_string(env_string, &key, &value) != 0)

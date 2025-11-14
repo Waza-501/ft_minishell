@@ -6,12 +6,13 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/13 13:41:48 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 18:19:42 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expand.h"
+#include "parser.h"
 
 static char	*get_arg_var(t_lexer *node, int idx)
 {
@@ -72,14 +73,27 @@ static int	empty_space_dollar(char *start, int idx, int size, t_lexer *node)
 	return (0);
 }
 
+static int	single_special_var(t_data *data, char *str, char *code, t_lexer	*node)
+{
+	ft_free(&str);
+	ft_free(&node->string);
+	node->string = code;
+	if (is_quoted(data->lexer->string))
+		remove_quotes(data, data->lexer);
+	ft_putendl_fd(data->lexer->string, STDOUT_FILENO);
+	return (1);
+}
+
 int	set_last_exit_code(t_data *data, char *str, t_lexer *node)
 {
 	char	*code;
 	char	*end;
 	bool	result;
-
-	printf("found code\n");
+	
 	code = ft_itoa(data->exit_code);
+	if (!node->prev && !node->next && ((ft_strlen(node->string) == 2) 
+        || (ft_strlen(node->string) == 4 && is_quoted(node->string))))
+		return (single_special_var(data, str, code, node));
 	end = ft_strdup(&node->string[find_dollar_sign(node->string) + 2]);
 	if (!code || !end)
 	{
@@ -143,12 +157,12 @@ int	scan_expand(t_data *data, t_lexer *node)
 			malloc_error(data, false);
 		if (!cdll_get_node(data->envp_copy, false, arg_var))
 		{
-			if (find_replace_type(data, node, arg_var) == 1)
+			if (find_replace_type(data, node, arg_var))
 				return (ft_free(&arg_var), 1);
 		}
 		else
 			if (replace_var(data->envp_copy, node, arg_var) == 1)
-				return (ft_free(&arg_var), malloc_error(data, false), 1);
+				return (ft_free(&arg_var), malloc_error(data, false), -1);
 		ft_free(&arg_var);
 		idx++;
 	}

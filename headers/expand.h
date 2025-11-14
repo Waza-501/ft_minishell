@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:36:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 14:47:26 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 15:21:06 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "structs.h"
 
 /*expand_core*/
-bool	expand_args(t_data *data);
+int		expand_args(t_data *data);
 
 /*expand_args*/
 int		scan_expand(t_data *data, t_lexer *node);

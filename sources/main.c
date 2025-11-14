@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/14 11:52:03 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 17:46:35 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	mini_loop(t_data *data)
 		set_signals_noninteractive();
 		if (!data->input)
 			empty_line_exit(data);
+		printf("input is now %s\n", data->input);
 		data->exit_code = parse_input(data, data->input);
 		if (data->commands)
 		{

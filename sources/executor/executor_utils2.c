@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 12:11:04 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 17:21:10 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,9 +173,11 @@ bool	single_cmd(t_shell *shell)
 	int	save_stdin;
 	int	save_stdout;
 
+	save_stdin = -1;
+	save_stdout = -1;
 	if (is_builtin(shell->cmds))
 	{
-		if (set_fd_execution(shell->cmds))
+		set_fd_execution(shell->cmds);
 		save_stdin = ft_dup(STDIN_FILENO);
 		save_stdout = ft_dup(STDOUT_FILENO);
 		execute_builtin(shell->cmds, shell);

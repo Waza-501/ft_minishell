@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/13 13:34:24 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 18:19:26 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static int	finalize_list(t_data *data)
 
 int	parse_input(t_data *data, char *str)
 {
+	int	s_var;
+
 	if (is_space(str))
 		return (0);
 	add_history(data->input);
@@ -55,8 +57,11 @@ int	parse_input(t_data *data, char *str)
 		return (reset_data(data, 2));
 	if (assign_type(data) == false)
 		return (reset_data(data, 2));
-	if (expand_args(data) == false)
+	s_var = expand_args(data);
+	if (s_var < 0)
 		return (reset_data(data, 2));
+	else if (s_var == 1)
+		return (reset_data(data, 0));
 	if (concatenate_strings(data) == false)
 		reset_data(data, 1);
 	if (finalize_list(data))

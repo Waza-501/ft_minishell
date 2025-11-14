@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 11:53:00 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 17:31:32 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	execute_commands(t_data *data)
 		if (debug_count > 10) // Safety check
 			break ;
 	}
-	// printf("  Total shell commands: %d\n", debug_count);
+	printf("  Total shell commands: %d\n", debug_count);
 	// printf("  shell.cmds pointer: %p\n", (void *)shell.cmds);
 	// Execute the command pipeline
 	execute(&shell);

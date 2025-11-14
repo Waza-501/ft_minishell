@@ -6,16 +6,17 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:32:49 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/04 13:38:36 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 17:34:02 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expand.h"
 
-bool	expand_args(t_data *data)
+int	expand_args(t_data *data)
 {
 	t_lexer	*copy;
+	int		ret;
 
 	copy = data->lexer;
 	while (copy)
@@ -24,10 +25,11 @@ bool	expand_args(t_data *data)
 			copy = copy->next;
 		else
 		{
-			if (scan_expand(data, copy))
-				return (false);
+			ret = scan_expand(data, copy);
+			if (ret != 0)
+				return (ret);
 			copy = copy->next;
 		}
 	}
-	return (true);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 11:52:37 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/14 17:30:57 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,19 @@ static bool	execute_currdir(t_commands *cmd, t_shell *shell)
 int	execute_builtin(t_commands *cmd, t_shell *shell)
 {
 	if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
-		g_exit_code = ft_pwd();
+		shell->data->exit_code = ft_pwd();
 	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
-		g_exit_code = ft_echo(cmd);
+		shell->data->exit_code = ft_echo(cmd);
 	else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
-		g_exit_code = ft_cd(cmd, shell);
+		shell->data->exit_code = ft_cd(cmd, shell);
 	else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
-		g_exit_code = ft_export(cmd, shell, 0);
+		shell->data->exit_code = ft_export(cmd, shell, 0);
 	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
-		g_exit_code = ft_unset(cmd, shell);
+		shell->data->exit_code = ft_unset(cmd, shell);
 	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
-		g_exit_code = ft_env(shell->env);
+		shell->data->exit_code = ft_env(shell->env);
 	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
-		g_exit_code = ft_exit(shell->data, shell, cmd);
+		shell->data->exit_code = ft_exit(shell->data, shell, cmd);
 	else
 		return (0);
 	return (1);
@@ -206,8 +206,6 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 			ft_dup2(prev_fd, STDIN);
 			close(prev_fd); // new add 04/11 - Close after dup2
 		}
-		else
-			printf("Child: No input redirection needed\n");
 		if (cmd->outfile != -1)
 		{
 			// printf("Child: Redirecting stdout to fd %d\n", cmd->outfile);
@@ -222,9 +220,7 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 			ft_dup2(cmd->pipefd[1], STDOUT);
 			close(cmd->pipefd[0]); // new add 04/11 - Close after dup2
 		}
-		else
-			printf("Child: No output redirection needed\n");
-		// printf("Child: About to execute: %s\n", cmd->args[0]);
+		printf("Child: About to execute: %s\n", cmd->args[0]);
 		// Command out for now Max because of missing function
 		execute_cmd(cmd, shell);
 		exit(g_exit_code);
@@ -285,7 +281,7 @@ void	execute(t_shell *shell)
 	// Optimization: handle single command without unnecessary forking
 	if (curr->next == NULL && single_cmd(shell))
 	{
-		// printf("Single command executed\n");
+		printf("Single command executed\n");
 		return ;
 	}
 	// printf("start main execution loop\n");
@@ -316,5 +312,5 @@ void	execute(t_shell *shell)
 	// printf("======================\n");
 	ft_waitpid(shell);
 	// Wait for all child processes to complete
-	// printf("=== EXECUTE END ===\n");
+	printf("=== EXECUTE END ===\n");
 }

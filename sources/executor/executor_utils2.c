@@ -6,13 +6,22 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/15 11:24:26 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/15 20:54:22 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include "redirect.h"
+
+static void	ft_exit_exec(t_data *data, t_shell *shell, int code)
+{
+	if (shell)
+		cleanup_shell(shell);
+	if (data)
+		free_data(data);
+	exit(code);
+}
 
 /**
  * @brief Execute external command by searching through PATH directories
@@ -52,13 +61,13 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 		if (!tmp) // debug
 		{
 			ft_free_arr(path);
-			exit(1);
+			ft_exit_exec(shell->data, shell, 1);
 		}
 		tmp = ft_strjoin_free(tmp, cmd->args[0]);
 		if (!tmp) // debug
 		{
 			ft_free_arr(path);
-			exit(1);
+			ft_exit_exec(shell->data, shell, 1);
 		}
 		printf("   Full path: %s\n", tmp); // Debug
 		if (access(tmp, X_OK) == 0) // debug
@@ -70,7 +79,7 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 			perror("execve");
 			ft_free_arr(path);
 			free(tmp);
-			exit(126); // Permission denied or exec format error
+			ft_exit_exec(shell->data, shell, 126); // Permission denied or exec format error
 		}
 		// Uncommand to debug
 		// if (access(tmp, F_OK) == 0
@@ -87,7 +96,7 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd->args[0], STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	exit(127);
+	ft_exit_exec(shell->data, shell, 127);
 }
 
 /**

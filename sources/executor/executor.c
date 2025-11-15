@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/15 11:17:33 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/15 21:02:17 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,10 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 		// printf("Built-in executed\n");
 		exit(shell->data->exit_code);
 	}
-	printf("Not a builtin, trying external command: %s\n", cmd->args[0]);
+	//printf("Not a builtin, trying external command: %s\n", cmd->args[0]);
 	if (execute_currdir(cmd, shell))
 	{
-		printf("Current dir executed\n");
+		//printf("Current dir executed\n");
 		exit(shell->data->exit_code);
 	}
 	while (shell->env && shell->env[i])
@@ -129,10 +129,10 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 	}
 	if (shell->env[i])
 	{
-		printf("Searching PATH...\n");
+		//printf("Searching PATH...\n");
 		ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
 	}
-	printf("No PATH, trying direct execution\n");
+	//printf("No PATH, trying direct execution\n");
 	ft_execve(cmd, shell, NULL);
 	// Try built-in first, then current directory execution
 	// 	if (!execute_builtin(cmd, shell) && !execute_currdir(cmd, shell))
@@ -220,10 +220,10 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 			ft_dup2(cmd->pipefd[1], STDOUT);
 			close(cmd->pipefd[0]); // new add 04/11 - Close after dup2
 		}
-		printf("Child: About to execute: %s\n", cmd->args[0]);
+		//printf("Child: About to execute: %s\n", cmd->args[0]);
 		// Command out for now Max because of missing function
 		execute_cmd(cmd, shell);
-		printf("executed\n");
+		//printf("executed\n");
 		exit(shell->data->exit_code);
 	}
 	else // debug part. Need to check
@@ -282,7 +282,7 @@ void	execute(t_shell *shell)
 	// Optimization: handle single command without unnecessary forking
 	if (curr->next == NULL && single_cmd(shell))
 	{
-		printf("Single command executed\n");
+		//printf("Single command executed\n");
 		return ;
 	}
 	// printf("start main execution loop\n");
@@ -313,5 +313,5 @@ void	execute(t_shell *shell)
 	// printf("======================\n");
 	ft_waitpid(shell);
 	// Wait for all child processes to complete
-	printf("=== EXECUTE END ===\n");
+	//printf("=== EXECUTE END ===\n");
 }

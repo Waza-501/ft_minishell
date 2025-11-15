@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 17:21:10 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/15 11:24:26 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 	char	*tmp;
 
 	i = 0;
-	//printf("🔍 ft_execve called for: %s\n", cmd->args[0]); // Debug
+	printf("🔍 ft_execve called for: %s\n", cmd->args[0]); // Debug
 	while (path && path[i])
 	{
-		//printf("   Trying path[%d]: %s\n", i, path[i]); // Debug
+		printf("   Trying path[%d]: %s\n", i, path[i]); // Debug
 		tmp = ft_strjoin(path[i], "/");
 		if (!tmp) // debug
 		{
@@ -60,10 +60,10 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 			ft_free_arr(path);
 			exit(1);
 		}
-		//printf("   Full path: %s\n", tmp); // Debug
+		printf("   Full path: %s\n", tmp); // Debug
 		if (access(tmp, X_OK) == 0) // debug
 		{
-			//printf("   Found executable: %s\n", tmp); // Debug
+			printf("   Found executable: %s\n", tmp); // Debug
 			// Try to execute - this never returns on success
 			execve(tmp, cmd->args, shell->env);
 			// If we reach here, execve failed

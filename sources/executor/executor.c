@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 17:30:57 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/15 11:17:33 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 	printf("Not a builtin, trying external command: %s\n", cmd->args[0]);
 	if (execute_currdir(cmd, shell))
 	{
-		// printf("Current dir executed\n");
+		printf("Current dir executed\n");
 		exit(shell->data->exit_code);
 	}
 	while (shell->env && shell->env[i])
@@ -129,10 +129,10 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 	}
 	if (shell->env[i])
 	{
-		// printf("Searching PATH...\n");
+		printf("Searching PATH...\n");
 		ft_execve(cmd, shell, ft_split(&shell->env[i][5], ':'));
 	}
-	//printf("No PATH, trying direct execution\n");
+	printf("No PATH, trying direct execution\n");
 	ft_execve(cmd, shell, NULL);
 	// Try built-in first, then current directory execution
 	// 	if (!execute_builtin(cmd, shell) && !execute_currdir(cmd, shell))
@@ -223,7 +223,8 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 		printf("Child: About to execute: %s\n", cmd->args[0]);
 		// Command out for now Max because of missing function
 		execute_cmd(cmd, shell);
-		exit(g_exit_code);
+		printf("executed\n");
+		exit(shell->data->exit_code);
 	}
 	else // debug part. Need to check
 	{

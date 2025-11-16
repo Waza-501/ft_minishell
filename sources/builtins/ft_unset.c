@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 12:00:55 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 10:40:15 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/16 09:17:59 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,13 @@ static bool	in_env(char *str, char **env)
 	while (env && env[i])
 	{
 		if (ft_strncmp(env[i], str, len) == 0 && (env[i][len] == '='
-				|| env[i][len] == '\0'))
+			|| env[i][len] == '\0'))
 			return (true);
 		i++;
 	}
 	return (false);
 }
+
 /**
  * @brief Create new environment array with one variable removed
  * @param shell Shell structure

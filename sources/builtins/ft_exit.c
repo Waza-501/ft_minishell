@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_exit.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: haile <haile@student.codam.nl>               +#+                     */
+/*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:54:17 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 12:10:54 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/16 09:20:14 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ static void	exit_minishell(t_data *data, t_shell *shell)
 	ft_putstr_fd("exit\n", STDOUT);
 	exit (exit_code);
 }
+/**
+ * Keep this just in case, after checking cmd exit
+	// if (cmd->pid != 0)
+	// 	ft_putstr_fd("exit\n", STDOUT);
+ */
 
 int	ft_exit(t_data *data, t_shell *shell, t_commands *cmd)
 {
@@ -72,9 +77,6 @@ int	ft_exit(t_data *data, t_shell *shell, t_commands *cmd)
 		ft_putstr_fd("exit\n", STDOUT);
 		exit_minishell(data, shell);
 	}
-	// if (cmd->pid != 0)
-	// 	ft_putstr_fd("exit\n", STDOUT);
-	// don't think this is needed anymore, but will keep it just in case
 	if (!cmd->args[1])
 		exit_minishell(data, shell);
 	if (cmd->args[2] != NULL)

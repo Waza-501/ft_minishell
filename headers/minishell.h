@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/17 13:41:08 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/17 14:33:21 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ bool		find_matching_quotes(char *str, bool s_q, bool d_q);
 
 // Updated function prototypes Max
 bool		is_builtin(t_commands *cmd);
-int			execute_builtin(t_commands *cmd, t_shell *shell, int fd_0, int fd_1);
+int			execute_builtin(t_commands *cmd, t_shell *shell,
+				int fd_0, int fd_1);
 void		ft_execve(t_commands *cmd, t_shell *shell, char **path);
 void		ft_waitpid(t_shell *shell);
 bool		single_cmd(t_shell *shell);

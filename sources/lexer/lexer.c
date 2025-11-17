@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 20:28:55 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/04 13:23:37 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/17 14:32:00 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	double_token(t_lexer *node, int n)
 	return (insert_new_node(node, new, old));
 }
 
-int	to_be_named(t_lexer	*node, int n)
+int	split_lexer_node(t_lexer *node, int n)
 {
 	char	*new;
 	char	*old;
@@ -76,8 +76,8 @@ int	find_pipe_in_string(char *str)
 	idx = 0;
 	if (ft_strlen(str) == 1 || (str[idx] == S_Q || str[idx] == D_Q))
 		return (-1);
-	else if (ft_strlen(str) == 2
-		&& (!ft_strncmp(str, "<<", 2) || !ft_strncmp(str, ">>", 2)))
+	else if (ft_strlen(str) == 2 && (!ft_strncmp(str, "<<", 2)
+			|| !ft_strncmp(str, ">>", 2)))
 		return (-1);
 	while (str[idx])
 	{
@@ -98,7 +98,7 @@ int	split_operators(t_data *data)
 	{
 		i = find_pipe_in_string(copy->string);
 		if (i >= 0)
-			if (to_be_named(copy, i))
+			if (split_lexer_node(copy, i))
 				malloc_error(data, false);
 		copy = copy->next;
 	}
@@ -122,11 +122,11 @@ bool	setup_lexer(t_data *data)
 			idx += add_lex_node(&copy[idx], &(data->lexer));
 		if (idx == -1)
 		{
-			ft_free (&copy);
+			ft_free(&copy);
 			malloc_error(data, false);
 		}
 	}
-	ft_free (&copy);
+	ft_free(&copy);
 	if (split_operators(data))
 		return (false);
 	return (true);

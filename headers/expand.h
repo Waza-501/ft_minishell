@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:36:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/14 15:21:06 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/17 13:04:57 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ int		expand_args(t_data *data);
 
 /*expand_args*/
 int		scan_expand(t_data *data, t_lexer *node);
+
+/*expand_special_var.c*/
+int		set_last_exit_code(t_data *data, char *str, t_lexer *node);
 
 /*expand_utils.c*/
 bool	check_env_char(char c);

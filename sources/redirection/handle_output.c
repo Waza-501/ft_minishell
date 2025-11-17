@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:55 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 12:03:39 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/17 14:09:35 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	handle_output(t_files *list, int *fd)
 	if (close_existing_fd_out(list, fd))
 		return (false);
 	if (list->type == OUTPUT)
-		*fd = open(list->filename, O_WRONLY | O_CREAT, 0644);
+		*fd = open(list->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		*fd = open(list->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (*fd == -1)

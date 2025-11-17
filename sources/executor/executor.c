@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 12:44:56 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 13:47:29 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 	i = 0;
 	if (!cmd->args[0])
 		exit(0);
-	if (execute_builtin(cmd, shell))
+	if (execute_builtin(cmd, shell, -1, -1))
 		exit(shell->data->exit_code);
 	if (execute_currdir(cmd, shell))
 		exit(shell->data->exit_code);
@@ -108,8 +108,7 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	cmd->pid = ft_fork();
 	if (cmd->pid == 0)
 	{
-		if (set_fd_execution(cmd))
-			printf("should not reach here\n");
+		set_fd_execution(cmd);
 		setup_child_input(cmd, prev_fd);
 		setup_child_output(cmd);
 		execute_cmd(cmd, shell);

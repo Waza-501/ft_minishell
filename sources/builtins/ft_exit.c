@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:54:17 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/16 09:20:14 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 13:46:39 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,17 @@ static void	exit_checker(t_data *data, char *str)
 	}
 }
 
-static void	exit_minishell(t_data *data, t_shell *shell)
+static void	exit_minishell(t_data *data, t_shell *shell, int fd_0, int fd_1)
 {
 	int	exit_code;
 
 	exit_code = data->exit_code;
 	cleanup_shell(shell);
 	free_data(data);
+	if (fd_0 != -1)
+		close(fd_0);
+	if (fd_1 != -1)
+		close(fd_1);
 	ft_putstr_fd("exit\n", STDOUT);
 	exit (exit_code);
 }
@@ -70,21 +74,24 @@ static void	exit_minishell(t_data *data, t_shell *shell)
 	// 	ft_putstr_fd("exit\n", STDOUT);
  */
 
-int	ft_exit(t_data *data, t_shell *shell, t_commands *cmd)
+int	ft_exit(t_shell *shell, t_commands *cmd, int fd_0, int fd_1)
 {
+	t_data	*data;
+
+	data = shell->data;
 	if (!cmd)
 	{
 		ft_putstr_fd("exit\n", STDOUT);
-		exit_minishell(data, shell);
+		exit_minishell(data, shell, fd_0, fd_1);
 	}
 	if (!cmd->args[1])
-		exit_minishell(data, shell);
+		exit_minishell(data, shell, fd_0, fd_1);
 	if (cmd->args[2] != NULL)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR);
 		return (1);
 	}
 	exit_checker(data, cmd->args[1]);
-	exit_minishell(data, shell);
+	exit_minishell(data, shell, fd_0, fd_1);
 	return (0);
 }

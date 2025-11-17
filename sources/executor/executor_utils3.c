@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/17 12:40:27 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 13:08:17 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 13:40:15 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	init_shell_for_execution(t_shell *shell, t_data *data)
  *
  * Uses to store the exit status of executed built-ins
  */
-int	execute_builtin(t_commands *cmd, t_shell *shell)
+int	execute_builtin(t_commands *cmd, t_shell *shell, int fd_0, int fd_1)
 {
 	if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
 		shell->data->exit_code = ft_pwd();
@@ -93,7 +93,7 @@ int	execute_builtin(t_commands *cmd, t_shell *shell)
 	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
 		shell->data->exit_code = ft_env(shell->env);
 	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
-		shell->data->exit_code = ft_exit(shell->data, shell, cmd);
+		shell->data->exit_code = ft_exit(shell, cmd, fd_0, fd_1);
 	else
 		return (0);
 	return (1);

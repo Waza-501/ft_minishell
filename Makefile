@@ -1,7 +1,6 @@
 NAME		:=	minishell
 CC			:=	cc
-FLAGS		:= -g 
-# -Wall -Wextra -Werror
+FLAGS		:= -g -Wall -Wextra -Werror
 
 # Detect operating system
 UNAME_S := $(shell uname -s)
@@ -63,6 +62,7 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				builtins/ft_export_sort.c\
 				builtins/ft_export_print.c\
 				builtins/ft_exit.c\
+				builtins/builtins_utils.c\
 				executor/executor_bridge.c\
 				executor/executor.c\
 				executor/executor_utils1.c\

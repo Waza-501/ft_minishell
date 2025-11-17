@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/17 13:11:03 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 13:17:53 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char		*build_full_path(char *dir, char *cmd, char **path, t_shell *sh);
 int			try_execute_path(char *tmp, t_commands *cmd, t_shell *sh,
 				char **path);
 void		ft_exit_exec(t_data *data, t_shell *shell, int code);
+bool		execute_currdir(t_commands *cmd, t_shell *shell);
 
 // Executor - Bridge functions Max
 int			execute_commands(t_data *data);

@@ -6,22 +6,13 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:18 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 12:37:38 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 13:18:16 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include <errno.h> // Add to includes
-
-/**
- * @brief Print long error message for getcwd failure
- */
-void	print_getcwd_error(void)
-{
-	ft_putstr_fd("cd: error retrieving current directory: ", STDERR_FILENO);
-	ft_putendl_fd("getcwd: cannot access parent directories", STDERR_FILENO);
-}
 
 /**
  * @brief Update PWD and OLDPWD environment variables

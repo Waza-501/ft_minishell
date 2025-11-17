@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 12:33:01 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 12:41:56 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,26 +86,6 @@ int	execute_commands(t_data *data)
 	return (0);
 }
 
-/**
- * @brief Initialize shell structure from data structure
- * @param shell Shell structure to initialize
- * @param data Main data structure containing environment and commands
- * @return 0 on success, 1 on failure
- * Flow: Convert environment from circular linked list to array
- */
-int	init_shell_for_execution(t_shell *shell, t_data *data)
-{
-	if (!shell || !data)
-		return (1);
-	shell->env = convert_cdll_to_env_array(data->envp_copy);
-	if (!shell->env)
-		return (1);
-	shell->cmds = NULL;
-	shell->stop = false;
-	shell->data = data;
-	return (0);
-}
-
 static char	*create_env_string(t_cd_ll_node *node)
 {
 	char	*temp_key_eq;
@@ -151,33 +131,4 @@ char	**convert_cdll_to_env_array(t_cdllist *env_list)
 	}
 	env_array[i] = NULL;
 	return (env_array);
-}
-
-/**
- * Sync changes back to linked list BEFORE freeing
- * Free environment array (created by convert_cdll_to_env_array)
- * Clean up other fields
- */
-void	cleanup_shell(t_shell *shell)
-{
-	int	i;
-
-	if (!shell)
-		return ;
-	if (shell->env && shell->data && shell->data->envp_copy)
-		sync_env_to_list(shell->env, shell->data->envp_copy);
-	if (shell->env)
-	{
-		i = 0;
-		while (shell->env[i])
-		{
-			free(shell->env[i]);
-			i++;
-		}
-		free(shell->env);
-		shell->env = NULL;
-	}
-	shell->cmds = NULL;
-	shell->data = NULL;
-	shell->stop = false;
 }

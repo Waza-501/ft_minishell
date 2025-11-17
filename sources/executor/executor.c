@@ -6,85 +6,12 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 12:01:09 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 12:44:56 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "redirect.h"
-
-// #include "libft.h"
-
-/**git
- * @brief Execute command from current directory or with absolute/relative path
- * @param cmd Command structure containing command name and arguments
- * @param shell Shell state containing environment and configuration
- * @return true if command was executed successfully, false if not applicable
- *
- * This function handles:
- * - Empty command validation (exits with 127)
- * - Commands with '/' (absolute/relative paths)
- * - File accessibility checks before execution
- * - Direct execve() calls for path-based commands
- */
-static bool	execute_currdir(t_commands *cmd, t_shell *shell)
-{
-	if (cmd->args[0][0] == '\0')
-	{
-		ft_putstr_fd("minishell: : command not found\n", STDERR_FILENO);
-		exit(127);
-	}
-	if (ft_strchr(cmd->args[0], '/') == NULL)
-		return (false);
-	if (access(cmd->args[0], F_OK) == 0)
-	{
-		if (execve(cmd->args[0], cmd->args, shell->env) == -1)
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			perror(cmd->args[0]);
-			exit(126);
-		}
-	}
-	return (false);
-}
-
-/**
- * @brief Execute built-in shell commands
- * @param cmd Command structure containing command name and arguments
- * @param shell Shell state for environment and configuration access
- * @return 1 if command was a built-in and executed, 0 if not a built-in
- *
- * Supported built-ins:
- * - pwd: Print working directory
- * - echo: Display text with optional -n flag
- * - cd: Change directory
- * - export: Set environment variables
- * - unset: Remove environment variables
- * - env: Display environment variables
- * - exit: Exit the shell
- *
- * Uses global g_exit_code to store the exit status of executed built-ins
- */
-int	execute_builtin(t_commands *cmd, t_shell *shell)
-{
-	if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
-		shell->data->exit_code = ft_pwd();
-	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
-		shell->data->exit_code = ft_echo(cmd);
-	else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
-		shell->data->exit_code = ft_cd(cmd, shell);
-	else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
-		shell->data->exit_code = ft_export(cmd, shell, 0);
-	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
-		shell->data->exit_code = ft_unset(cmd, shell);
-	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
-		shell->data->exit_code = ft_env(shell->env);
-	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
-		shell->data->exit_code = ft_exit(shell->data, shell, cmd);
-	else
-		return (0);
-	return (1);
-}
 
 /**
  * @brief Execute a single command with PATH resolution

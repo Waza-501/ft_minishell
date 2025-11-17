@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 14:02:47 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 12:29:27 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 13:08:04 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	handle_export_display(t_shell *shell)
 	sorted = sort_env(shell->env);
 	if (!sorted)
 	{
-		g_exit_code = 1;
+		shell->data->exit_code = 1;
 		return (1);
 	}
 	print_env(sorted);
@@ -102,7 +102,7 @@ int	ft_export(t_commands *cmd, t_shell *shell, char *str)
 {
 	int		i;
 
-	g_exit_code = 0;
+	shell->data->exit_code = 0;
 	if (!str && !cmd->args[1])
 		return (handle_export_display(shell));
 	if (str)
@@ -119,5 +119,5 @@ int	ft_export(t_commands *cmd, t_shell *shell, char *str)
 			i++;
 		}
 	}
-	return (g_exit_code);
+	return (shell->data->exit_code);
 }

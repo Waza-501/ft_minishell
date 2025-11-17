@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/17 11:13:00 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 13:11:03 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void		ft_execve(t_commands *cmd, t_shell *shell, char **path);
 void		ft_waitpid(t_shell *shell);
 bool		single_cmd(t_shell *shell);
 void		execute(t_shell *shell);
-
-// Updated builtin prototypes Max
 int			ft_echo(t_commands *cmd);
 int			ft_cd(t_commands *cmd, t_shell *shell);
 int			ft_export(t_commands *cmd, t_shell *shell, char *str);
@@ -90,10 +88,14 @@ void		print_env(char **sorted_env);
 void		free_sorted_env(char **sorted_env);
 char		*ft_getcwd(void);
 void		print_getcwd_error(void);
-int			export_err(char *str);
+int			export_err(t_shell *shell, char *str);
 int			check_identifier(char *str);
 int			check_validity(char *str);
 int			ft_chdir(char *path, t_shell *shell);
+char		*build_full_path(char *dir, char *cmd, char **path, t_shell *sh);
+int			try_execute_path(char *tmp, t_commands *cmd, t_shell *sh,
+				char **path);
+void		ft_exit_exec(t_data *data, t_shell *shell, int code);
 
 // Executor - Bridge functions Max
 int			execute_commands(t_data *data);
@@ -107,7 +109,7 @@ int			add_file_node(t_files **list, t_lexer *lexer);
 int			sync_env_to_list(char **env_array, t_cdllist *env_list);
 void		sync_environment_changes(t_shell *shell);
 
-// Core shell functions (replace existing init/cleanup_shell if you have them)
+// Core shell functions
 t_shell		*init_shell(t_data *data);
 void		cleanup_shell(t_shell *shell);
 

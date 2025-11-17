@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 11:50:15 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 12:52:32 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include "redirect.h"
 
-static void	ft_exit_exec(t_data *data, t_shell *shell, int code)
+void	ft_exit_exec(t_data *data, t_shell *shell, int code)
 {
 	if (shell)
 		cleanup_shell(shell);
@@ -23,8 +23,7 @@ static void	ft_exit_exec(t_data *data, t_shell *shell, int code)
 	exit(code);
 }
 
-static int	try_execute_path(char *tmp, t_commands *cmd, t_shell *sh,
-		char **path)
+int	try_execute_path(char *tmp, t_commands *cmd, t_shell *sh, char **path)
 {
 	if (access(tmp, X_OK) == 0)
 	{
@@ -37,7 +36,7 @@ static int	try_execute_path(char *tmp, t_commands *cmd, t_shell *sh,
 	return (0);
 }
 
-static char	*build_full_path(char *dir, char *cmd, char **path, t_shell *sh)
+char	*build_full_path(char *dir, char *cmd, char **path, t_shell *sh)
 {
 	char	*tmp;
 	char	*full_path;
@@ -55,50 +54,6 @@ static char	*build_full_path(char *dir, char *cmd, char **path, t_shell *sh)
 		ft_exit_exec(sh->data, sh, 1);
 	}
 	return (full_path);
-}
-
-/**
- * @brief Execute external command by searching through PATH directories
- * @param cmd Command structure containing command name and arguments
- * @param shell Shell state for environment access
- * @param path Array of PATH directories to search (can be NULL)
- *
- * Execution process:
- * 1. If path is provided, search each directory for the command
- * 2. Construct full path by joining directory + "/" + command_name
- * 3. Check if constructed path exists and is accessible
- * 4. Attempt execution with execve()
- * 5. If command not found in any PATH directory, exit with 127
- *
- * Memory management:
- * - Frees path array before exit
- * - Frees temporary path strings during search
- *
- * Exit codes:
- * - 127: Command not found
- * - -1: execve() failed but file was found (shouldn't happen normally)
- *
- * This function always exits the process - never returns to caller.
- */
-
-void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	while (path && path[i])
-	{
-		tmp = build_full_path(path[i], cmd->args[0], path, shell);
-		try_execute_path(tmp, cmd, shell, path);
-		free(tmp);
-		i++;
-	}
-	ft_free_arr(path);
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd->args[0], STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	ft_exit_exec(shell->data, shell, 127);
 }
 
 /**

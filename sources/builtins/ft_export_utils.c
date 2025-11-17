@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:58:34 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 10:07:03 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 13:09:03 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	is_identifier(char c)
  * @param str Invalid identifier string
  * @return 1 (error code)
  */
-int	export_err(char *str)
+int	export_err(t_shell *shell, char *str)
 {
 	ft_putstr_fd("minishell: export: `", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
-	g_exit_code = 1;
+	shell->data->exit_code = 1;
 	return (1);
 }
 

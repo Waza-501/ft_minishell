@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/17 10:00:43 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 10:04:23 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 13:10:11 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
  * @param str Invalid identifier
  * @return 1 (error occurred)
  */
-static int	handle_invalid_identifier(char *str)
+static int	handle_invalid_identifier(t_shell *shell, char *str)
 {
-	export_err(str);
+	export_err(shell, str);
 	return (1);
 }
 
@@ -65,7 +65,7 @@ int	check_and_send(t_shell *shell, char *str)
 
 	identifier = check_identifier(str);
 	if (!identifier)
-		return (handle_invalid_identifier(str));
+		return (handle_invalid_identifier(shell, str));
 	if (!check_validity(str))
 		return (0);
 	if (if_exist(shell->env, str))

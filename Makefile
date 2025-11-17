@@ -31,6 +31,7 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				parser/concatenate_strings.c\
 				parser/expand_args.c\
 				parser/expand_core.c\
+				parser/expand_special_var.c\
 				parser/expand_utils.c\
 				parser/parsing_utils.c\
 				parser/parsing.c\

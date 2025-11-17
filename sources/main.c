@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/15 21:03:20 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/17 12:32:28 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-
-int	g_exit_code = 0;
 
 static int	empty_line_exit(t_data *data)
 {

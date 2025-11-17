@@ -57,6 +57,7 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				builtins/ft_export.c\
 				builtins/ft_cd.c\
 				builtins/ft_export_utils.c\
+				builtins/ft_export_utils2.c\
 				builtins/ft_export_sort.c\
 				builtins/ft_export_print.c\
 				builtins/ft_exit.c\

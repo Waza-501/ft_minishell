@@ -6,9 +6,11 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 13:57:55 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/16 09:16:07 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 11:17:57 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 /**
  * @brief Get current working directory
@@ -28,13 +30,4 @@ char	*get_pwd(void)
 		free(buf);
 		return (NULL);
 	}
-}
-
-/**
- * @brief Print long error message for getcwd failure
- */
-void	print_getcwd_error(void)
-{
-	ft_putstr_fd("cd: error retrieving current directory: ", STDERR_FILENO);
-	ft_putendl_fd("getcwd: cannot access parent directories", STDERR_FILENO);
 }

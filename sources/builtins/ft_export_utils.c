@@ -6,28 +6,26 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:58:34 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/11 13:39:32 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 10:07:03 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
- * TEMPORARY STUB: is_identifier
- * TODO: Implement proper identifier validation
- * Should check if character is valid for env var name (alphanumeric
-	+ underscore)
+ * @brief Check if character is valid for env var name
+ * @param c Character to check
+ * @return 1 if valid identifier character, 0 otherwise
  */
 int	is_identifier(char c)
 {
-	// Minimal implementation - allows alphanumeric and underscore
 	return (ft_isalnum(c) || c == '_');
 }
 
 /*
- * TEMPORARY STUB: export_err
- * TODO: Implement proper error message printing
- * Should print "export: `str': not a valid identifier"
+ * @brief Print export error message for invalid identifier
+ * @param str Invalid identifier string
+ * @return 1 (error code)
  */
 int	export_err(char *str)
 {
@@ -39,16 +37,17 @@ int	export_err(char *str)
 }
 
 /*
- * TEMPORARY STUB: check_validity
- * TODO: Implement full validation logic
- * Should check for proper format (NAME=VALUE or NAME+=VALUE)
+ * @brief Check for proper format (NAME=VALUE or NAME+=VALUE)
+ * @param str String to validate
+ * @return 1 if valid format, 0 otherwise
+ * Step:
+ * 1. Basic check: must have at least one character before '='
  */
 int	check_validity(char *str)
 {
 	int	i;
 
 	i = 0;
-	// Basic check: must have at least one character before '='
 	if (!str || str[0] == '=')
 		return (0);
 	while (str[i] && str[i] != '=')
@@ -59,8 +58,13 @@ int	check_validity(char *str)
 	}
 	return (1);
 }
+/*
+ * @brief Check if identifier is valid (not starting with digit)
+ * @param str String to check
+ * @return 1 if valid, 2 if append operation, 0 if invalid
+ */
 
-static int	check_identifier(char *str)
+int	check_identifier(char *str)
 {
 	int	i;
 
@@ -83,51 +87,28 @@ static int	check_identifier(char *str)
 	return (1);
 }
 
-/*
- * @brief Check and send environment variable, tracking if changes were made
- * @param shell Shell structure
- * @param str Variable string to process
- * @return 1 if environment was modified, 0 if no changes made
- */
-
-int	check_and_send(t_shell *shell, char *str)
+void	join_arr(t_shell *shell, char *str)
 {
-	int	check;
-	int	identifier;
-	int	env_modified;
+	int		i;
+	int		j;
+	char	*new_var;
 
-	check = 0;
-	identifier = check_identifier(str);
-	env_modified = 0;
-	if (!identifier)
+	i = 0;
+	j = 0;
+	while (str[j] && str[j] != '=')
+		j++;
+	while (shell->env[i])
 	{
-		check = export_err(str);
-		// printf("DEBUG: Invalid identifier\n");
-	}
-	else if (!check_validity(str))
-	{
-		check = 1;
-	}
-	else if (if_exist(shell->env, str))
-	{
-		check = 1;
-		env_modified = 1;
-	}
-	else
-	{
-		if (!check)
+		if (!ft_strncmp(shell->env[i], str, j - 1) && shell->env[i][j
+			- 1] == '=')
 		{
-			if (identifier == 2)
-			{
-				join_arr(shell, str);
-				env_modified = 1;
-			}
-			else
-			{
-				send_arr(shell, str);
-				env_modified = 1;
-			}
+			shell->env[i] = ft_strjoin_free(shell->env[i], &str[j + 1]);
+			return ;
 		}
+		i++;
 	}
-	return (env_modified);
+	new_var = ft_substr(str, 0, j - 1);
+	new_var = ft_strjoin_free(new_var, &str[j]);
+	ft_export(NULL, shell, new_var);
+	free(new_var);
 }

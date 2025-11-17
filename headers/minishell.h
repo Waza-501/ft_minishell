@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/14 09:32:31 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 11:13:00 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ char		**sort_env(char **env);
 void		print_env(char **sorted_env);
 void		free_sorted_env(char **sorted_env);
 char		*ft_getcwd(void);
+void		print_getcwd_error(void);
+int			export_err(char *str);
+int			check_identifier(char *str);
+int			check_validity(char *str);
+int			ft_chdir(char *path, t_shell *shell);
 
 // Executor - Bridge functions Max
 int			execute_commands(t_data *data);

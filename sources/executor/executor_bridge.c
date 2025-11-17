@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 17:31:32 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/17 09:41:18 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
  * @brief int init_commands_for_execution(t_commands *cmd_list)
  * @param cmd_list Parser's t_commands linked list
  * @return 0 on success, 1 on failure
+ * Flow: Initialize execution fields that parser doesn't set
+ *
  */
 int	init_commands_for_execution(t_commands *cmd_list)
 {
@@ -26,14 +28,10 @@ int	init_commands_for_execution(t_commands *cmd_list)
 	cmd_number = 0;
 	while (current)
 	{
-		// printf("🔧 INIT_COMMANDS_FOR_EXECUTION CALLED!\n");
-		// Initialize execution fields that parser doesn't set
-		current->pid = -1;       // No process yet
-		current->pipefd[0] = -1; // No pipe yet
+		current->pid = -1;
+		current->pipefd[0] = -1;
 		current->pipefd[1] = -1;
-		current->n = cmd_number; // Set command number
-		// current->heredoc = NULL;        // Will be set by heredoc handler
-		// printf("🔧 Setting command %p to number %d\n", current, cmd_number);
+		current->n = cmd_number;
 		current = current->next;
 		cmd_number++;
 	}
@@ -42,6 +40,8 @@ int	init_commands_for_execution(t_commands *cmd_list)
 /**
  * @brief Clean up execution-specific fields in commands after execution
  * @param cmd_list Command list to clean up
+
+	* Flow: Close any open pipe file descriptors --> After close then reset process ID
  */
 void	cleanup_execution_fields(t_commands *cmd_list)
 {
@@ -50,7 +50,6 @@ void	cleanup_execution_fields(t_commands *cmd_list)
 	current = cmd_list;
 	while (current)
 	{
-		// Close any open pipe file descriptors
 		if (current->pipefd[0] > 2)
 		{
 			close(current->pipefd[0]);
@@ -61,7 +60,6 @@ void	cleanup_execution_fields(t_commands *cmd_list)
 			close(current->pipefd[1]);
 			current->pipefd[1] = -1;
 		}
-		// Reset process ID
 		current->pid = -1;
 		current = current->next;
 	}
@@ -71,24 +69,6 @@ void	cleanup_execution_fields(t_commands *cmd_list)
  * @param data Main data structure containing parsed commands and environment
  * @return Execution status (0 = success, non-zero = error)
  */
-// int execute_commands(t_data *data)
-// {
-//     t_shell shell;
-
-//     if (init_shell_for_execution(&shell, data) != 0)
-// Initialize shell structure for executor
-//         return (1);
-//     if (init_commands_for_execution(data->commands) != 0)
-// Initialize execution fields in the command list
-//         return (cleanup_shell(&shell), 1);
-//     shell.cmds = data->commands;
-//     // Execute the command pipeline
-//     execute(&shell);
-//     data->exit_code = g_exit_code;
-//     // Cleanup
-//     cleanup_shell(&shell);
-//     return (0);
-// }
 int	execute_commands(t_data *data)
 {
 	t_shell		shell;
@@ -144,12 +124,12 @@ int	execute_commands(t_data *data)
  * @param shell Shell structure to initialize
  * @param data Main data structure containing environment and commands
  * @return 0 on success, 1 on failure
+ * Flow: Convert environment from circular linked list to array
  */
 int	init_shell_for_execution(t_shell *shell, t_data *data)
 {
 	if (!shell || !data)
 		return (1);
-	// Convert environment from circular linked list to array
 	shell->env = convert_cdll_to_env_array(data->envp_copy);
 	if (!shell->env)
 		return (1);
@@ -161,6 +141,10 @@ int	init_shell_for_execution(t_shell *shell, t_data *data)
 
 /**
  * @brief Convert circular doubly linked list environment to char** array
+ * Flow: Allocate array -> Convert each node to "KEY=VALUE" format (while loop)
+ * temp_key_eq: Create "KEY=" string, noted to clean up on failure
+ * full_var: Step 2: Create "KEY=VALUE" string
+ * Break if we've completed the circular list
  */
 char	**convert_cdll_to_env_array(t_cdllist *env_list)
 {
@@ -173,47 +157,32 @@ char	**convert_cdll_to_env_array(t_cdllist *env_list)
 	i = 0;
 	if (!env_list || !env_list->head)
 		return (NULL);
-	// Allocate array
 	env_array = malloc(sizeof(char *) * (env_list->size + 1));
 	if (!env_array)
 		return (NULL);
-	// Convert each node to "KEY=VALUE" format
 	current = env_list->head;
 	while (current && i < env_list->size)
 	{
-		// Step 1: Create "KEY=" string
 		temp_key_eq = ft_strjoin(current->var_1, "=");
 		if (!temp_key_eq)
 		{
-			// Cleanup on failure
 			while (--i >= 0)
 				free(env_array[i]);
 			free(env_array);
 			return (NULL);
 		}
-		// Step 2: Create "KEY=VALUE" string
 		full_var = ft_strjoin(temp_key_eq, current->var_2);
 		free(temp_key_eq);
 		if (!full_var)
 		{
-			// Cleanup on failure
 			while (--i >= 0)
 				free(env_array[i]);
 			free(env_array);
 			return (NULL);
 		}
 		env_array[i] = full_var;
-		// env_array[i] = ft_strjoin(current->var_1, "=");
-		// if (!env_array[i])
-		//     return (ft_free_arr(env_array), NULL);
-		// char *temp = env_array[i];
-		// env_array[i] = ft_strjoin(temp, current->var_2);
-		// free(temp);
-		// if (!env_array[i])
-		//     return (ft_free_arr(env_array), NULL);
 		current = current->next;
 		i++;
-		// Break if we've completed the circular list
 		if (current == env_list->head)
 			break ;
 	}

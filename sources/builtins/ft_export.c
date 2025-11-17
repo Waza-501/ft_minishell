@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 14:02:47 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 10:41:14 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 10:09:44 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,6 @@ int	if_exist(char **env, char *str)
 		i++;
 	}
 	return (0);
-}
-
-void	join_arr(t_shell *shell, char *str)
-{
-	int		i;
-	int		j;
-	char	*new_var;
-
-	i = 0;
-	j = 0;
-	while (str[j] && str[j] != '=')
-		j++;
-	while (shell->env[i])
-	{
-		if (!ft_strncmp(shell->env[i], str, j - 1) && shell->env[i][j
-			- 1] == '=')
-		{
-			shell->env[i] = ft_strjoin_free(shell->env[i], &str[j + 1]);
-			return ;
-		}
-		i++;
-	}
-	new_var = ft_substr(str, 0, j - 1);
-	new_var = ft_strjoin_free(new_var, &str[j]);
-	ft_export(NULL, shell, new_var);
-	free(new_var);
 }
 
 char	**new_array(char **env, char **rtn, char *str)
@@ -94,6 +68,36 @@ int	send_arr(t_shell *shell, char *str)
 	return (1);
 }
 
+/*
+ * @brief Handle export display mode (no arguments)
+ * @param shell Shell instance with environment
+ * @return 0 on success, 1 on error
+ */
+static int	handle_export_display(t_shell *shell)
+{
+	char	**sorted;
+
+	sorted = sort_env(shell->env);
+	if (!sorted)
+	{
+		g_exit_code = 1;
+		return (1);
+	}
+	print_env(sorted);
+	free_sorted_env(sorted);
+	return (0);
+}
+/**
+ * @brief Export builtin command implementation
+ * @param cmd Command structure (NULL for direct string mode)
+ * @param shell Shell instance with environment
+ * @param str Direct string parameter (NULL for cmd args mode)
+ * @return Exit code (0 success, 1 error)
+ * Display sorted environment (!str && !cmd->args[1])
+ * Handle single string parameter (str provided)
+ * Handle command arguments (cmd->args[1+] provided)
+ */
+
 int	ft_export(t_commands *cmd, t_shell *shell, char *str)
 {
 	int		i;
@@ -101,17 +105,7 @@ int	ft_export(t_commands *cmd, t_shell *shell, char *str)
 
 	g_exit_code = 0;
 	if (!str && !cmd->args[1])
-	{
-		sorted = sort_env(shell->env);
-		if (!sorted)
-		{
-			g_exit_code = 1;
-			return (1);
-		}
-		print_env(sorted);
-		free_sorted_env(sorted);
-		return (0);
-	}
+		return (handle_export_display(shell));
 	if (str)
 	{
 		if (!if_exist(shell->env, str))

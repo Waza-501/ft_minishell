@@ -1,6 +1,6 @@
 NAME		:=	minishell
 CC			:=	cc
-FLAGS		:= -g
+FLAGS		:= -g -Wall -Wextra -Werror
 
 # Detect operating system
 UNAME_S := $(shell uname -s)

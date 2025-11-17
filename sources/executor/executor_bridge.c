@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 11:42:05 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 12:33:01 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,6 @@ char	**convert_cdll_to_env_array(t_cdllist *env_list)
 	char			**env_array;
 	t_cd_ll_node	*current;
 	int				i;
-	char			*temp_key_eq;
-	char			*full_var;
 
 	i = 0;
 	if (!env_list || !env_list->head)

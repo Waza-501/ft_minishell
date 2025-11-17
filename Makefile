@@ -69,6 +69,7 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				executor/executor_utils2.c\
 				executor/executor_utils3.c\
 				executor/env_sync.c\
+				printing.c\
 
 OBJECTS_DIR	:=	objects/
 OBJECTS		:=	$(addprefix $(OBJECTS_DIR), $(SOURCES:.c=.o))

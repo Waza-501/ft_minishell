@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/01 11:48:40 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/17 12:23:54 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/17 14:39:19 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	check_syntax(t_data *data)
 				print_error(SYNTAX_EOF);
 				return (1);
 			}
-			else if (copy->next->type > 2)
+			else if (copy->next->type > 2
+				|| (copy->type == PIPE && !copy->prev))
 			{
 				print_syntax_error(SYNTAX, copy->next->string);
 				return (1);

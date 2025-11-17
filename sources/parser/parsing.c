@@ -6,7 +6,7 @@
 /*   By: owen <owen@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/17 13:15:46 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/17 15:10:18 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ int	parse_input(t_data *data, char *str)
 	if (build_command_list(data))
 		return (0);
 	clear_lexer(data);
+	print_command_list(data->commands);
 	return (0);
 }

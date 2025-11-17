@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/15 21:01:11 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/17 11:50:15 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,40 @@ static void	ft_exit_exec(t_data *data, t_shell *shell, int code)
 	if (data)
 		free_data(data);
 	exit(code);
+}
+
+static int	try_execute_path(char *tmp, t_commands *cmd, t_shell *sh,
+		char **path)
+{
+	if (access(tmp, X_OK) == 0)
+	{
+		execve(tmp, cmd->args, sh->env);
+		perror("execve");
+		ft_free_arr(path);
+		free(tmp);
+		ft_exit_exec(sh->data, sh, 126);
+	}
+	return (0);
+}
+
+static char	*build_full_path(char *dir, char *cmd, char **path, t_shell *sh)
+{
+	char	*tmp;
+	char	*full_path;
+
+	tmp = ft_strjoin(dir, "/");
+	if (!tmp)
+	{
+		ft_free_arr(path);
+		ft_exit_exec(sh->data, sh, 1);
+	}
+	full_path = ft_strjoin_free(tmp, cmd);
+	if (!full_path)
+	{
+		ft_free_arr(path);
+		ft_exit_exec(sh->data, sh, 1);
+	}
+	return (full_path);
 }
 
 /**
@@ -53,42 +87,10 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 	char	*tmp;
 
 	i = 0;
-	//printf("🔍 ft_execve called for: %s\n", cmd->args[0]); // Debug
 	while (path && path[i])
 	{
-		//printf("   Trying path[%d]: %s\n", i, path[i]); // Debug
-		tmp = ft_strjoin(path[i], "/");
-		if (!tmp) // debug
-		{
-			ft_free_arr(path);
-			ft_exit_exec(shell->data, shell, 1);
-		}
-		tmp = ft_strjoin_free(tmp, cmd->args[0]);
-		if (!tmp) // debug
-		{
-			ft_free_arr(path);
-			ft_exit_exec(shell->data, shell, 1);
-		}
-		//printf("   Full path: %s\n", tmp); // Debug
-		if (access(tmp, X_OK) == 0) // debug
-		{
-			//printf("   Found executable: %s\n", tmp); // Debug
-			// Try to execute - this never returns on success
-			execve(tmp, cmd->args, shell->env);
-			// If we reach here, execve failed
-			perror("execve");
-			ft_free_arr(path);
-			free(tmp);
-			ft_exit_exec(shell->data, shell, 126); // Permission denied or exec format error
-		}
-		// Uncommand to debug
-		// if (access(tmp, F_OK) == 0
-		// 	&& execve(tmp, cmd->args, shell->env) == -1)
-		// {
-		// 	ft_free_arr(path);
-		// 	perror(cmd->args[0]);
-		// 	exit(-1);
-		// }
+		tmp = build_full_path(path[i], cmd->args[0], path, shell);
+		try_execute_path(tmp, cmd, shell, path);
 		free(tmp);
 		i++;
 	}
@@ -128,14 +130,11 @@ void	ft_waitpid(t_shell *shell)
 	int			status;
 	int			sig;
 
-	// printf(" Starting to wait for processes...\n");
 	curr = shell->cmds;
 	while (curr)
 	{
 		if (curr->pid > 0)
 		{
-			// printf("Waiting for pid %d (command: %s)\n", curr->pid,
-			// 	curr->args[0]);
 			waitpid(curr->pid, &status, 0);
 			if (WIFEXITED(status))
 				shell->data->exit_code = WEXITSTATUS(status);
@@ -149,11 +148,6 @@ void	ft_waitpid(t_shell *shell)
 			}
 			if (shell->data->exit_code == 130 || shell->data->exit_code == 131)
 				shell->stop = true;
-		}
-		else
-		{
-			// printf("Invalid pid for command: %s (pid=%d)\n", curr->args[0],
-			// 	curr->pid);
 		}
 		curr = curr->next;
 	}

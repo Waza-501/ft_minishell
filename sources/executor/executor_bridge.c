@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 09:41:18 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 11:42:05 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ int	init_commands_for_execution(t_commands *cmd_list)
 	return (0);
 }
 /**
- * @brief Clean up execution-specific fields in commands after execution
+ * @brief Clean up execution-specific fields in
+ * commands after execution
  * @param cmd_list Command list to clean up
-
-	* Flow: Close any open pipe file descriptors --> After close then reset process ID
+ * Flow: Close any open pipe file descriptors
+ * --> After close then reset process ID
  */
+
 void	cleanup_execution_fields(t_commands *cmd_list)
 {
 	t_commands	*current;
@@ -69,52 +71,17 @@ void	cleanup_execution_fields(t_commands *cmd_list)
  * @param data Main data structure containing parsed commands and environment
  * @return Execution status (0 = success, non-zero = error)
  */
+
 int	execute_commands(t_data *data)
 {
-	t_shell		shell;
-	t_commands	*debug_curr;
-	int			debug_count;
+	t_shell	shell;
 
-	// CRITICAL DEBUG: Check data->commands BEFORE assignment
-	// printf("🔍 DATA->COMMANDS DEBUG (before assignment):\n");
-	debug_curr = data->commands;
-	debug_count = 0;
-	while (debug_curr)
-	{
-		// printf("  Data Command %d: %s (next=%p)\n", debug_count,
-		// 	debug_curr->args[0] ? debug_curr->args[0] : "NULL",
-		// 	(void *)debug_curr->next);
-		debug_curr = debug_curr->next;
-		debug_count++;
-		if (debug_count > 10) // Safety check
-			break ;
-	}
-	// printf("  Total data commands: %d\n", debug_count);
-	// printf("  data->commands pointer: %p\n", (void *)data->commands);
 	if (init_shell_for_execution(&shell, data) != 0)
 		return (1);
 	if (init_commands_for_execution(data->commands) != 0)
 		return (cleanup_shell(&shell), 1);
 	shell.cmds = data->commands;
-	// CRITICAL DEBUG: Check shell.cmds AFTER assignment
-	// printf(" SHELL->CMDS DEBUG (after assignment):\n");
-	debug_curr = shell.cmds;
-	debug_count = 0;
-	while (debug_curr)
-	{
-		// printf("  Shell Command %d: %s (next=%p)\n", debug_count,
-		// 	debug_curr->args[0] ? debug_curr->args[0] : "NULL",
-		// 	(void *)debug_curr->next);
-		debug_curr = debug_curr->next;
-		debug_count++;
-		if (debug_count > 10) // Safety check
-			break ;
-	}
-	printf("  Total shell commands: %d\n", debug_count);
-	// printf("  shell.cmds pointer: %p\n", (void *)shell.cmds);
-	// Execute the command pipeline
 	execute(&shell);
-	// Cleanup
 	cleanup_shell(&shell);
 	return (0);
 }
@@ -137,6 +104,19 @@ int	init_shell_for_execution(t_shell *shell, t_data *data)
 	shell->stop = false;
 	shell->data = data;
 	return (0);
+}
+
+static char	*create_env_string(t_cd_ll_node *node)
+{
+	char	*temp_key_eq;
+	char	*full_var;
+
+	temp_key_eq = ft_strjoin(node->var_1, "=");
+	if (!temp_key_eq)
+		return (NULL);
+	full_var = ft_strjoin(temp_key_eq, node->var_2);
+	free(temp_key_eq);
+	return (full_var);
 }
 
 /**
@@ -163,24 +143,9 @@ char	**convert_cdll_to_env_array(t_cdllist *env_list)
 	current = env_list->head;
 	while (current && i < env_list->size)
 	{
-		temp_key_eq = ft_strjoin(current->var_1, "=");
-		if (!temp_key_eq)
-		{
-			while (--i >= 0)
-				free(env_array[i]);
-			free(env_array);
+		env_array[i] = create_env_string(current);
+		if (!env_array[i])
 			return (NULL);
-		}
-		full_var = ft_strjoin(temp_key_eq, current->var_2);
-		free(temp_key_eq);
-		if (!full_var)
-		{
-			while (--i >= 0)
-				free(env_array[i]);
-			free(env_array);
-			return (NULL);
-		}
-		env_array[i] = full_var;
 		current = current->next;
 		i++;
 		if (current == env_list->head)

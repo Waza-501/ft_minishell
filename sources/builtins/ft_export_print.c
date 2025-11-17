@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/05 15:53:56 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:40:21 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 09:55:34 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,26 @@ static void	print_var_name(char *str)
 /*
  * @brief Print variable value with quotes (the part after '=')
  * @param str Environment variable string (format: "NAME=value")
- *
- * Prints: ="value"
- * If no '=' found, prints nothing (variable declared but not set)
+ * Steps:
+ * 1. Prints: ="value". Find the '=' sign
+ * 2. If no '=' found, prints nothing (variable declared but not set)
+ * 3. Print ="value"
+ * 4. TODO: Handle special characters that need escaping
+ * For now, just print as-is
  */
 static void	print_var_value(char *str)
 {
 	int	i;
 
 	i = 0;
-	// Find the '=' sign
 	while (str[i] && str[i] != '=')
 		i++;
-	// If no '=', variable is declared but has no value
 	if (!str[i])
 		return ;
-	// Print ="value"
 	ft_putstr_fd("=\"", 1);
-	i++; // Move past '='
+	i++;
 	while (str[i])
 	{
-		// TODO: Handle special characters that need escaping
-		// For now, just print as-is
 		ft_putchar_fd(str[i], 1);
 		i++;
 	}

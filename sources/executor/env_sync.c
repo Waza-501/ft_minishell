@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/06 10:51:54 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/14 11:08:21 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 11:29:51 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	split_env_string(const char *env_string, char **key, char **value)
  * If it was an update, cdll_update_list leaked the key. Free it
  * If it was a new node, the list took ownership of both key and value
  */
+
 static int	update_single_var(t_cdllist *env_list, const char *env_string)
 {
 	char			*key;
@@ -81,6 +82,7 @@ static int	update_single_var(t_cdllist *env_list, const char *env_string)
  *
  * Uses existing cdll_update_list function for safety
  */
+
 int	sync_env_to_list(char **env_array, t_cdllist *env_list)
 {
 	int	i;
@@ -105,6 +107,7 @@ int	sync_env_to_list(char **env_array, t_cdllist *env_list)
  * @brief Wrapper function called from cleanup_shell()
  * @param shell Shell structure containing environment and data pointer
  */
+
 void	sync_environment_changes(t_shell *shell)
 {
 	if (!shell || !shell->data || !shell->data->envp_copy || !shell->env)

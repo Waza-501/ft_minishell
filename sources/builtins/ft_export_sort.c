@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/05 15:51:38 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/10 12:40:19 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 09:52:36 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static char	**dup_env(char **env)
 		dup[i] = ft_strdup(env[i]);
 		if (!dup[i])
 		{
-			// Cleanup on failure
 			while (--i >= 0)
 				free(dup[i]);
 			free(dup);
@@ -96,7 +95,6 @@ static void	sort_array(char **env)
 		j = i + 1;
 		while (env[j])
 		{
-			// Compare only the variable name (before '=')
 			if (ft_strncmp(env[j], env[min_idx], ft_strchr(env[j], '=')
 					- env[j]) < 0)
 				min_idx = j;

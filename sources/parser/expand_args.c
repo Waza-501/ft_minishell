@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/14 18:19:42 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/17 12:27:32 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,44 +70,6 @@ static int	empty_space_dollar(char *start, int idx, int size, t_lexer *node)
 		return (1);
 	}
 	ft_free(&end);
-	return (0);
-}
-
-static int	single_special_var(t_data *data, char *str, char *code, t_lexer	*node)
-{
-	ft_free(&str);
-	ft_free(&node->string);
-	node->string = code;
-	if (is_quoted(data->lexer->string))
-		remove_quotes(data, data->lexer);
-	ft_putendl_fd(data->lexer->string, STDOUT_FILENO);
-	return (1);
-}
-
-int	set_last_exit_code(t_data *data, char *str, t_lexer *node)
-{
-	char	*code;
-	char	*end;
-	bool	result;
-	
-	code = ft_itoa(data->exit_code);
-	if (!node->prev && !node->next && ((ft_strlen(node->string) == 2) 
-        || (ft_strlen(node->string) == 4 && is_quoted(node->string))))
-		return (single_special_var(data, str, code, node));
-	end = ft_strdup(&node->string[find_dollar_sign(node->string) + 2]);
-	if (!code || !end)
-	{
-		ft_free(&str);
-		ft_free(&code);
-		ft_free(&end);
-		malloc_error(data, true);
-	}
-	result = reform_string(node, str, end, code);
-	ft_free(&str);
-	ft_free(&code);
-	ft_free(&end);
-	if (result == false)
-		malloc_error(data, false);
 	return (0);
 }
 

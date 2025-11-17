@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 12:41:56 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/17 13:47:01 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	execute_commands(t_data *data)
 		return (cleanup_shell(&shell), 1);
 	shell.cmds = data->commands;
 	execute(&shell);
+	cleanup_execution_fields(data->commands);
 	cleanup_shell(&shell);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/18 11:13:39 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/18 12:44:12 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,5 @@ int	parse_input(t_data *data, char *str)
 	if (build_command_list(data))
 		return (0);
 	clear_lexer(data);
-	// print_command_list(data->commands);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/18 16:26:47 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/18 17:50:14 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int	close_heredoc(t_files *list, int *fd)
 {
+	printf("close data: %s   %i\n", list->filename, *fd);
 	if (close(*fd))
 		print_close_fd_error();
 	if (unlink(list->prev->filename))
@@ -22,10 +23,25 @@ int	close_heredoc(t_files *list, int *fd)
 	return (0);
 }
 
+static int	close_last_fd_in(t_files *list, int *fd)
+{
+	printf("close last data: %s   %i\n", list->filename, *fd);
+	if (list->type == HEREDOC)
+		if (unlink(list->filename))
+			print_remove_hd_error(list->filename);
+	if (close(*fd))
+		print_close_fd_error();
+	list->open = false;
+	*fd = -1;
+	return (0);
+}
+
 int	close_existing_fd_in(t_files *list, int *fd)
 {
 	if (!list->prev)
 		return (0);
+	// if (!list->next)
+	// 	return (close_last_fd_in(list, fd));
 	if (list->prev->type == HEREDOC)
 		close_heredoc(list, fd);
 	else

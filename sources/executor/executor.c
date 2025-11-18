@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/18 17:01:54 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/18 17:41:45 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,5 @@ void	execute(t_shell *shell)
 		}
 		curr = curr->next;
 	}
-	printf("pre wait\n");
 	ft_waitpid(shell);
-	printf("post wait\n");
 }

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 13:47:29 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/18 17:01:54 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	setup_child_input(t_commands *cmd, int prev_fd)
 	if (cmd->infile != -1)
 	{
 		ft_dup2(cmd->infile, STDIN);
-		close_existing_fd_out(find_open_fd(cmd->infiles), &cmd->infile);
+		close_existing_fd_in(find_open_fd(cmd->infiles), &cmd->infile);
 	}
 	else if (prev_fd != -1)
 	{
@@ -71,7 +71,7 @@ static void	setup_child_output(t_commands *cmd)
 	if (cmd->outfile != -1)
 	{
 		ft_dup2(cmd->outfile, STDOUT);
-		close_existing_fd_in(find_open_fd(cmd->outfiles), &cmd->outfile);
+		close_existing_fd_out(find_open_fd(cmd->outfiles), &cmd->outfile);
 	}
 	else if (cmd->next != NULL)
 	{
@@ -108,7 +108,6 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	cmd->pid = ft_fork();
 	if (cmd->pid == 0)
 	{
-		set_fd_execution(cmd);
 		setup_child_input(cmd, prev_fd);
 		setup_child_output(cmd);
 		execute_cmd(cmd, shell);
@@ -148,13 +147,18 @@ void	execute(t_shell *shell)
 		return ;
 	while (curr && !shell->stop)
 	{
-		handle_pipes(curr, prev_fd, shell);
-		if (prev_fd != -1)
-			close(prev_fd);
-		prev_fd = curr->pipefd[0];
-		if (curr->pipefd[1] != -1)
-			close(curr->pipefd[1]);
+		if (!set_fd_execution(curr))
+		{
+			handle_pipes(curr, prev_fd, shell);
+			if (prev_fd != -1)
+				close(prev_fd);
+			prev_fd = curr->pipefd[0];
+			if (curr->pipefd[1] != -1)
+				close(curr->pipefd[1]);
+		}
 		curr = curr->next;
 	}
+	printf("pre wait\n");
 	ft_waitpid(shell);
+	printf("post wait\n");
 }

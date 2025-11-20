@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/18 17:50:14 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 10:29:31 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,36 +18,25 @@ int	close_heredoc(t_files *list, int *fd)
 	printf("close data: %s   %i\n", list->filename, *fd);
 	if (close(*fd))
 		print_close_fd_error();
-	if (unlink(list->prev->filename))
-		print_remove_hd_error(list->prev->filename);
-	return (0);
-}
-
-static int	close_last_fd_in(t_files *list, int *fd)
-{
-	printf("close last data: %s   %i\n", list->filename, *fd);
-	if (list->type == HEREDOC)
-		if (unlink(list->filename))
-			print_remove_hd_error(list->filename);
-	if (close(*fd))
-		print_close_fd_error();
-	list->open = false;
-	*fd = -1;
+	if (unlink(list->filename))
+		print_remove_hd_error(list->filename);
 	return (0);
 }
 
 int	close_existing_fd_in(t_files *list, int *fd)
 {
+	t_files	*copy;
+
 	if (!list->prev)
 		return (0);
-	// if (!list->next)
-	// 	return (close_last_fd_in(list, fd));
-	if (list->prev->type == HEREDOC)
-		close_heredoc(list, fd);
+	copy = find_open_fd(list);
+	printf("close existing fd data: %s   %i\n", list->filename, *fd);
+	if (list->type == HEREDOC)
+		close_heredoc(copy, fd);
 	else
 		if (close(*fd))
 			print_close_fd_error();
-	list->prev->open = false;
+	copy->open = false;
 	*fd = -1;
 	return (0);
 }
@@ -56,6 +45,7 @@ int	handle_input(t_files *list, int *fd)
 {
 	if (!list)
 		return (0);
+	printf("open fd data: %s   %i\n", list->filename, *fd);
 	if (close_existing_fd_in(list, fd))
 		return (1);
 	*fd = open(list->filename, O_RDONLY);

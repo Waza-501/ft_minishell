@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:03:42 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/18 17:23:23 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 09:55:47 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,26 @@ void	print_close_fd_error(void)
 	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
-void	print_file_list(t_files *files, char *str)
+void	delete_files_list(t_commands *cmd)
 {
 	t_files	*copy;
+	t_files	*next;
 
-	printf(" %s [", str);
-	copy = files;
-	if (copy)
+	copy = cmd->infiles;
+	while (copy)
 	{
-		while (copy)
-		{
-			printf("%s", copy->filename);
-			if (copy->next)
-				printf(", ");
-			copy = copy->next;
-		}
+		next = copy->next;
+		ft_free(&copy->filename);
+		ft_free(&copy->hd_delim);
+		ft_free(&copy);
+		copy = next;
 	}
-	printf("]");
+	copy = cmd->outfiles;
+	while (copy)
+	{
+		next = copy->next;
+		ft_free(&copy->filename);
+		ft_free(&copy);
+		copy = next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 15:22:19 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/10 14:47:37 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 09:57:20 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 /*files_list_utils.c*/
 t_files		*find_open_fd(t_files *list);
+void		delete_files_list(t_commands *cmd);
 void		print_close_fd_error(void);
 void		print_remove_hd_error(char *str);
 int			outfile_open_error(t_files *file);
@@ -26,7 +27,7 @@ int			infile_open_error(t_files *file);
 
 /*files_list.c*/
 t_files		*get_last_file(t_files *list);
-void		delete_files_list(t_commands *cmd);
+t_files		*get_first_file(t_files *list);
 int			add_file_node(t_files **list, t_lexer *lexer);
 
 /*handle_append.c*/

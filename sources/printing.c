@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:12:51 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/13 13:23:21 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 09:55:30 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,23 @@ void	print_tokenlist(t_lexer *list)
 		list = list->next;
 	}
 	printf("-------------------------\n\n");
+}
+
+void	print_file_list(t_files *files, char *str)
+{
+	t_files	*copy;
+
+	printf(" %s [", str);
+	copy = files;
+	if (copy)
+	{
+		while (copy)
+		{
+			printf("%s", copy->filename);
+			if (copy->next)
+				printf(", ");
+			copy = copy->next;
+		}
+	}
+	printf("]");
 }

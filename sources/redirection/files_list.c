@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/03 15:14:25 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/18 17:37:55 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 10:31:40 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,22 @@ t_files	*find_open_fd(t_files *list)
 {
 	t_files	*copy;
 
-	copy = list;
-	while (copy)
-	{
-		printf("filename: %s ", copy->filename);
-		if (copy->open == true)
-			printf("true\n");
-		if (copy->open == false)
-			printf("false\n");
-		copy = copy->next;
-	}
-	copy = list;
+	// copy = get_first_file(list);
+	// printf("first file data: %s\n", copy->filename);
+	// while (copy)
+	// {
+	// 	printf("filename: %s ", copy->filename);
+	// 	if (copy->open == true)
+	// 		printf("true\n");
+	// 	if (copy->open == false)
+	// 		printf("false\n");
+	// 	copy = copy->next;
+	// }
+	copy = get_first_file(list);
 	while (copy && copy->open == false)
 	{
-		printf("filename: %s\n", copy->filename);
 		copy = copy->next;
 	}
-	printf("filename to close: %s\n", copy->filename);
 	return (copy);
 }
 
@@ -76,28 +75,14 @@ t_files	*get_last_file(t_files *list)
 	return (copy);
 }
 
-void	delete_files_list(t_commands *cmd)
+t_files	*get_first_file(t_files *list)
 {
 	t_files	*copy;
-	t_files	*next;
 
-	copy = cmd->infiles;
-	while (copy)
-	{
-		next = copy->next;
-		ft_free(&copy->filename);
-		ft_free(&copy->hd_delim);
-		ft_free(&copy);
-		copy = next;
-	}
-	copy = cmd->outfiles;
-	while (copy)
-	{
-		next = copy->next;
-		ft_free(&copy->filename);
-		ft_free(&copy);
-		copy = next;
-	}
+	copy = list;
+	while (copy->prev)
+		copy = copy->prev;
+	return (copy);
 }
 
 int	add_file_node(t_files **list, t_lexer *lexer)

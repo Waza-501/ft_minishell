@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/18 16:27:09 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 11:22:51 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+int	g_exit_code = 0;
 
 static int	empty_line_exit(t_data *data)
 {
@@ -34,6 +36,11 @@ static int	mini_loop(t_data *data)
 		set_signals_interactive();
 		data->input = readline("minishell$ ");
 		set_signals_noninteractive();
+		if (g_exit_code == 130)
+		{
+			data->exit_code = g_exit_code;
+			g_exit_code = 0;
+		}
 		if (!data->input)
 			empty_line_exit(data);
 		data->exit_code = parse_input(data, data->input);

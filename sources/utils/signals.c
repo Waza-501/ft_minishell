@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:45 by owen          #+#    #+#                 */
-/*   Updated: 2025/10/30 13:05:16 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/20 11:21:46 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	trap_sigquit(void)
 void	reset_line(int signal)
 {
 	(void)signal;
+	g_exit_code = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

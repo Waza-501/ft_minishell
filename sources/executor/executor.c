@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/20 14:07:00 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 14:32:09 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 		ft_exit_exec(shell->data, shell, 0);
 	}
 	if (execute_builtin(cmd, shell, -1, -1))
-		exit(shell->data->exit_code);
+		ft_exit_exec(shell->data, shell, shell->data->exit_code);
 	if (execute_currdir(cmd, shell))
-		exit(shell->data->exit_code);
+		ft_exit_exec(shell->data, shell, shell->data->exit_code);
 	while (shell->env && shell->env[i])
 	{
 		if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)

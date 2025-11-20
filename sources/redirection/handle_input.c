@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/20 13:43:50 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 14:07:06 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int	close_heredoc(t_files *list, int *fd)
 {
 	close(*fd);
-	printf("removing file %s\n", list->filename);
 	unlink(list->filename);
 	return (0);
 }

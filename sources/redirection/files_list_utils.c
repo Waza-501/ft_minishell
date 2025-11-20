@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:03:42 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/20 12:46:30 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 14:08:13 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	print_remove_hd_error(char *str)
 
 void	close_all_fd(t_commands *cmd)
 {
-	printf("closing existing file descriptors\n");
 	if (cmd->infiles)
 		close_existing_fd_in(cmd->infiles, &cmd->infile);
 	if (cmd->outfiles)

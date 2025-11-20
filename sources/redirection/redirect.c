@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/05 10:12:26 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/18 17:48:55 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 12:05:45 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static int	open_fd_in_order(t_files *list, int *fd)
 	copy = list;
 	while (copy)
 	{
-		printf("filename to open is %s\n", copy->filename);
 		if (copy->type == INPUT)
 		{
 			if (handle_input(copy, fd))

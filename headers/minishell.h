@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/18 12:46:45 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 11:35:47 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@
 
 /*global variable*/
 extern int	g_exit_code;
+
+/*TEMP*/
+void		print_command_list(t_commands *list);
+void		print_envp(char **envp, t_cdllist *list);
+void		print_tokenlist(t_lexer *list);
+void		print_file_list(t_files *files, char *str);
 
 /*copy_env*/
 t_cdllist	*copy_envp(char **envp);

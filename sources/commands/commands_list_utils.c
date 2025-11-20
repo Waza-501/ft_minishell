@@ -6,11 +6,12 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:41:20 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/18 16:06:03 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 12:51:10 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "redirect.h"
 
 void	clear_commands(t_data *data)
 {
@@ -21,16 +22,7 @@ void	clear_commands(t_data *data)
 	{
 		start = data->commands->next;
 		ft_free_arr(data->commands->args);
-		if (data->commands->infile > 2)
-		{
-			if (close(data->commands->infile))
-				printf("write fail free error report thing using perror\n");
-		}
-		if (data->commands->outfile > 2)
-		{
-			if (close(data->commands->outfile))
-				printf("write fail free error report thing using perror\n");
-		}
+		close_all_fd(data->commands);
 		delete_files_list(data->commands);
 		ft_free(&data->commands);
 		data->commands = start;

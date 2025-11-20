@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:03:42 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/20 09:55:47 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 12:46:30 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,13 @@ void	print_remove_hd_error(char *str)
 	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
-void	print_close_fd_error(void)
+void	close_all_fd(t_commands *cmd)
 {
-	ft_putstr_fd(MS_ERROR, STDERR_FILENO);
-	ft_putstr_fd("Error: Failed to close file descriptor ", STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	printf("closing existing file descriptors\n");
+	if (cmd->infiles)
+		close_existing_fd_in(cmd->infiles, &cmd->infile);
+	if (cmd->outfiles)
+		close_existing_fd_out(cmd->outfiles, &cmd->outfile);
 }
 
 void	delete_files_list(t_commands *cmd)

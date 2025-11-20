@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:55 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/20 11:32:59 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 13:43:54 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int	close_existing_fd_out(t_files *list, int *fd)
 {
 	t_files	*copy;
 
-	if (!list->prev)
+	if (!list)
 		return (0);
 	copy = find_open_fd(list);
+	if (copy->open == false)
+		return (0);
 	close(*fd);
 	copy->open = false;
 	*fd = -1;

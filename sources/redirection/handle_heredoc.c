@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/18 16:23:19 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 12:36:59 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ int	handle_heredoc(t_files *list, int *fd)
 		return (1);
 	if (fill_heredoc(list, fd))
 		return (1);
-	if (close(*fd))
-		print_close_fd_error();
+	close(*fd);
 	*fd = -1;
 	*fd = open(list->filename, O_RDONLY);
 	if (*fd == -1)

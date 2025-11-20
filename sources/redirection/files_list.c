@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/03 15:14:25 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/20 12:00:37 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 13:35:03 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,13 @@ t_files	*find_open_fd(t_files *list)
 	t_files	*copy;
 
 	copy = get_first_file(list);
-	while (copy && copy->open == false)
+	while (copy->next && copy->open == false)
 	{
 		copy = copy->next;
 	}
-	return (copy);
+	if (copy->open == true)
+		return (copy);
+	return (get_first_file(copy));
 }
 
 t_files	*get_last_file(t_files *list)
@@ -59,7 +61,7 @@ t_files	*get_last_file(t_files *list)
 	t_files	*copy;
 
 	copy = list;
-	while (copy->next)
+	while (copy && copy->next)
 		copy = copy->next;
 	return (copy);
 }
@@ -69,7 +71,7 @@ t_files	*get_first_file(t_files *list)
 	t_files	*copy;
 
 	copy = list;
-	while (copy->prev)
+	while (copy && copy->prev)
 		copy = copy->prev;
 	return (copy);
 }

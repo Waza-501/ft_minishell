@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/20 11:34:47 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 13:37:37 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static void	execute_cmd(t_commands *cmd, t_shell *shell)
 	int	i;
 
 	i = 0;
-	if (!cmd->args[0])
-		exit(0);
+	if (!cmd->args)
+		ft_exit_exec(shell->data, shell, 0);
 	if (execute_builtin(cmd, shell, -1, -1))
 		exit(shell->data->exit_code);
 	if (execute_currdir(cmd, shell))
@@ -56,11 +56,14 @@ static void	setup_child_input(t_commands *cmd, int prev_fd)
 {
 	if (cmd->infile != -1)
 	{
+		printf("setting up new fd\n");
 		ft_dup2(cmd->infile, STDIN);
-		close_existing_fd_in(find_open_fd(cmd->infiles), &cmd->infile);
+		close_existing_fd_in(cmd->infiles, &cmd->infile);
+		printf("fd is %i\n", cmd->infile);
 	}
 	else if (prev_fd != -1)
 	{
+		printf("previous fd is %i\n", prev_fd);
 		ft_dup2(prev_fd, STDIN);
 		close(prev_fd);
 	}
@@ -70,8 +73,10 @@ static void	setup_child_output(t_commands *cmd)
 {
 	if (cmd->outfile != -1)
 	{
+		printf("setting up new fd out\n");
 		ft_dup2(cmd->outfile, STDOUT);
-		close_existing_fd_out(find_open_fd(cmd->outfiles), &cmd->outfile);
+		close_existing_fd_out(cmd->outfiles, &cmd->outfile);
+		printf("fd is %i\n", cmd->infile);
 	}
 	else if (cmd->next != NULL)
 	{
@@ -149,13 +154,20 @@ void	execute(t_shell *shell)
 	{
 		if (!set_fd_execution(curr))
 		{
+			printf("current infile_fd = %i current outfile_fd = %i\n", curr->infile, curr->outfile);
 			handle_pipes(curr, prev_fd, shell);
+			printf("prev_fd is %i\n", prev_fd);
 			if (prev_fd != -1)
 				close(prev_fd);
 			prev_fd = curr->pipefd[0];
+			printf("prev_fd is %i\n", prev_fd);
 			if (curr->pipefd[1] != -1)
 				close(curr->pipefd[1]);
 		}
+		printf("\n\n");
+		printf("after exec infile_fd = %i current outfile_fd = %i\n", curr->infile, curr->outfile);
+		close_all_fd(curr);
+		printf("after clean infile_fd = %i current outfile_fd = %i\n", curr->infile, curr->outfile);
 		curr = curr->next;
 	}
 	ft_waitpid(shell);

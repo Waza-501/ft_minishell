@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/20 11:33:19 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 13:43:50 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 int	close_heredoc(t_files *list, int *fd)
 {
 	close(*fd);
-	if (unlink(list->filename))
-		print_remove_hd_error(list->filename);
+	printf("removing file %s\n", list->filename);
+	unlink(list->filename);
 	return (0);
 }
 
@@ -25,10 +25,12 @@ int	close_existing_fd_in(t_files *list, int *fd)
 {
 	t_files	*copy;
 
-	if (!list->prev)
+	if (!list)
 		return (0);
 	copy = find_open_fd(list);
-	if (list->type == HEREDOC)
+	if (copy->open == false)
+		return (0);
+	if (copy->type == HEREDOC)
 		close_heredoc(copy, fd);
 	else
 		close(*fd);

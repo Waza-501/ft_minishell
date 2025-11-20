@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/18 16:27:31 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 11:55:13 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	**convert_cdll_to_env_array(t_cdllist *env_list)
 	int				i;
 
 	i = 0;
-	if (!env_list || !env_list->head)
+	if (!env_list)
 		return (NULL);
 	env_array = malloc(sizeof(char *) * (env_list->size + 1));
 	if (!env_array)

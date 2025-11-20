@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:54:17 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 13:46:39 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 11:12:50 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,31 @@ static void	exit_minishell(t_data *data, t_shell *shell, int fd_0, int fd_1)
  * Keep this just in case, after checking cmd exit
 	// if (cmd->pid != 0)
 	// 	ft_putstr_fd("exit\n", STDOUT);
- */
+* Steps: 
+* Is the first argument numeric?
+* If it is not NUMERIC, exit immediately. Print errors and set code 2
+* Second check: Too many argument
+* Standard exit: valid number, no extra args
+*/
 
 int	ft_exit(t_shell *shell, t_commands *cmd, int fd_0, int fd_1)
 {
 	t_data	*data;
+	bool	error_check;
 
 	data = shell->data;
-	if (!cmd)
+	error_check = false;
+	if (!cmd || !cmd->args[1])
+		exit_minishell(data, shell, fd_0, fd_1);
+	ft_atoi_check(cmd->args[1], &error_check);
+	if (error_check == true)
 	{
-		ft_putstr_fd("exit\n", STDOUT);
+		exit_checker(data, cmd->args[1]);
 		exit_minishell(data, shell, fd_0, fd_1);
 	}
-	if (!cmd->args[1])
-		exit_minishell(data, shell, fd_0, fd_1);
 	if (cmd->args[2] != NULL)
 	{
+		ft_putstr_fd("exit\n", STDOUT);
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR);
 		return (1);
 	}

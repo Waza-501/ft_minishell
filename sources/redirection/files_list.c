@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/03 15:14:25 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/20 10:31:40 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 12:00:37 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,6 @@ t_files	*find_open_fd(t_files *list)
 {
 	t_files	*copy;
 
-	// copy = get_first_file(list);
-	// printf("first file data: %s\n", copy->filename);
-	// while (copy)
-	// {
-	// 	printf("filename: %s ", copy->filename);
-	// 	if (copy->open == true)
-	// 		printf("true\n");
-	// 	if (copy->open == false)
-	// 		printf("false\n");
-	// 	copy = copy->next;
-	// }
 	copy = get_first_file(list);
 	while (copy && copy->open == false)
 	{

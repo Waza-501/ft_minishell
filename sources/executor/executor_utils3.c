@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/17 12:40:27 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 13:40:15 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 11:43:25 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,14 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 	char	*tmp;
 
 	i = 0;
+	if (!path)
+	{
+		tmp = ft_strdup(cmd->args[0]);
+		if (!tmp)
+			ft_exit_exec(shell->data, shell, 1);
+		try_execute_path(tmp, cmd, shell, path);
+		free(tmp);
+	}
 	while (path && path[i])
 	{
 		tmp = build_full_path(path[i], cmd->args[0], path, shell);
@@ -170,8 +178,7 @@ void	ft_execve(t_commands *cmd, t_shell *shell, char **path)
 		i++;
 	}
 	ft_free_arr(path);
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd->args[0], STDERR_FILENO);
+	print_error(cmd->args[0]);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	ft_exit_exec(shell->data, shell, 127);
 }

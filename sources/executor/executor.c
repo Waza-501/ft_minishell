@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/20 14:32:09 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/20 16:27:01 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	setup_child_output(t_commands *cmd)
 		ft_dup2(cmd->outfile, STDOUT);
 		close_existing_fd_out(cmd->outfiles, &cmd->outfile);
 	}
-	else if (cmd->next != NULL)
+	if (cmd->next != NULL)
 	{
 		close(cmd->pipefd[0]);
 		ft_dup2(cmd->pipefd[1], STDOUT);

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/21 11:30:15 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/21 14:54:42 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	parse_input(t_data *data, char *str)
 {
 	int	s_var;
 
+	add_history(data->input);
 	if (is_space(str))
 		return (0);
-	add_history(data->input);
 	if (find_matching_quotes(str, false, false) == false)
 		return (2);
 	if (setup_lexer(data) == false)

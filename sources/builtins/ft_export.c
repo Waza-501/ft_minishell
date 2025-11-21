@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 14:02:47 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 13:08:04 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/21 09:23:33 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,20 @@ int	if_exist(char **env, char *str)
 
 	i = 0;
 	len = 0;
-	while (str[len] != '=')
+	while (str[len] && str[len] != '=')
 		len++;
 	if (!env)
 		return (0);
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], str, len))
+		if (!ft_strncmp(env[i], str, len) && (env[i][len] == '='
+			|| env[i][len] == '\0'))
 		{
-			free(env[i]);
-			env[i] = ft_strdup(str);
+			if (ft_strchr(str, '='))
+			{
+				free(env[i]);
+				env[i] = ft_strdup(str);
+			}
 			return (1);
 		}
 		i++;
@@ -100,7 +104,7 @@ static int	handle_export_display(t_shell *shell)
 
 int	ft_export(t_commands *cmd, t_shell *shell, char *str)
 {
-	int		i;
+	int	i;
 
 	shell->data->exit_code = 0;
 	if (!str && !cmd->args[1])

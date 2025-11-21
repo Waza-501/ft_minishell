@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:54:17 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/21 09:33:35 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/21 11:00:14 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	exit_checker(t_data *data, char *str)
 		ft_putstr_fd("minishell: exit: ", STDERR);
 		ft_putstr_fd(str, STDERR);
 		ft_putstr_fd(": numeric argument required\n", STDERR);
-		data->exit_code = 255;
+		data->exit_code = 2;
 	}
 }
 

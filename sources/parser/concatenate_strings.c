@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/17 15:09:22 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/21 11:30:31 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	merge_nodes(t_data *data, t_lexer *node)
 	ft_free(&node->string);
 	node->string = new;
 	node->concat = node->next->concat;
-	lex_del_node(node->next);
+	lex_del_node(data, node->next);
 	return (0);
 }
 

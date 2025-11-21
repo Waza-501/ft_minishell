@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/20 11:59:59 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/21 11:30:15 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	finalize_list(t_data *data)
 		if (is_space(copy->string) == true)
 		{
 			tmp = copy->next;
-			lex_del_node(copy);
+			lex_del_node(data, copy);
 			copy = tmp;
 		}
 		else

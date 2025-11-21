@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:28:02 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/17 11:23:04 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/21 11:29:15 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,7 @@ int						add_command_node(t_commands **list);
 /*lexer_list_utils.c*/
 int						merge_nodes(t_data *data, t_lexer *node);
 int						insert_new_node(t_lexer *node, char *new, char *str);
-void					lex_del_node(t_lexer *node);
-// void		lex_del_first(t_data *data);
+void					lex_del_node(t_data *data, t_lexer *node);
 void					clear_lexer(t_data *data);
 
 /*lexer_list.c*/

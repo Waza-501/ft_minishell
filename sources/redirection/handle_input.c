@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:57 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/20 14:07:06 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/21 15:29:37 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,17 @@ int	close_existing_fd_in(t_files *list, int *fd)
 	return (0);
 }
 
-int	handle_input(t_files *list, int *fd)
+int	handle_input(t_files *list, int *fd, int *ret)
 {
 	if (!list)
 		return (0);
 	close_existing_fd_in(list, fd);
 	*fd = open(list->filename, O_RDONLY);
 	if (*fd == -1)
-		return (infile_open_error(list));
+	{
+		*ret = infile_open_error(list);
+		return (1);
+	}
 	list->open = true;
 	return (0);
 }

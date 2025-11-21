@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 15:22:19 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/20 12:35:56 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/21 15:17:42 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,18 @@ int			handle_append(t_files *list, int *fd);
 char		*get_hd_filename(void);
 
 /*handle_heredoc.c*/
-int			handle_heredoc(t_files *list, int *fd);
+int			handle_heredoc(t_files *list, int *fd, int *ret);
 
 /*handle_input.c*/
 int			close_existing_fd_in(t_files *list, int *fd);
-int			handle_input(t_files *list, int *fd);
+int			handle_input(t_files *list, int *fd, int *ret);
 
 /*handle_output.c*/
 int			close_existing_fd_out(t_files *list, int *fd);
-int			handle_output(t_files *list, int *fd);
+int			handle_output(t_files *list, int *fd, int *ret);
 
 /*set_redirect*/
-//bool		set_redirect(t_data *data, t_commands *list, t_lexer *lexer);
 int			simplified_redir(t_data *data, t_commands *list, t_lexer *node);
-int			set_fd_execution(t_commands *cmd);
+int			set_fd_execution(t_shell *shell, t_commands *cmd);
 
 #endif

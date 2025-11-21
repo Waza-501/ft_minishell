@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/21 09:52:09 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/21 15:10:07 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	execute(t_shell *shell)
 		return ;
 	while (curr && !shell->stop)
 	{
-		if (!set_fd_execution(curr))
+		if (!set_fd_execution(shell, curr))
 		{
 			handle_pipes(curr, prev_fd, shell);
 			if (prev_fd != -1)
@@ -157,8 +157,6 @@ void	execute(t_shell *shell)
 			if (curr->pipefd[1] != -1)
 				close(curr->pipefd[1]);
 		}
-		else
-			shell->data->exit_code = 1;
 		close_all_fd(curr);
 		curr = curr->next;
 	}

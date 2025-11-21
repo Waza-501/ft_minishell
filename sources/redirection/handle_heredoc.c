@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/03 16:08:52 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/20 16:21:21 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/21 15:28:41 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	fill_heredoc(t_files *list, int *fd)
 		{
 			ft_putstr_fd(HD_EMPTY_LINE, STDERR_FILENO);
 			ft_putendl_fd(list->hd_delim, STDERR_FILENO);
-			return (1);
+			return (130);
 		}
 		if (scan_line(line, list->hd_delim, list->quoted))
 			break ;
@@ -66,19 +66,23 @@ int	fill_heredoc(t_files *list, int *fd)
 	return (0);
 }
 
-int	handle_heredoc(t_files *list, int *fd)
+int	handle_heredoc(t_files *list, int *fd, int *ret)
 {
-	if (close_existing_fd_in(list, fd))
+	close_existing_fd_in(list, fd);
+	*ret = create_hd_file(list, fd);
+	if (*ret)
 		return (1);
-	if (create_hd_file(list, fd))
-		return (1);
-	if (fill_heredoc(list, fd))
+	*ret = fill_heredoc(list, fd);
+	if (*ret)
 		return (1);
 	close(*fd);
 	*fd = -1;
 	*fd = open(list->filename, O_RDONLY);
 	if (*fd == -1)
-		return (infile_open_error(list));
+	{
+		*ret = infile_open_error(list);
+		return (1);
+	}
 	list->open = true;
 	return (0);
 }

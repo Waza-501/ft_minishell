@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/20 13:45:33 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/21 12:01:32 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	ft_waitpid(t_shell *shell)
 {
 	t_commands	*curr;
 	int			status;
-	int			sig;
 
 	curr = shell->cmds;
 	while (curr)
@@ -91,18 +90,15 @@ void	ft_waitpid(t_shell *shell)
 		if (curr->pid > 0)
 		{
 			waitpid(curr->pid, &status, 0);
-			if (WIFEXITED(status))
+			if (!curr->next && WIFEXITED(status))
 				shell->data->exit_code = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
+			else if (!curr->next && WIFSIGNALED(status))
 			{
-				sig = WTERMSIG(status);
-				if (sig == SIGINT)
-					shell->data->exit_code = 130;
-				else if (sig == SIGQUIT)
-					shell->data->exit_code = 131;
+				shell->data->exit_code = 128 + WTERMSIG(status);
+				if (shell->data->exit_code == 130
+					|| shell->data->exit_code == 131)
+					shell->stop = true;
 			}
-			if (shell->data->exit_code == 130 || shell->data->exit_code == 131)
-				shell->stop = true;
 		}
 		curr = curr->next;
 	}

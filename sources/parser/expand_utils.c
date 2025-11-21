@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 16:59:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/13 13:30:51 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/21 15:57:08 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	check_env_char(char c)
 {
-	if (ft_isalpha(c) || ft_isdigit(c) || c == '_' || c == '$' || c == '?')
+	if (ft_isalpha(c) || ft_isdigit(c) || c == '_' || c == '?')
 		return (true);
 	return (false);
 }
@@ -33,7 +33,7 @@ int	find_var_size(char *str)
 {
 	int	idx;
 
-	idx = 0;
+	idx = 1;
 	while (str[idx])
 	{
 		if (check_env_char(str[idx]) == false)
@@ -62,7 +62,6 @@ int	find_var_in_string(char *str, char *var)
 	return (idx);
 }
 
-/*rewrite this, mayhaps?*/
 bool	reform_string(t_lexer *node, char *start, char *end, char *middle)
 {
 	char	*temp;

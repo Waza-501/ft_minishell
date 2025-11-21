@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:18 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 13:18:16 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/21 11:17:57 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ int	ft_cd(t_commands *cmd, t_shell *shell)
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR);
 		return (1);
 	}
-	else if (cmd->args[1][0] == '\0')
-		return (0);
 	else if (ft_strncmp("-", cmd->args[1], 2) == 0)
 		return (cd_minus(shell));
 	return (ft_chdir(cmd->args[1], shell));

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/06 10:51:54 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/17 11:29:51 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/23 09:08:39 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
  * @param key Output for key part (caller must free)
  * @param value Output for value part (caller must free)
  * @return 0 on success, 1 on failure
+ * Step:
+ * 1. Find the '=' character in the string.
+ * 2. If no '=' character found (like "KEY"), value set to be NULL (instead of empty string before).
+ * Else update key and value
+ * 3. Check key allocation. Update: Allow value to be NULL
  */
 static int	split_env_string(const char *env_string, char **key, char **value)
 {
@@ -30,7 +35,7 @@ static int	split_env_string(const char *env_string, char **key, char **value)
 	if (!equals_pos)
 	{
 		*key = ft_strdup(env_string);
-		*value = ft_strdup("");
+		*value = NULL;
 	}
 	else
 	{
@@ -38,10 +43,11 @@ static int	split_env_string(const char *env_string, char **key, char **value)
 		*key = ft_substr(env_string, 0, key_len);
 		*value = ft_strdup(equals_pos + 1);
 	}
-	if (!*key || !*value)
+	if (!*key || (equals_pos && !*value))
 	{
 		free(*key);
-		free(*value);
+		if (*value)
+			free(*value);
 		return (1);
 	}
 	return (0);

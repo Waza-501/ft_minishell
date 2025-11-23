@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/14 11:55:10 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/20 11:55:13 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/23 09:07:51 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,18 @@ int	execute_commands(t_data *data)
 	cleanup_shell(&shell);
 	return (0);
 }
-
+/**
+ * Step:
+ * 1. Handle NULL Value (export VAR)
+ * 2. Else join key and value with an equal sign
+*/
 static char	*create_env_string(t_cd_ll_node *node)
 {
 	char	*temp_key_eq;
 	char	*full_var;
 
+	if (node->var_2 == NULL)
+		return(ft_strdup(node->var_1));
 	temp_key_eq = ft_strjoin(node->var_1, "=");
 	if (!temp_key_eq)
 		return (NULL);

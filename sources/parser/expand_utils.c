@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 16:59:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/21 15:57:08 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/24 15:37:24 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	find_var_size(char *str)
 {
 	int	idx;
 
-	idx = 1;
+	idx = 0;
 	while (str[idx])
 	{
 		if (check_env_char(str[idx]) == false)

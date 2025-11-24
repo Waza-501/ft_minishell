@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/21 16:00:37 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/24 15:40:48 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*get_arg_var(t_lexer *node, int idx)
 	int				size;
 	char			*var_copy;
 
-	size = (find_var_size(&node->string[idx]));
+	size = (find_var_size(&node->string[idx + 1]));
 	var_copy = (char *)malloc(sizeof(char) * (size + 1));
 	if (!var_copy)
 		return (malloc_error(NULL, true));

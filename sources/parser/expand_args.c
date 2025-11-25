@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/26 09:06:38 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/24 15:40:48 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/25 12:46:19 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	scan_expand(t_data *data, t_lexer *node)
 		if (!cdll_get_node(data->envp_copy, false, arg_var))
 		{
 			if (find_replace_type(data, node, arg_var))
-				return (ft_free(&arg_var), 1);
+				return (ft_free(&arg_var), 127);
 		}
 		else
 			if (replace_var(data->envp_copy, node, arg_var) == 1)

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 15:02:32 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/14 11:51:05 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/25 12:52:44 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	reset_data(t_data *data, int code)
 	if (data->commands)
 		clear_commands(data);
 	data->exit_code = code;
-	return (0);
+	return (code);
 }
 
 t_data	*init_data(void)

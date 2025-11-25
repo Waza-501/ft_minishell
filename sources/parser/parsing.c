@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/28 11:29:41 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/21 14:54:42 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/25 12:48:30 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	parse_input(t_data *data, char *str)
 	s_var = expand_args(data);
 	if (s_var < 0)
 		return (reset_data(data, 2));
-	else if (s_var == 1)
-		return (reset_data(data, 0));
+	else if (s_var >= 1)
+		return (reset_data(data, s_var));
 	if (concatenate_strings(data) == false)
 		reset_data(data, 1);
 	if (finalize_list(data))

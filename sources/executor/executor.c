@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/21 15:10:07 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/25 12:24:01 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,19 @@ void	execute(t_shell *shell)
 			prev_fd = curr->pipefd[0];
 			if (curr->pipefd[1] != -1)
 				close(curr->pipefd[1]);
+		}
+		else
+		{
+			if (prev_fd != -1)
+				close(prev_fd);
+			if (curr->next)
+			{
+				ft_pipe(curr->pipefd);
+				close(curr->pipefd[1]);
+				prev_fd = curr->pipefd[0];
+			}
+			else
+				prev_fd = -1;
 		}
 		close_all_fd(curr);
 		curr = curr->next;

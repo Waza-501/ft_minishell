@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/17 12:25:44 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/21 11:36:28 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/25 11:59:35 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	single_var(t_data *data, char *str, char *code, t_lexer	*node)
 		remove_quotes(data, data->lexer);
 	ft_putstr_fd(data->lexer->string, STDOUT_FILENO);
 	ft_putendl_fd(": command not found", STDOUT_FILENO);
+	data->exit_code = 127;
 	return (1);
 }
 

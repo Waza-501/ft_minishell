@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/25 12:24:01 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/25 12:27:47 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	execute(t_shell *shell)
 {
 	t_commands	*curr;
 	int			prev_fd;
+	int			ret;
 
 	prev_fd = -1;
 	curr = shell->cmds;
@@ -148,7 +149,8 @@ void	execute(t_shell *shell)
 		return ;
 	while (curr && !shell->stop)
 	{
-		if (!set_fd_execution(shell, curr))
+		ret = set_fd_execution(shell, curr);
+		if (ret == 0)
 		{
 			handle_pipes(curr, prev_fd, shell);
 			if (prev_fd != -1)
@@ -157,20 +159,7 @@ void	execute(t_shell *shell)
 			if (curr->pipefd[1] != -1)
 				close(curr->pipefd[1]);
 		}
-		else
-		{
-			if (prev_fd != -1)
-				close(prev_fd);
-			if (curr->next)
-			{
-				ft_pipe(curr->pipefd);
-				close(curr->pipefd[1]);
-				prev_fd = curr->pipefd[0];
-			}
-			else
-				prev_fd = -1;
-		}
-		close_all_fd(curr);
+		close_all_fd(curr, ret, &prev_fd);
 		curr = curr->next;
 	}
 	ft_waitpid(shell);

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:03:42 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/25 12:02:05 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/25 12:27:14 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,21 @@ void	print_remove_hd_error(char *str)
 	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }
 
-void	close_all_fd(t_commands *cmd)
+void	close_all_fd(t_commands *cmd, int ret, int *prev_fd)
 {
+	if (ret == 1)
+	{
+		if (*prev_fd != -1)
+			close(prev_fd);
+		if (cmd->next)
+		{
+			ft_pipe(cmd->pipefd);
+			close(cmd->pipefd[1]);
+			*prev_fd = cmd->pipefd[0];
+		}
+		else
+			*prev_fd = -1;
+	}
 	if (cmd->infiles)
 		close_existing_fd_in(cmd->infiles, &cmd->infile);
 	if (cmd->outfiles)

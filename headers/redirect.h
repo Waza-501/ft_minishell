@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 15:22:19 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/21 15:17:42 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/25 12:27:31 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define HD_EMPTY_LINE "warning, heredoc delimited by EOF: wanted "
 
 /*files_list_utils.c*/
-void		close_all_fd(t_commands *cmd);
+void		close_all_fd(t_commands *cmd, int ret, int *prev_fd);
 t_files		*find_open_fd(t_files *list);
 void		delete_files_list(t_commands *cmd);
 void		print_close_fd_error(void);

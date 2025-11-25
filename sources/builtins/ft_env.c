@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/05 11:52:30 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/23 09:02:10 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/25 12:31:26 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 /**
  * Step
  * 1. Check if env is NULL
- * 2. While looping through each element, if str does not contain '=' then I don't print
-*/
+ * 2. While looping through each element,
+	if str does not contain '=' then I don't print
+ */
 int	ft_env(char **env)
 {
 	int	i;

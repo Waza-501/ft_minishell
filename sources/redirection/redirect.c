@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/05 10:12:26 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/21 15:18:11 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/25 12:03:27 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ int	set_fd_execution(t_shell *shell, t_commands *cmd)
 	fd = -1;
 	code = open_fd_in_order (cmd->outfiles, &fd);
 	if (code)
-		return (code);
+	{
+		shell->data->exit_code = 1;
+		return (1);
+	}
 	cmd->outfile = fd;
 	return (0);
 }

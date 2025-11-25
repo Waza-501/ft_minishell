@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/06 12:41:20 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/20 12:51:10 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/25 12:28:47 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	clear_commands(t_data *data)
 	{
 		start = data->commands->next;
 		ft_free_arr(data->commands->args);
-		close_all_fd(data->commands);
+		close_all_fd(data->commands, 0, NULL);
 		delete_files_list(data->commands);
 		ft_free(&data->commands);
 		data->commands = start;

@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 11:03:42 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/25 12:27:14 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/25 12:29:30 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	close_all_fd(t_commands *cmd, int ret, int *prev_fd)
 	if (ret == 1)
 	{
 		if (*prev_fd != -1)
-			close(prev_fd);
+			close(*prev_fd);
 		if (cmd->next)
 		{
 			ft_pipe(cmd->pipefd);

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/26 12:46:25 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/26 13:05:42 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	}
 	else if (prev_fd != -1)
 		close(prev_fd);
-	restore_signals_interactive();
+	// restore_signals_interactive();
 }
 
 /**

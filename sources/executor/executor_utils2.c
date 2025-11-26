@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/26 12:51:19 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/26 13:07:02 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ void	ft_waitpid(t_shell *shell)
 			else if (!curr->next && WIFSIGNALED(status))
 			{
 				shell->data->exit_code = 128 + WTERMSIG(status);
+				if (shell->data->exit_code == 131)
+					ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
+				if (shell->data->exit_code == 130)
+					ft_putchar_fd('\n', STDERR_FILENO);
 				if (shell->data->exit_code == 130
 					|| shell->data->exit_code == 131)
 					shell->stop = true;

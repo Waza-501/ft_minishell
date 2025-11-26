@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:23 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/26 09:18:47 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/26 11:25:26 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static int	mini_loop(t_data *data)
 			reset_data(data, data->exit_code);
 		}
 	}
-	free_data(data);
 	return (0);
 }
 

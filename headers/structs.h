@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/04 13:28:02 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/21 11:29:15 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/26 11:25:54 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void					clear_commands(t_data *data);
 int						build_command_list(t_data *data);
 
 /*commands_list.c*/
-// t_commands	*init_commands(void);
 t_commands				*command_list_last(t_commands *list);
 void					clear_commands(t_data *data);
 int						add_command_node(t_commands **list);

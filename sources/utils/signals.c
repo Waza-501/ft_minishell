@@ -6,15 +6,15 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:45 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/20 11:21:46 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/26 11:13:18 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <readline/history.h>
+#include <readline/readline.h>
 #include <signal.h>
 #include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
 /* Add this declaration Max*/
 // extern void rl_replace_line(const char *text, int clear_undo);
@@ -85,13 +85,16 @@ void	set_signals_interactive(void)
  * @brief Set up signal handlers for non-interactive shell mode.
  *
  * Sets both SIGINT and SIGQUIT to simply move to a new line.
+ * Fix: The parent shell ignores SIGINT/SIGQUIT so it doesn't exit when
+ * child processes are killed by these signals. Child processes
+ * will reset to default signal handling before exec.
  */
 void	set_signals_noninteractive(void)
 {
 	struct sigaction	ms;
 
 	ft_memset(&ms, 0, sizeof(ms));
-	ms.sa_handler = &put_newline;
+	ms.sa_handler = SIG_IGN;
 	sigaction(SIGINT, &ms, NULL);
 	sigaction(SIGQUIT, &ms, NULL);
 }

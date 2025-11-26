@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/21 11:37:13 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/26 11:13:48 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_cdllist	*copy_envp(char **envp);
 /*signals.c*/
 void		set_signals_interactive(void);
 void		set_signals_noninteractive(void);
+void		reset_signals_for_child(void);
 
 /*utils.c*/
 void		ft_free(void *ptr);

@@ -6,11 +6,15 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/29 14:10:30 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/10/22 11:33:59 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/26 11:13:03 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <signal.h>
+#include <stdio.h>
 
 void	ft_free(void *ptr)
 {
@@ -45,7 +49,7 @@ int	find_other_half(char *str, char delim, bool *delim_toggle)
 
 bool	find_matching_quotes(char *str, bool s_q, bool d_q)
 {
-	int		idx;
+	int	idx;
 
 	idx = 0;
 	while (str[idx])
@@ -67,4 +71,20 @@ bool	find_matching_quotes(char *str, bool s_q, bool d_q)
 	else if (d_q == true)
 		return (print_error(EOF_DQ), false);
 	return (true);
+}
+/**
+ * @brief Reset signals to default for child processes.
+ *
+ * Called in child process after fork() but before exec() to ensure
+ * child processes can be killed normally by SIGINT/SIGQUIT.
+ */
+
+void	reset_signals_for_child(void)
+{
+	struct sigaction	ms;
+
+	ft_memset(&ms, 0, sizeof(ms));
+	ms.sa_handler = SIG_DFL;
+	sigaction(SIGINT, &ms, NULL);
+	sigaction(SIGQUIT, &ms, NULL);
 }

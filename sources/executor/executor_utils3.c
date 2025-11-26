@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/17 12:40:27 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/20 11:43:25 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/26 13:18:09 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,12 @@ bool	execute_currdir(t_commands *cmd, t_shell *shell)
 			perror(cmd->args[0]);
 			exit(126);
 		}
+	}
+	else
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		perror(cmd->args[0]);
+		exit(127);
 	}
 	return (false);
 }

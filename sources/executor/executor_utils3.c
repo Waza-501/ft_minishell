@@ -6,7 +6,7 @@
 /*   By: haile <haile@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/11/17 12:40:27 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/26 13:18:09 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/26 13:21:16 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int	execute_builtin(t_commands *cmd, t_shell *shell, int fd_0, int fd_1)
  * - Commands with '/' (absolute/relative paths)
  * - File accessibility checks before execution
  * - Direct execve() calls for path-based commands
+ * - Update 26/11: Handle case access failes. 
+ * If a path is provided but file missing then code 127.
  */
 bool	execute_currdir(t_commands *cmd, t_shell *shell)
 {

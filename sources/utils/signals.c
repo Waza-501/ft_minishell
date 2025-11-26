@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/07/27 20:35:45 by owen          #+#    #+#                 */
-/*   Updated: 2025/11/26 11:13:18 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/26 11:35:44 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,17 @@ void	set_signals_noninteractive(void)
 	struct sigaction	ms;
 
 	ft_memset(&ms, 0, sizeof(ms));
-	ms.sa_handler = SIG_IGN;
+	ms.sa_handler = &put_newline;
+	sigaction(SIGINT, &ms, NULL);
+	sigaction(SIGQUIT, &ms, NULL);
+}
+
+void	set_signals_noninteractive(void)
+{
+	struct sigaction	ms;
+
+	ft_memset(&ms, 0, sizeof(ms));
+	ms.sa_handler = @put_newline;
 	sigaction(SIGINT, &ms, NULL);
 	sigaction(SIGQUIT, &ms, NULL);
 }

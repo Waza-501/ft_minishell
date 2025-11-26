@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:44 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/21 15:11:56 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/26 12:51:19 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,11 @@ char	*build_full_path(char *dir, char *cmd, char **path, t_shell *sh)
  * Exit status handling:
  * - Normal exit: Uses WEXITSTATUS() to get exit code
  * - Signal termination: Maps signals to conventional exit codes
- *   - SIGINT (Ctrl-C): 130
- *   - SIGQUIT (Ctrl-\): 131
+ * - WIFSIGNALED(status): True if child was killed by signal
+ * - WTERMSIG(status): Gets the signal number that killed the child
+ * - SIGINT (2): Ctrl+C → exit_code = 130, print newline
+ *  - SIGQUIT (3): Ctrl+\ → exit_code = 131, print "Quit (core dumped)"
+ *  - Other signals: Just set exit_code = 128 + signal_num
  *
  * Signal propagation:
  * - If any process exits with 130 or 131, sets shell->stop = true
@@ -103,6 +106,7 @@ void	ft_waitpid(t_shell *shell)
 		curr = curr->next;
 	}
 }
+
 /**
  * @brief Handle single built-in command execution without forking
  * @param shell Shell state containing the single command to execute

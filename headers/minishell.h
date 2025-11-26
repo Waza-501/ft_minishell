@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/25 15:01:56 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/26 11:13:48 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/26 11:42:49 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ t_cdllist	*copy_envp(char **envp);
 void		set_signals_interactive(void);
 void		set_signals_noninteractive(void);
 void		reset_signals_for_child(void);
+void		set_signals_parent_execution(void);
+void		restore_signals_interactive(void);
 
 /*utils.c*/
 void		ft_free(void *ptr);
@@ -62,8 +64,8 @@ bool		find_matching_quotes(char *str, bool s_q, bool d_q);
 
 // Updated function prototypes Max
 bool		is_builtin(t_commands *cmd);
-int			execute_builtin(t_commands *cmd, t_shell *shell,
-				int fd_0, int fd_1);
+int			execute_builtin(t_commands *cmd, t_shell *shell, int fd_0,
+				int fd_1);
 void		ft_execve(t_commands *cmd, t_shell *shell, char **path);
 void		ft_waitpid(t_shell *shell);
 bool		single_cmd(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/27 11:23:49 by haile         #+#    #+#                 */
-/*   Updated: 2025/11/26 11:36:47 by haile         ########   odam.nl         */
+/*   Updated: 2025/11/26 12:46:25 by haile         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,11 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 		cmd->pipefd[0] = -1;
 		cmd->pipefd[1] = -1;
 	}
+	set_signals_parent_execution();
 	cmd->pid = ft_fork();
 	if (cmd->pid == 0)
 	{
-		// reset_signals_for_child();
+		reset_signals_for_child();
 		setup_child_input(cmd, prev_fd);
 		setup_child_output(cmd);
 		execute_cmd(cmd, shell);
@@ -120,6 +121,7 @@ static void	handle_pipes(t_commands *cmd, int prev_fd, t_shell *shell)
 	}
 	else if (prev_fd != -1)
 		close(prev_fd);
+	restore_signals_interactive();
 }
 
 /**

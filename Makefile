@@ -48,6 +48,7 @@ SOURCES		:=	lexer/lexer_list_utils.c\
 				utils/copy_env.c\
 				utils/error.c\
 				utils/signals.c\
+				utils/signals2.c\
 				utils/utils.c\
 				main.c\
 				data.c\

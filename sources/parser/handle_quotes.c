@@ -6,7 +6,7 @@
 /*   By: haile < haile@student.codam.nl>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/10/22 13:19:53 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/14 15:24:24 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/26 09:12:51 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static size_t	strlen_without_quotes(char *str)
 	return (idx);
 }
 
-/*will need to be renamed*/
 static int	reform_str(char *str, char *new)
 {
 	int		i;

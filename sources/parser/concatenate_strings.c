@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/09/09 11:04:04 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/21 11:30:31 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/26 09:28:45 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	concatenate_strings(t_data *data)
 	copy = data->lexer;
 	while (copy)
 	{
-		if (copy && copy->concat == true && copy->type < 2)
+		if (copy && copy->concat == true && copy->type < 3)
 		{
 			while (copy->concat == true)
 			{

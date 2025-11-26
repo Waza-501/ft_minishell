@@ -6,7 +6,7 @@
 /*   By: owhearn <owhearn@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/08/15 01:01:54 by owhearn       #+#    #+#                 */
-/*   Updated: 2025/11/18 15:34:06 by owhearn       ########   odam.nl         */
+/*   Updated: 2025/11/26 09:06:24 by owhearn       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ t_cdllist	*copy_envp(char **envp)
 	{
 		split = ft_split_env(envp[i], '=');
 		if (!split)
-			printf("split error encountered. Fix this later\n");
+		{
+			cdll_del_list(copy);
+			return (NULL);
+		}
 		cdll_add_back(copy, cdll_new_node(split[0], split[1], 0));
 		free(split);
 		i++;
